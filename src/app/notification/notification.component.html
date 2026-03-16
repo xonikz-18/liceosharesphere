@@ -1,0 +1,44 @@
+<!-- REQUEST CARD (only visible after clicking notification) -->
+<div class="request-card" *ngIf="showRequest">
+
+  <div class="close-btn" (click)="closeRequest()"></div>
+
+  <div class="request-content">
+
+    <div class="avatar"></div>
+
+    <div class="request-text">
+      <b>Kissie Ann</b> requested to borrow “Projector”.
+    </div>
+
+  </div>
+
+  <div class="request-buttons">
+    <button class="decline" (click)="decline()">Decline</button>
+    <button class="approve" (click)="approve()">Approve</button>
+  </div>
+
+</div>
+
+
+<!-- NOTIFICATION DROPDOWN -->
+<div class="notification-panel">
+
+  <div class="notif-header">
+
+    <div class="notif-icon"></div>
+    Notifications
+
+  </div>
+
+  <div class="notif-item" (click)="openRequest()">
+
+    <div class="avatar"></div>
+
+    <div class="notif-text">
+      <b>Kissie Ann</b> requested to borrow “Projector”.
+    </div>
+
+  </div>
+
+</div>

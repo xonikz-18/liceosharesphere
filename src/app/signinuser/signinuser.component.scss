@@ -1,0 +1,97 @@
+*{
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* LEFT IMAGE PANEL */
+
+.left-panel{
+  width: 28%;
+  background-color: #7a0000;
+
+  background-image: url('eac2.png');
+  background-size: 605px;
+  background-position: 0px 10%;
+}
+
+/* RIGHT SIDE */
+
+.right-panel{
+  width: 72%;
+  background: #eeeeee;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM */
+
+.form-container{
+  width: 420px;
+}
+
+h1{
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABELS */
+
+label{
+  font-size: 14px;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+
+/* INPUTS */
+
+input, select{
+  height: 38px;
+  padding: 6px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* BUTTONS */
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.signup{
+  background: #f5a300;
+  border: none;
+  width: 140px;
+  height: 40px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel{
+  background: #5a0000;
+  color: white;
+  border: none;
+  width: 140px;
+  height: 40px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,85 @@
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="logo"></div>
+
+    <div class="menu">
+
+      <div class="menu-item" routerLink="/dashboard">
+        <div class="icon home"></div>
+        <span>Home</span>
+      </div>
+
+      <div class="menu-item active" routerLink="/history">
+        <div class="icon history"></div>
+        <span>History</span>
+      </div>
+
+      <div class="menu-item" routerLink="/profile">
+      <div class="icon profile"></div>
+      <span>Profile</span>
+    </div>
+
+    </div>
+
+    <!-- LOGOUT -->
+    <div class="logout" (click)="toggleLogout()">
+      <div class="icon logout-icon"></div>
+      <span>Logout</span>
+    </div>
+
+  </div>
+
+
+  <!-- MAIN HISTORY AREA -->
+  <div class="main-history">
+
+    <div class="history-container">
+
+      <div class="history-list">
+
+        <div 
+          class="history-card"
+          *ngFor="let h of history"
+        >
+
+          <div class="indicator"
+            [ngClass]="{
+              'borrowed': h.type === 'borrowed',
+              'lent': h.type === 'lent'
+            }">
+          </div>
+
+          <div class="history-text">
+
+            <span *ngIf="h.type === 'borrowed'">
+              Borrowed <b>“{{h.item}}”</b> from <b>{{h.person}}</b>
+            </span>
+
+            <span *ngIf="h.type === 'lent'">
+              Lent <b>“{{h.item}}”</b> to <b>{{h.person}}</b>
+            </span>
+
+          </div>
+
+          <div class="history-date">
+            {{h.date}}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LOGOUT MODAL -->
+<app-logout
+  *ngIf="showLogoutPopup"
+  (cancel)="handleCancel()">
+</app-logout>

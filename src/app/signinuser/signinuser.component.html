@@ -1,0 +1,54 @@
+<div class="container">
+
+    <div class="left-panel"></div>
+
+    <div class="right-panel">
+
+        <div class="form-container">
+
+            <h1>Account Information</h1>
+
+            <form>
+
+                <label>Full Name *</label>
+                <input type="text" name="fullname" [(ngModel)]="user.fullname">
+
+                <label>Email *</label>
+                <input type="email" name="email" [(ngModel)]="user.email">
+
+                <label>Sex *</label>
+                <select name="sex" [(ngModel)]="user.sex">
+                    <option value="">Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+
+                <label>Department *</label>
+                <select name="department" [(ngModel)]="user.department">
+                    <option value="">Select</option>
+                    <option>IT</option>
+                    <option>HR</option>
+                    <option>Finance</option>
+                </select>
+
+                <label>Contact Number *</label>
+                <input type="text" name="contact" [(ngModel)]="user.contact">
+
+                <label>Password *</label>
+                <input type="password" name="password" [(ngModel)]="user.password">
+
+                <label>Confirm Password *</label>
+                <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword">
+
+                <div class="buttons">
+                    <button class="signup" type="button" (click)="signUp()">Sign Up</button>
+                    <button class="cancel" type="button" (click)="cancel()">Cancel</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

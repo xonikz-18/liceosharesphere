@@ -1,0 +1,106 @@
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="logo"></div>
+
+    <div class="menu">
+
+  <div class="menu-item" routerLink="/dashboard" routerLinkActive="active">
+    <div class="icon home"></div>
+    <span>Home</span>
+  </div>
+
+  <div class="menu-item" routerLink="/history" routerLinkActive="active">
+    <div class="icon history"></div>
+    <span>History</span>
+  </div>
+
+      <div class="menu-item" routerLink="/profile">
+      <div class="icon profile"></div>
+      <span>Profile</span>
+    </div>
+
+    </div>
+
+    <div class="logout" (click)="toggleLogout()">
+      <div class="icon logout-icon"></div>
+      <span>Logout</span>
+    </div>
+
+  </div>
+
+
+
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+
+      <!-- ADD BUTTON -->
+      <div class="btn" (click)="openAddPopup()">
+        <div class="icon add"></div>
+        <span>Add</span>
+      </div>
+
+
+      <div class="top-icons">
+
+        <!-- SEARCH -->
+        <div class="search-container">
+          <div class="icon search"></div>
+          <input type="text" placeholder="Search">
+        </div>
+
+        <!-- NOTIFICATION -->
+        <div class="btn" (click)="toggleNotifications($event)">
+          <div class="icon notif"></div>
+        </div>
+
+        <!-- MESSAGE -->
+        <div class="btn" (click)="toggleMessages($event)">
+          <div class="icon message"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- LOGOUT MODAL -->
+<app-logout
+  *ngIf="showLogoutPopup"
+  (cancel)="handleCancel()">
+</app-logout>
+
+
+<!-- ADD ITEM MODAL -->
+<app-add
+  *ngIf="showAddPopup"
+  (cancel)="closeAddPopup()">
+</app-add>
+
+
+<!-- NOTIFICATIONS -->
+<app-notification
+  *ngIf="showNotifications"
+  (click)="$event.stopPropagation()">
+</app-notification>
+
+
+<!-- MESSAGES -->
+<app-message
+  *ngIf="showMessages"
+  (click)="$event.stopPropagation()">
+</app-message>

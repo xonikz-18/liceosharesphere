@@ -1,45 +1,46 @@
 <div class="login-container">
+  <div class="login-left">
+    <div class="logo"></div>
 
-  <div class="login-card">
+    <p class="subtitle">
+      Sign in to share, borrow, and track academic resources
+      within Liceo de Cagayan University!
+    </p>
 
-    <div class="left">
+    <form (ngSubmit)="login()">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="student@liceo.edu.ph"
+        required
+      />
 
-      <h1 class="title">LICEO</h1>
-      <h2 class="subtitle">SHARESPHERE</h2>
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+        required
+      />
 
-      <p class="description">
-        Sign in to share, borrow, and track academic resources
-        within Liceo de Cagayan University!
-      </p>
+      <button 
+        class="login-btn" 
+        type="submit" 
+        [disabled]="!email.trim() || !password.trim()">
+        Login
+      </button>
+    </form>
 
-      <form>
+    <p class="forgot">Forgot your password?</p>
+    <p class="divider">or create an account</p>
 
-        <label>Email</label>
-        <input type="email" placeholder="student@liceo.edu.ph">
-
-        <label>Password</label>
-        <input type="password" placeholder="Enter password">
-
-        <button class="login-btn">Login</button>
-
-      </form>
-
-      <a class="forgot">Forgot your password?</a>
-
-      <div class="divider">
-        <span></span>
-        <p>or create an account</p>
-        <span></span>
-      </div>
-
-      <button class="signup-btn">Sign up</button>
-
-    </div>
-
-    <div class="right">
-      <img src="assets/logo.png" alt="Liceo Logo">
-    </div>
-
+    <button routerLink="/verifyemail" class="signup-btn">
+      Sign up
+    </button>
   </div>
 
+  <div class="login-right"></div>
 </div>

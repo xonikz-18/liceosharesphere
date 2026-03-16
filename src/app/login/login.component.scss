@@ -1,108 +1,126 @@
-.login-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #1e1e1e;
-}
+/* ---------------------------------- */
+/* Full screen root for Angular login */
+/* ---------------------------------- */
 
-.login-card {
-  width: 900px;
-  height: 500px;
-  background: linear-gradient(to right, #ffffff, #e8efe8);
-  display: flex;
-  border-radius: 10px;
+/* Ensure the whole page fills the screen */
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
 }
 
-.left {
-  width: 50%;
-  padding: 40px;
+/* Main container: left + right */
+.login-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* prevents any scrollbars */
 }
 
-.title {
-  color: #c62828;
-  font-size: 36px;
-  letter-spacing: 6px;
+/* ---------------- LEFT SIDE ---------------- */
+.login-left {
+  flex: 1;
+  background: #f5f5f5;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+  box-sizing: border-box;
+  min-width: 350px; /* prevent left side from shrinking too much */
+}
+
+.logo {
+  width: 220px;
+  height: 80px;
+  background-image: url('logoone.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 20px;
 }
 
 .subtitle {
-  color: #c62828;
-  font-size: 16px;
-  letter-spacing: 4px;
-  margin-bottom: 20px;
-}
-
-.description {
-  font-size: 13px;
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  max-width: 320px;
+  margin-bottom: 25px;
 }
 
 form {
+  width: 320px;
   display: flex;
   flex-direction: column;
 }
 
 label {
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 10px;
 }
 
 input {
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 6px;
+  border: 1px solid #ccc;
   margin-top: 5px;
 }
 
 .login-btn {
   margin-top: 20px;
-  padding: 10px;
-  background: #7a0000;
-  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
+  background: #8b0000;
+  color: white;
   cursor: pointer;
 }
 
 .forgot {
-  font-size: 12px;
   margin-top: 10px;
-  display: block;
+  font-size: 13px;
+  color: #555;
 }
 
 .divider {
-  display: flex;
-  align-items: center;
   margin: 20px 0;
-}
-
-.divider span {
-  flex: 1;
-  height: 1px;
-  background: #ccc;
-}
-
-.divider p {
-  margin: 0 10px;
-  font-size: 12px;
+  font-size: 13px;
+  color: #888;
 }
 
 .signup-btn {
-  padding: 10px;
-  background: orange;
+  width: 320px;
+  padding: 12px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
+  background: #f5a000;
   cursor: pointer;
 }
 
-.right {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ---------------- RIGHT SIDE ---------------- */
+.login-right {
+  flex: 1;
+  height: 100%;
+  background-image: url('eac.png');
+  background-size: cover;       /* fills panel fully */
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 300px;             /* ensures right side doesn’t shrink too much */
 }
 
-.right img {
-  width: 200px;
+.error-text {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  display: block;
+  text-align: left;
+}
+
+/* Optional: change input border to red if empty and submitted */
+input.ng-invalid.ng-touched {
+  border: 1px solid #ff4d4d;
 }

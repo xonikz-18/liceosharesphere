@@ -1,0 +1,176 @@
+:host{
+  display:block;
+  height:100vh;
+  width:100vw;
+}
+
+.dashboard{
+  display:flex;
+  height:100%;
+  width:100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:225px;
+  background:#7c0000;
+  color:white;
+
+  display:flex;
+  flex-direction:column;
+
+  padding:30px 20px;
+  box-sizing:border-box;
+}
+
+/* LOGO */
+
+.logo{
+  width:170px;
+  height:60px;
+  background:url('noiconlogo.png') no-repeat center;
+  background-size:contain;
+  margin-bottom:50px;
+}
+
+/* MENU */
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.menu-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.menu-item.active{
+  color:#f7b733;
+}
+
+/* ICON BASE */
+
+.icon{
+  width:32px;
+  height:32px;
+
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+/* SIDEBAR ICONS */
+
+.home{
+  background-image:url('home2btnicon.png');
+}
+
+.history{
+  background-image:url('history2btnicon.png');
+}
+
+.profile{
+  background-image:url('profilebtnicon.png');
+}
+
+.logout-icon{
+  background-image:url('logoutbtnicon.png');
+  width:23px;
+  height:23px;
+}
+
+/* LOGOUT BUTTON */
+
+.logout{
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:6px 12px;
+  border:1px solid white;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+  height:26px;
+  width:150px;
+}
+
+/* MAIN HISTORY AREA */
+
+.main-history{
+  flex:1;
+  background:#dcdcdc;
+  padding:30px;
+  box-sizing:border-box;
+}
+
+/* HISTORY CONTAINER */
+
+.history-container{
+  height:100%;
+}
+
+/* SCROLL LIST */
+
+.history-list{
+  height:100%;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  padding-right:15px; /* space between cards and scrollbar */
+}
+
+/* HISTORY CARD */
+
+.history-card{
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  background:#f5f5f5;
+
+  border:1px solid #d9d9d9;
+  border-radius:10px;
+
+  padding:16px 18px;
+}
+
+/* INDICATOR */
+
+.indicator{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+}
+
+.borrowed{
+  background:#f3a300;
+}
+
+.lent{
+  background:#5b0000;
+}
+
+/* TEXT */
+
+.history-text{
+  flex:1;
+  font-size:15px;
+}
+
+/* DATE */
+
+.history-date{
+  font-size:14px;
+  color:#666;
+}

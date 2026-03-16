@@ -1,0 +1,54 @@
+<div class="add-overlay">
+
+  <div class="add-modal">
+
+    <div class="cancel-icon" (click)="onCancel()"></div>
+
+    <div class="form-group">
+      <label>Item name <span class="required">*</span></label>
+
+      <input
+        type="text"
+        class="input-field"
+        maxlength="100"
+        [(ngModel)]="itemName"
+      >
+
+      <div class="char-counter">{{ itemName.length }}/100</div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Description <span class="required">*</span></label>
+
+      <textarea
+        class="textarea-field"
+        maxlength="600"
+        [(ngModel)]="description"
+      ></textarea>
+
+      <div class="char-counter">{{ description.length }}/600</div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Attachment <span class="required">*</span></label>
+
+      <label class="upload-box">
+        <input type="file" hidden (change)="onFileSelected($event)">
+
+        <div class="upload-content">
+          <div class="attach-icon"></div>
+          <p>Click here to attach image</p>
+        </div>
+      </label>
+    </div>
+
+
+    <div class="button-row">
+      <button class="btn-post" (click)="onPost()">Post</button>
+    </div>
+
+  </div>
+
+</div>

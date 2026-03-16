@@ -1,0 +1,94 @@
+<div class="message-container">
+
+  <!-- INBOX VIEW -->
+
+  <div class="message-panel" *ngIf="!openChat">
+
+    <div class="header">
+      Messages
+    </div>
+
+    <div class="message-item" (click)="openConversation()">
+
+      <div class="avatar"></div>
+
+      <div class="message-info">
+
+        <div class="name">Kissie Ann</div>
+        <div class="preview">Thank you!</div>
+
+      </div>
+
+      <div class="time">1h</div>
+
+      <div class="unread-dot"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- CHAT VIEW -->
+
+  <div class="chat-panel" *ngIf="openChat">
+
+    <div class="chat-header">
+
+      <div class="back-btn" (click)="goBack()"></div>
+
+      <div class="avatar"></div>
+
+      <div class="name">Kissie Ann</div>
+
+      <div class="close-btn"></div>
+
+    </div>
+
+
+    <div class="chat-body">
+
+      <div *ngFor="let msg of messages">
+
+        <div class="message-row left" *ngIf="msg.from === 'kissie'">
+
+          <div class="avatar small"></div>
+
+          <div class="bubble">
+            {{msg.text}}
+          </div>
+
+        </div>
+
+
+        <div class="message-row right" *ngIf="msg.from === 'me'">
+
+          <div class="bubble">
+            {{msg.text}}
+          </div>
+
+          <div class="avatar small"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="chat-input">
+
+      <input
+        type="text"
+        placeholder="Type a message..."
+        [(ngModel)]="messageText"
+        (keyup.enter)="sendMessage()"
+      >
+
+      <div class="send-btn" (click)="sendMessage()"></div>
+
+    </div>
+
+  </div>
+
+</div>

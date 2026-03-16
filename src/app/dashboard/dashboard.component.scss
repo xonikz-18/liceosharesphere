@@ -1,0 +1,207 @@
+:host{
+  display:block;
+  height:100vh;
+  width:100vw;
+}
+
+.dashboard{
+  display:flex;
+  height:100%;
+  width:100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width: 225px;
+  background:#7c0000;
+  color:white;
+
+  display:flex;
+  flex-direction:column;
+
+  padding:30px 20px;
+  box-sizing:border-box;
+}
+
+.logo{
+  width:170px;
+  height:60px;
+  background:url('noiconlogo.png') no-repeat center;
+  background-size:contain;
+  margin-bottom:50px;
+}
+
+/* MENU */
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.menu-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.menu-item.active{
+  color:#f7b733;
+}
+
+/* LOGOUT BUTTON (thinner) */
+
+.logout{
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:6px 12px;
+  border:1px solid white;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+  height: 26px;   /* reduced height to match image */
+  width: 150px;
+}
+
+/* MAIN AREA */
+
+.main{
+  flex:1;
+  background:rgb(246, 246, 246);
+  display:flex;
+  flex-direction:column;
+}
+
+/* TOPBAR */
+
+.topbar{
+  height:70px;
+  background: white;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 35px;
+}
+
+/* BUTTONS */
+
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  padding:6px 12px;
+
+  cursor:pointer;
+}
+
+.add-button{
+  background:#ffffff;
+  border-radius:6px;
+  padding:6px 14px;
+  border:1px solid #ddd;
+}
+
+/* RIGHT SIDE GROUP */
+
+.top-icons{
+  display:flex;
+  align-items:center;
+  gap:8px;  /* compressed spacing between search, notif, message */
+}
+
+/* SEARCH FIELD */
+
+.search-container{
+  display:flex;
+  align-items:center;
+
+  background:white;
+  border-radius:20px;
+
+  padding:4px 10px;
+  width:240px;  /* slightly longer like the picture */
+
+  border:1px solid #ddd;
+}
+
+.search-container input{
+  border:none;
+  outline:none;
+  margin-left:0;   /* no extra margin */
+  flex:1;
+}
+
+/* CONTENT */
+
+.content{
+  flex:1;
+}
+
+/* ICONS */
+
+.icon{
+  width:32px;   /* big icons */
+  height:32px;
+
+  background-size:contain;
+  background-repeat:no-repeat;
+
+  cursor:pointer;
+}
+
+/* SIDEBAR ICONS */
+
+.home{
+  background-image:url('homebtnicon.png');
+}
+
+.history{
+  background-image:url('historybtnicon.png');
+}
+
+.profile{
+  background-image:url('profilebtnicon.png');
+}
+
+.logout-icon{
+  background-image:url('logoutbtnicon.png');
+  width: 23px;
+  height: 23px;
+}
+
+/* TOPBAR ICONS */
+
+.add{
+  background-image:url('addbtnicon.png');
+}
+
+.search{
+  background-image:url('searchbtnicon.png');
+}
+
+.notif{
+  background-image:url('notifbtnicon.png');
+}
+
+.message{
+  background-image:url('messagebtnicon.png');
+}
+
+app-add, app-logout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
