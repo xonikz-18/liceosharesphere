@@ -28,7 +28,7 @@
 .logo{
   width:170px;
   height:60px;
-  background:url('noiconlogo.png') no-repeat center;
+  background:url('../../assets/images/noiconlogo.png') no-repeat center;
   background-size:contain;
   margin-bottom:50px;
 }
@@ -58,12 +58,12 @@
   background-repeat:no-repeat;
 }
 
-.home{ background-image:url('home2btnicon.png'); }
-.history{ background-image:url('historybtnicon.png'); }
-.profile{ background-image:url('profile2btnicon.png'); }
+.home{ background-image:url('../../assets/icons/home2btnicon.png'); }
+.history{ background-image:url('../../assets/icons/historybtnicon.png'); }
+.profile{ background-image:url('../../assets/icons/profile2btnicon.png'); }
 
 .logout-icon{
-  background-image:url('logoutbtnicon.png');
+  background-image:url('../../assets/icons/logoutbtnicon.png');
   width:23px;
   height:23px;
 }
@@ -134,7 +134,7 @@
   width:22px;
   height:22px;
 
-  background:url('editprofilebtnicon.png') no-repeat center;
+  background:url('../../assets/icons/editprofilebtnicon.png') no-repeat center;
   background-size:contain;
 
   border:none;
@@ -216,7 +216,7 @@
   width:60px;
   height:60px;
   border-radius:6px;
-  background:url('dummypepic.png') no-repeat center;
+  background:url('../../assets/images/dummypepic.png') no-repeat center;
   background-size:cover;
 }
 

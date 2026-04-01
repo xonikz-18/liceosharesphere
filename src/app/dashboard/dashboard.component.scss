@@ -28,7 +28,7 @@
 .logo{
   width:170px;
   height:60px;
-  background:url('noiconlogo.png') no-repeat center;
+  background:url('../../assets/images/noiconlogo.png') no-repeat center;
   background-size:contain;
   margin-bottom:50px;
 }
@@ -163,19 +163,19 @@
 /* SIDEBAR ICONS */
 
 .home{
-  background-image:url('homebtnicon.png');
+  background-image:url('../../assets/icons/homebtnicon.png');
 }
 
 .history{
-  background-image:url('historybtnicon.png');
+  background-image:url('../../assets/icons/historybtnicon.png');
 }
 
 .profile{
-  background-image:url('profilebtnicon.png');
+  background-image:url('../../assets/icons/profilebtnicon.png');
 }
 
 .logout-icon{
-  background-image:url('logoutbtnicon.png');
+  background-image:url('../../assets/icons/logoutbtnicon.png');
   width: 23px;
   height: 23px;
 }
@@ -183,19 +183,19 @@
 /* TOPBAR ICONS */
 
 .add{
-  background-image:url('addbtnicon.png');
+  background-image:url('../../assets/icons/addbtnicon.png');
 }
 
 .search{
-  background-image:url('searchbtnicon.png');
+  background-image:url('../../assets/icons/searchbtnicon.png');
 }
 
 .notif{
-  background-image:url('notifbtnicon.png');
+  background-image:url('../../assets/icons/notifbtnicon.png');
 }
 
 .message{
-  background-image:url('messagebtnicon.png');
+  background-image:url('../../assets/icons/messagebtnicon.png');
 }
 
 app-add, app-logout {
