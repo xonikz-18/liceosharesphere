@@ -1,0 +1,59 @@
+<div class="overlay" (click)="onClose()">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="header">
+      <h2>{{ item?.name }}</h2>
+      <div class="close-btn" (click)="onClose()"></div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- IMAGE -->
+      <div class="image-section">
+        <div 
+          class="image-preview"
+          [ngStyle]="{'background-image': 'url(' + item?.image + ')'}"
+          (click)="openPreview()">
+        </div>
+
+        <span class="status-badge" [ngClass]="item?.status">
+          {{ item?.status }}
+        </span>
+      </div>
+
+      <!-- DETAILS -->
+      <div class="form-section">
+
+        <div class="owner">
+          <div class="avatar"></div>
+          <span>{{ item?.owner }}</span>
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <p class="desc">{{ item?.description }}</p>
+        </div>
+
+        <div class="actions">
+          <button class="msg-btn" (click)="messageOwner()">Message Owner</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ✅ FULLSCREEN OUTSIDE MAIN OVERLAY -->
+<div 
+  class="fullscreen" 
+  *ngIf="showPreview" 
+  (click)="closePreview()"
+>
+  <img [src]="item?.image">
+</div>

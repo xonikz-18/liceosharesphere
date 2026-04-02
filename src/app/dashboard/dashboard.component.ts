@@ -6,6 +6,7 @@ import { LogoutComponent } from '../logout/logout.component';
 import { AddComponent } from '../add/add.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { MessageComponent } from '../message/message.component';
+import { ItemViewComponent } from '../itemview/itemview.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,8 @@ import { MessageComponent } from '../message/message.component';
     LogoutComponent,
     AddComponent,
     NotificationComponent,
-    MessageComponent
+    MessageComponent,
+    ItemViewComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -49,6 +51,16 @@ export class DashboardComponent {
   /* LOGOUT */
   /* ========================= */
 
+  selectedItem: any = null;
+
+openItem(item: any){
+  this.selectedItem = item;
+}
+
+closeItem(){
+  this.selectedItem = null;
+}
+
   toggleLogout(){
     this.showLogoutPopup = true;
   }
@@ -70,9 +82,9 @@ export class DashboardComponent {
   }
 
   handlePost(item: any){
-    this.items.unshift(item); // 🔥 ALWAYS ADD ON TOP
-    this.showAddPopup = false;
-  }
+  this.items.unshift(item);
+  this.showAddPopup = false;
+}
 
   /* ========================= */
   /* IMAGE PREVIEW */

@@ -70,15 +70,13 @@
     <div class="content">
 
       <div class="item-grid">
-
-        <div class="item-card" *ngFor="let item of items">
+        <div class="item-card" *ngFor="let item of items" (click)="openItem(item)">
 
           <div class="item-title">{{ item.name }}</div>
 
           <div
-            class="item-image"
-            [style.backgroundImage]="'url(' + item.image + ')'"
-            (click)="openPreview(item.image)">
+          class="item-image"
+          [style.backgroundImage]="'url(' + item.image + ')'">
           </div>
 
           <div class="item-footer">
@@ -128,7 +126,9 @@
   (click)="$event.stopPropagation()">
 </app-message>
 
-<!-- 🔥 FULL IMAGE VIEW -->
-<div class="overlay" *ngIf="previewImage" (click)="closePreview()">
-  <img [src]="previewImage" class="full-preview">
-</div>
+
+<app-itemview
+  *ngIf="selectedItem"
+  [item]="selectedItem"
+  (close)="closeItem()">
+</app-itemview>

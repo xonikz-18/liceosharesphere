@@ -5,26 +5,26 @@
     <div class="right-panel">
 
         <div class="form-container">
-
+            
             <h1>Account Information</h1>
 
-            <form>
+            <form #signupForm="ngForm" (ngSubmit)="signUp(signupForm)">
 
                 <label>Full Name *</label>
-                <input type="text" name="fullname" [(ngModel)]="user.fullname">
+                <input type="text" name="fullname" [(ngModel)]="user.fullname" required>
 
                 <label>Email *</label>
-                <input type="email" name="email" [(ngModel)]="user.email">
+                <input type="email" name="email" [(ngModel)]="user.email" required>
 
                 <label>Sex *</label>
-                <select name="sex" [(ngModel)]="user.sex">
+                <select name="sex" [(ngModel)]="user.sex" required>
                     <option value="">Select</option>
                     <option>Male</option>
                     <option>Female</option>
                 </select>
 
                 <label>Department *</label>
-                <select name="department" [(ngModel)]="user.department">
+                <select name="department" [(ngModel)]="user.department" required>
                     <option value="">Select</option>
                     <option>IT</option>
                     <option>HR</option>
@@ -32,18 +32,21 @@
                 </select>
 
                 <label>Contact Number *</label>
-                <input type="text" name="contact" [(ngModel)]="user.contact">
+                <input type="text" name="contact" [(ngModel)]="user.contact" required>
 
                 <label>Password *</label>
-                <input type="password" name="password" [(ngModel)]="user.password">
+                <input type="password" name="password" [(ngModel)]="user.password" required>
 
                 <label>Confirm Password *</label>
-                <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword">
-
+                <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword" required>
+                
                 <div class="buttons">
-                    <button class="signup" type="button" (click)="signUp()">Sign Up</button>
+                <button class="signup" type="button" (click)="signUp(signupForm)">
+                Sign Up
+                </button>
+
                     <button class="cancel" type="button" (click)="cancel()">Cancel</button>
-                </div>
+                    </div>
 
             </form>
 
