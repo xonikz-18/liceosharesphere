@@ -4,6 +4,8 @@
   width:100vw;
 }
 
+/* MAIN LAYOUT */
+
 .dashboard{
   display:flex;
   height:100%;
@@ -53,7 +55,7 @@
   color:#f7b733;
 }
 
-/* LOGOUT BUTTON (thinner) */
+/* LOGOUT BUTTON */
 
 .logout{
   margin-top:auto;
@@ -66,8 +68,8 @@
   border-radius:6px;
   font-size:14px;
   cursor:pointer;
-  height: 26px;   /* reduced height to match image */
-  width: 150px;
+  height:26px;
+  width:150px;
 }
 
 /* MAIN AREA */
@@ -77,13 +79,14 @@
   background:rgb(246, 246, 246);
   display:flex;
   flex-direction:column;
+  overflow:hidden; /* 🔥 important */
 }
 
 /* TOPBAR */
 
 .topbar{
   height:70px;
-  background: white;
+  background:white;
 
   display:flex;
   align-items:center;
@@ -101,26 +104,18 @@
   gap:8px;
 
   padding:6px 12px;
-
   cursor:pointer;
 }
 
-.add-button{
-  background:#ffffff;
-  border-radius:6px;
-  padding:6px 14px;
-  border:1px solid #ddd;
-}
-
-/* RIGHT SIDE GROUP */
+/* RIGHT SIDE */
 
 .top-icons{
   display:flex;
   align-items:center;
-  gap:8px;  /* compressed spacing between search, notif, message */
+  gap:8px;
 }
 
-/* SEARCH FIELD */
+/* SEARCH */
 
 .search-container{
   display:flex;
@@ -130,7 +125,7 @@
   border-radius:20px;
 
   padding:4px 10px;
-  width:240px;  /* slightly longer like the picture */
+  width:260px;
 
   border:1px solid #ddd;
 }
@@ -138,20 +133,20 @@
 .search-container input{
   border:none;
   outline:none;
-  margin-left:0;   /* no extra margin */
   flex:1;
 }
 
-/* CONTENT */
+/* CONTENT AREA */
 
 .content{
   flex:1;
+  overflow-y:auto;
 }
 
 /* ICONS */
 
 .icon{
-  width:32px;   /* big icons */
+  width:32px;
   height:32px;
 
   background-size:contain;
@@ -176,8 +171,8 @@
 
 .logout-icon{
   background-image:url('../../assets/icons/logoutbtnicon.png');
-  width: 23px;
-  height: 23px;
+  width:23px;
+  height:23px;
 }
 
 /* TOPBAR ICONS */
@@ -198,10 +193,121 @@
   background-image:url('../../assets/icons/messagebtnicon.png');
 }
 
-app-add, app-logout {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+/* MODALS FIX */
+
+app-add,
+app-logout{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+
+/* ========================= */
+/* 🔥 GRID FIX (IMPORTANT) */
+/* ========================= */
+
+.item-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:20px;
+
+  padding:20px 30px;
+
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* CARD */
+
+.item-card{
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+
+  border:1px solid #e0e0e0;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* TITLE */
+
+.item-title{
+  font-weight:600;
+  margin-bottom:8px;
+  font-size:15px;
+}
+
+/* IMAGE */
+
+.item-image{
+  width:100%;
+  height:200px;
+
+  border-radius:8px;
+
+  background-size:cover;
+  background-position:center;
+
+  cursor:pointer;
+}
+
+/* FOOTER */
+
+.item-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-top:10px;
+}
+
+/* OWNER */
+
+.owner{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.avatar{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#ccc;
+}
+
+/* DATE */
+
+.date{
+  font-size:12px;
+  color:#777;
+}
+
+/* ========================= */
+/* 🔥 FULL IMAGE PREVIEW */
+/* ========================= */
+
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+
+  background:rgba(0,0,0,0.7);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+}
+
+.full-preview{
+  max-width:90%;
+  max-height:90%;
+  border-radius:10px;
 }

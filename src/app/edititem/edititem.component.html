@@ -1,0 +1,65 @@
+<div class="overlay">
+
+  <div class="modal">
+
+    <!-- HEADER -->
+    <div class="header">
+      <h2>Edit Item</h2>
+      <div class="close-btn" (click)="cancel()"></div>
+    </div>
+
+    <div class="content">
+
+      <!-- LEFT IMAGE -->
+      <div class="image-section">
+        <div class="image-preview"></div>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="form-section">
+
+        <div class="field">
+          <label>Item name *</label>
+          <input [(ngModel)]="item.name">
+        </div>
+
+        <div class="field">
+          <label>Description *</label>
+          <textarea [(ngModel)]="item.description"></textarea>
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-group">
+
+          <label class="radio available">
+            <input type="radio" [(ngModel)]="item.status" value="available">
+            <span class="circle"></span>
+            <span>Available</span>
+          </label>
+
+          <label class="radio borrowed">
+            <input type="radio" [(ngModel)]="item.status" value="borrowed">
+            <span class="circle"></span>
+            <span>Borrowed</span>
+          </label>
+
+          <label class="radio returned">
+            <input type="radio" [(ngModel)]="item.status" value="returned">
+            <span class="circle"></span>
+            <span>Returned</span>
+          </label>
+
+        </div>
+
+        <!-- SAVE -->
+        <div class="actions">
+          <button class="save-btn" (click)="save()">Save</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

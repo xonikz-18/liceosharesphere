@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
 import { LogoutComponent } from '../logout/logout.component';
 import { AddComponent } from '../add/add.component';
 import { NotificationComponent } from '../notification/notification.component';
@@ -18,21 +19,35 @@ import { MessageComponent } from '../message/message.component';
     MessageComponent
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
 
+  /* ========================= */
   /* MODALS */
+  /* ========================= */
 
   showLogoutPopup = false;
   showAddPopup = false;
 
+  /* ========================= */
   /* DROPDOWNS */
+  /* ========================= */
 
   showNotifications = false;
   showMessages = false;
 
+  /* ========================= */
+  /* ITEMS */
+  /* ========================= */
+
+  items: any[] = [];
+
+  previewImage: string = '';
+
+  /* ========================= */
   /* LOGOUT */
+  /* ========================= */
 
   toggleLogout(){
     this.showLogoutPopup = true;
@@ -42,7 +57,9 @@ export class DashboardComponent {
     this.showLogoutPopup = false;
   }
 
+  /* ========================= */
   /* ADD ITEM */
+  /* ========================= */
 
   openAddPopup(){
     this.showAddPopup = true;
@@ -52,7 +69,26 @@ export class DashboardComponent {
     this.showAddPopup = false;
   }
 
+  handlePost(item: any){
+    this.items.unshift(item); // 🔥 ALWAYS ADD ON TOP
+    this.showAddPopup = false;
+  }
+
+  /* ========================= */
+  /* IMAGE PREVIEW */
+  /* ========================= */
+
+  openPreview(img: string){
+    this.previewImage = img;
+  }
+
+  closePreview(){
+    this.previewImage = '';
+  }
+
+  /* ========================= */
   /* NOTIFICATIONS */
+  /* ========================= */
 
   toggleNotifications(event: Event){
     event.stopPropagation();
@@ -60,7 +96,9 @@ export class DashboardComponent {
     this.showMessages = false;
   }
 
+  /* ========================= */
   /* MESSAGES */
+  /* ========================= */
 
   toggleMessages(event: Event){
     event.stopPropagation();
@@ -68,7 +106,9 @@ export class DashboardComponent {
     this.showNotifications = false;
   }
 
-  /* CLOSE WHEN CLICKING OUTSIDE */
+  /* ========================= */
+  /* CLOSE DROPDOWNS */
+  /* ========================= */
 
   @HostListener('document:click')
   closeDropdowns(){

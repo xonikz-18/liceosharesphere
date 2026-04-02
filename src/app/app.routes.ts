@@ -9,6 +9,8 @@ import { AddComponent } from './add/add.component';
 import { NotificationComponent } from './notification/notification.component';
 import { MessageComponent } from './message/message.component';
 import { ProfileBorrowedComponent } from './profileborrowed/profileborrowed.component';
+import { ProfileLentComponent } from './profilelent/profilelent.component';
+import { EditItemComponent } from './edititem/edititem.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -22,6 +24,10 @@ export const routes: Routes = [
   { path: 'history', component: HistoryComponent },
 
   { path: 'profile', component: ProfileBorrowedComponent },
+
+  { path: 'profile/lent', component: ProfileLentComponent },
+
+  { path: 'edit-item/:id', component: EditItemComponent },
 
   { path: 'logout', component: LogoutComponent },
 

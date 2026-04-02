@@ -21,12 +21,11 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
-/* modal card */
+/* modal */
 
 .add-modal{
   width:650px;
   background:white;
-
   border-radius:10px;
 
   padding:35px 40px 30px 40px;
@@ -36,7 +35,7 @@
   position:relative;
 }
 
-/* cancel button */
+/* close */
 
 .cancel-icon{
   position:absolute;
@@ -54,21 +53,17 @@
   background-position:center;
 }
 
-/* form spacing */
+/* form */
 
 .form-group{
   margin-bottom:22px;
 }
-
-/* labels */
 
 label{
   font-size:15px;
   font-weight:500;
   color:#333;
 }
-
-/* red asterisk */
 
 .required{
   color:#c30000;
@@ -77,38 +72,32 @@ label{
 /* inputs */
 
 .input-field{
-  width: 96.5%;
-  height: 30px;
+  width:96.5%;
+  height:30px;
 
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  border:1px solid #d9d9d9;
+  border-radius:6px;
 
-  margin-top: 8px;
-  padding: 8px 10px;
+  margin-top:8px;
+  padding:8px 10px;
 
-  font-size: 14px;
-  font-family: inherit;
+  font-size:14px;
 }
-
-/* textarea */
 
 .textarea-field{
-  width: 96.5%;
-  height: 140px;
+  width:96.5%;
+  height:140px;
 
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  border:1px solid #d9d9d9;
+  border-radius:6px;
 
-  margin-top: 8px;
-  padding: 10px;
+  margin-top:8px;
+  padding:10px;
 
   resize:none;
-
-  font-size: 14px;
-  font-family: inherit;
 }
 
-/* character counter */
+/* counter */
 
 .char-counter{
   text-align:right;
@@ -117,7 +106,7 @@ label{
   margin-top:4px;
 }
 
-/* upload box */
+/* upload */
 
 .upload-box{
   margin-top:10px;
@@ -125,13 +114,15 @@ label{
   background:#e9e9e9;
   border-radius:8px;
 
-  height:80px;
+  height:100px;
 
   display:flex;
   justify-content:center;
   align-items:center;
 
   cursor:pointer;
+
+  position:relative; /* 🔥 ADDED (for X button positioning) */
 }
 
 .upload-content{
@@ -142,8 +133,6 @@ label{
   font-size:13px;
   color:#555;
 }
-
-/* upload icon */
 
 .attach-icon{
   width:22px;
@@ -157,15 +146,31 @@ label{
   background-position:center;
 }
 
-/* button row */
+/* 🔥 REMOVE IMAGE BUTTON */
+
+.remove-image{
+  position:absolute;
+  top:8px;
+  right:8px;
+
+  width:18px;
+  height:18px;
+
+  cursor:pointer;
+
+  background-image:url("../../assets/icons/cancelbtnicon.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+/* button */
 
 .button-row{
   display:flex;
   justify-content:flex-end;
   margin-top:10px;
 }
-
-/* post button */
 
 .btn-post{
   background:#5b0000;
@@ -182,4 +187,22 @@ label{
 
 .btn-post:hover{
   opacity:0.9;
+}
+
+/* full preview */
+
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+
+  background:rgba(0,0,0,0.7);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:10000;
 }

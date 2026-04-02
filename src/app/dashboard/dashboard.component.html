@@ -7,20 +7,20 @@
 
     <div class="menu">
 
-  <div class="menu-item" routerLink="/dashboard" routerLinkActive="active">
-    <div class="icon home"></div>
-    <span>Home</span>
-  </div>
+      <div class="menu-item" routerLink="/dashboard" routerLinkActive="active">
+        <div class="icon home"></div>
+        <span>Home</span>
+      </div>
 
-  <div class="menu-item" routerLink="/history" routerLinkActive="active">
-    <div class="icon history"></div>
-    <span>History</span>
-  </div>
+      <div class="menu-item" routerLink="/history" routerLinkActive="active">
+        <div class="icon history"></div>
+        <span>History</span>
+      </div>
 
       <div class="menu-item" routerLink="/profile">
-      <div class="icon profile"></div>
-      <span>Profile</span>
-    </div>
+        <div class="icon profile"></div>
+        <span>Profile</span>
+      </div>
 
     </div>
 
@@ -32,11 +32,10 @@
   </div>
 
 
-
   <!-- MAIN AREA -->
   <div class="main">
 
-    <!-- TOP BAR -->
+    <!-- TOPBAR -->
     <div class="topbar">
 
       <!-- ADD BUTTON -->
@@ -44,7 +43,6 @@
         <div class="icon add"></div>
         <span>Add</span>
       </div>
-
 
       <div class="top-icons">
 
@@ -54,7 +52,7 @@
           <input type="text" placeholder="Search">
         </div>
 
-        <!-- NOTIFICATION -->
+        <!-- NOTIF -->
         <div class="btn" (click)="toggleNotifications($event)">
           <div class="icon notif"></div>
         </div>
@@ -68,9 +66,36 @@
 
     </div>
 
-    <!-- PAGE CONTENT -->
+    <!-- 🔥 CONTENT -->
     <div class="content">
-      <router-outlet></router-outlet>
+
+      <div class="item-grid">
+
+        <div class="item-card" *ngFor="let item of items">
+
+          <div class="item-title">{{ item.name }}</div>
+
+          <div
+            class="item-image"
+            [style.backgroundImage]="'url(' + item.image + ')'"
+            (click)="openPreview(item.image)">
+          </div>
+
+          <div class="item-footer">
+
+            <div class="owner">
+              <div class="avatar"></div>
+              <span>{{ item.owner }}</span>
+            </div>
+
+            <div class="date">{{ item.date }}</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
@@ -78,29 +103,32 @@
 </div>
 
 
-<!-- LOGOUT MODAL -->
+<!-- LOGOUT -->
 <app-logout
   *ngIf="showLogoutPopup"
   (cancel)="handleCancel()">
 </app-logout>
 
-
-<!-- ADD ITEM MODAL -->
+<!-- ADD -->
 <app-add
   *ngIf="showAddPopup"
-  (cancel)="closeAddPopup()">
+  (cancel)="closeAddPopup()"
+  (postItem)="handlePost($event)">
 </app-add>
 
-
-<!-- NOTIFICATIONS -->
+<!-- NOTIF -->
 <app-notification
   *ngIf="showNotifications"
   (click)="$event.stopPropagation()">
 </app-notification>
 
-
-<!-- MESSAGES -->
+<!-- MESSAGE -->
 <app-message
   *ngIf="showMessages"
   (click)="$event.stopPropagation()">
 </app-message>
+
+<!-- 🔥 FULL IMAGE VIEW -->
+<div class="overlay" *ngIf="previewImage" (click)="closePreview()">
+  <img [src]="previewImage" class="full-preview">
+</div>

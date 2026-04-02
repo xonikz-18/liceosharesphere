@@ -91,7 +91,7 @@
   height:100%;
 }
 
-/* CENTER PROFILE HEADER */
+/* PROFILE HEADER */
 
 .profile-header-wrapper{
   display:flex;
@@ -133,15 +133,11 @@
 .edit-icon{
   width:22px;
   height:22px;
-
   background:url('../../assets/icons/editprofilebtnicon.png') no-repeat center;
   background-size:contain;
-
   border:none;
   background-color:transparent;
-
   cursor:pointer;
-
   padding:0;
   margin:0;
 }
@@ -156,20 +152,12 @@
   padding:60px;
 }
 
-/* CONTAINER */
-
-.borrowed-section{
-  background:#e7e7e7;
-  border:1px solid #d9d9d9;
-  border-radius:12px;
-  padding:20px;
-}
-
-/* TABS */
+/* TABS (OUTSIDE BOX) */
 
 .tabs{
   display:flex;
-  margin-bottom:15px;
+  margin-left:0px;
+  margin-bottom:-2px;
 }
 
 .tab{
@@ -177,10 +165,23 @@
   border:1px solid #ccc;
   background:#eee;
   cursor:pointer;
+  border-bottom:none;
 }
 
 .tab.active{
   background:#f3a300;
+}
+
+/* CONTAINER (NO RADIUS LIKE FIGMA) */
+
+.borrowed-section{
+  background:#e7e7e7;
+  border:1px solid #d9d9d9;
+
+  border-radius:0; /* 🔥 removed curves */
+
+  padding:20px;
+  margin-top:2px;
 }
 
 /* SCROLL AREA */
@@ -188,7 +189,7 @@
 .borrowed-container{
   height:350px;
   overflow-y:auto;
-  padding-right:12px; /* creates gap before scrollbar */
+  padding-right:12px;
   box-sizing:border-box;
 }
 
