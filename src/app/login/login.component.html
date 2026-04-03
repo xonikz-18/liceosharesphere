@@ -1,46 +1,83 @@
 <div class="login-container">
-  <div class="login-left">
-    <div class="logo"></div>
 
-    <p class="subtitle">
-      Sign in to share, borrow, and track academic resources
-      within Liceo de Cagayan University!
-    </p>
+  <div class="center-wrapper">
 
-    <form (ngSubmit)="login()">
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="student@liceo.edu.ph"
-        required
-      />
+    <!-- LEFT -->
+    <div class="login-left">
 
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Enter password"
-        required
-      />
+      <div class="left-content">
 
-      <button 
-        class="login-btn" 
-        type="submit" 
-        [disabled]="!email.trim() || !password.trim()">
-        Login
-      </button>
-    </form>
+        <!-- LOGO -->
+        <div class="logo"></div>
 
-    <p class="forgot">Forgot your password?</p>
-    <p class="divider">or create an account</p>
+        <!-- SUBTITLE -->
+        <p class="subtitle">
+          Sign in to share, borrow, and track academic resources
+          within Liceo de Cagayan University!
+        </p>
 
-    <button routerLink="/signinuser" class="signup-btn">
-      Sign up
-    </button>
+        <form (ngSubmit)="login()">
+
+          <!-- EMAIL -->
+          <label>Email</label>
+          <div class="input-group">
+            <div class="icon email"></div>
+            <input
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="student@liceo.edu.ph"
+              required
+            />
+          </div>
+
+          <!-- PASSWORD -->
+          <label>Password</label>
+          <div class="input-group">
+            <div class="icon password"></div>
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <!-- LOGIN -->
+          <button 
+            class="login-btn" 
+            type="submit"
+            [disabled]="!email.trim() || !password.trim()">
+            Login
+          </button>
+
+        </form>
+
+        <!-- FORGOT -->
+        <p class="forgot" routerLink="/forgotpassemail">
+          Forgot your password?
+        </p>
+
+        <!-- DIVIDER -->
+        <div class="divider">
+          <span>or create an account</span>
+        </div>
+
+        <!-- SIGNUP -->
+        <button routerLink="/signinuser" class="signup-btn">
+          Sign up
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="login-right">
+      <div class="diamond"></div>
+    </div>
+
   </div>
 
-  <div class="login-right"></div>
 </div>

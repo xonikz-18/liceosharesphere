@@ -11,9 +11,16 @@ import { ProfileBorrowedComponent } from './profileborrowed/profileborrowed.comp
 import { ProfileLentComponent } from './profilelent/profilelent.component';
 import { EditItemComponent } from './edititem/edititem.component';
 import { ItemViewComponent } from './itemview/itemview.component';
+import { ForgotPassEmailComponent } from './forgotpassemail/forgotpassemail.component';
+import { ForgotPassOtpComponent } from './forgotpassotp/forgotpassotp.component';
+import { ForgotPassNewComponent } from './forgotpassnew/forgotpassnew.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
+
+  { path: 'forgotpassemail', component: ForgotPassEmailComponent },
+  { path: 'forgotpassotp', component: ForgotPassOtpComponent },
+  { path: 'forgotpassnew', component: ForgotPassNewComponent },
 
   { path: 'signinuser', component: SigninuserComponent },
 
