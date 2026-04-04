@@ -14,9 +14,12 @@ import { ItemViewComponent } from './itemview/itemview.component';
 import { ForgotPassEmailComponent } from './forgotpassemail/forgotpassemail.component';
 import { ForgotPassOtpComponent } from './forgotpassotp/forgotpassotp.component';
 import { ForgotPassNewComponent } from './forgotpassnew/forgotpassnew.component';
+import { AdminDashboardComponent } from './admindashboard/admindashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
+
+  { path: 'admindashboard', component: AdminDashboardComponent },
 
   { path: 'forgotpassemail', component: ForgotPassEmailComponent },
   { path: 'forgotpassotp', component: ForgotPassOtpComponent },

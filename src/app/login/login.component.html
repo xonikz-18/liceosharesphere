@@ -2,15 +2,13 @@
 
   <div class="center-wrapper">
 
-    <!-- LEFT -->
+    <!-- LEFT SIDE -->
     <div class="login-left">
 
       <div class="left-content">
 
-        <!-- LOGO -->
         <div class="logo"></div>
 
-        <!-- SUBTITLE -->
         <p class="subtitle">
           Sign in to share, borrow, and track academic resources
           within Liceo de Cagayan University!
@@ -20,7 +18,8 @@
 
           <!-- EMAIL -->
           <label>Email</label>
-          <div class="input-group">
+          <div class="input-group"
+               [ngClass]="{'error': invalidLogin || (showError && !email.trim())}">
             <div class="icon email"></div>
             <input
               type="email"
@@ -33,7 +32,8 @@
 
           <!-- PASSWORD -->
           <label>Password</label>
-          <div class="input-group">
+          <div class="input-group"
+               [ngClass]="{'error': invalidLogin || (showError && !password.trim())}">
             <div class="icon password"></div>
             <input
               type="password"
@@ -44,36 +44,28 @@
             />
           </div>
 
-          <!-- LOGIN -->
-          <button 
-            class="login-btn" 
-            type="submit"
-            [disabled]="!email.trim() || !password.trim()">
+          <button class="login-btn" type="submit">
             Login
           </button>
 
         </form>
 
-        <!-- FORGOT -->
         <p class="forgot" routerLink="/forgotpassemail">
           Forgot your password?
         </p>
 
-        <!-- DIVIDER -->
         <div class="divider">
           <span>or create an account</span>
         </div>
 
-        <!-- SIGNUP -->
         <button routerLink="/signinuser" class="signup-btn">
           Sign up
         </button>
 
       </div>
-
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT SIDE -->
     <div class="login-right">
       <div class="diamond"></div>
     </div>

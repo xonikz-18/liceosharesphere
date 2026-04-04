@@ -83,11 +83,15 @@ label{
 .input-group{
   display:flex;
   align-items:center;
+
   background:white;
   border-radius:6px;
+
   margin-top:6px;
   padding:0 12px;
   height:42px;
+  border: 2px solid transparent;
+  transition: 0.5s;
 }
 
 input{
@@ -106,6 +110,11 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 1000px white inset !important;
   -webkit-text-fill-color: black !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.input-group.error {
+  border: 2px solid red !important;
 }
 
 .icon{
