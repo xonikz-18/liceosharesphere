@@ -8,44 +8,54 @@
             
             <h1>Account Information</h1>
 
-            <form #signupForm="ngForm" (ngSubmit)="signUp(signupForm)">
+            <form #signupForm="ngForm" (ngSubmit)="onRegister()">
 
                 <label>Full Name *</label>
-                <input type="text" name="fullname" [(ngModel)]="user.fullname" required>
+                <input type="text" name="fullname" [(ngModel)]="fullname" required>
 
                 <label>Email *</label>
-                <input type="email" name="email" [(ngModel)]="user.email" required>
+                <input type="email" name="email" [(ngModel)]="email" required>
 
                 <label>Sex *</label>
-                <select name="sex" [(ngModel)]="user.sex" required>
+                <select name="sex" [(ngModel)]="sex" required>
                     <option value="">Select</option>
-                    <option>Male</option>
                     <option>Female</option>
+                    <option>Male</option>
                 </select>
 
                 <label>Department *</label>
-                <select name="department" [(ngModel)]="user.department" required>
+                <select name="department" [(ngModel)]="department" required>
                     <option value="">Select</option>
-                    <option>IT</option>
-                    <option>HR</option>
-                    <option>Finance</option>
+                    <option>College of Arts and Sciences</option>
+                    <option>School of Business, Management and Accountancy</option>
+                    <option>College of Criminal Justice</option>
+                    <option>College of Engineering</option>
+                    <option>College of Information Technology</option>
+                    <option>College of Medical Laboratory Science</option>
+                    <option>Conservatory of Music, Theater and Dance</option>
+                    <option>College of Nursing</option>
+                    <option>College of Dentistry</option>
+                    <option>College of Pharmacy</option>
+                    <option>College of Rehabilitation Sciences</option>
+                    <option>College of Radiologic Technology</option>
+                    <option>School of Teacher Education</option>
                 </select>
 
                 <label>Contact Number *</label>
-                <input type="text" name="contact" [(ngModel)]="user.contact" required>
+                <input type="text" name="contact" [(ngModel)]="contactNumber" required>
 
                 <label>Password *</label>
-                <input type="password" name="password" [(ngModel)]="user.password" required>
+                <input type="password" name="password" [(ngModel)]="password" required>
 
                 <label>Confirm Password *</label>
-                <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword" required>
+                <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required>
                 
                 <div class="buttons">
-                <button class="signup" type="button" (click)="signUp(signupForm)">
+                <button class="signup" type="button" (click)="onRegister()">
                 Sign Up
                 </button>
 
-                    <button class="cancel" type="button" (click)="cancel()">Cancel</button>
+                    <button class="cancel" type="button" (click)="onCancel()">Cancel</button>
                     </div>
 
             </form>
