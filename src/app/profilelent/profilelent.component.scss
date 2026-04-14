@@ -185,6 +185,12 @@
   margin-top:2px;
 }
 
+.list-message{
+  color:#666;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
 /* SCROLL AREA */
 
 .borrowed-container{
@@ -245,10 +251,30 @@
   gap:4px;
 }
 
+.action-button{
+  border:none;
+  background:transparent;
+  padding:0;
+  font:inherit;
+  line-height:1.2;
+}
+
 .edit-text{
   font-size:13px;
   cursor:pointer;
   text-decoration:underline;
+}
+
+.delete-text{
+  font-size:13px;
+  cursor:pointer;
+  text-decoration:underline;
+  color:#8b0000;
+}
+
+.action-button:disabled{
+  opacity:0.7;
+  cursor:not-allowed;
 }
 
 .status{
@@ -260,6 +286,11 @@
 .status.available{
   background:#B9FF66;
   color:#000;
+}
+
+.status.pending{
+  background:#f3a300;
+  color:#230000;
 }
 
 .status.borrowed{

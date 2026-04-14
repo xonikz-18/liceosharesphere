@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LentItem } from '../services/item.service';
+import { PostItem } from '../services/post.service';
 
 @Component({
   selector: 'app-edititem',
@@ -10,18 +10,36 @@ import { LentItem } from '../services/item.service';
   templateUrl: './edititem.component.html',
   styleUrls: ['./edititem.component.scss']
 })
-export class EditItemComponent {
+export class EditItemComponent implements OnInit {
 
-  @Input() item!: LentItem;
+  @Input() item!: PostItem;
 
-  // 🔥 send updated item back to parent
-  @Output() close = new EventEmitter<LentItem | null>();
+  @Output() saveItem = new EventEmitter<PostItem>();
+  @Output() close = new EventEmitter<void>();
+
+  editableItem!: PostItem;
+
+  ngOnInit() {
+    this.editableItem = { ...this.item };
+  }
+
+  saveFromClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+
+    queueMicrotask(() => this.save());
+  }
 
   save(){
-    this.close.emit(this.item); // send updated data
+    this.saveItem.emit(this.editableItem);
   }
 
   cancel(){
-    this.close.emit(null); // just close
+    this.close.emit();
   }
 }

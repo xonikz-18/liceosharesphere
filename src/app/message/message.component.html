@@ -1,94 +1,63 @@
 <div class="message-container">
 
-  <!-- INBOX VIEW -->
-
   <div class="message-panel" *ngIf="!openChat">
-
-    <div class="header">
-      Messages
+    <div class="notif-header">
+      <div class="message-icon"></div>
+      <div class="title">Messages</div>
+      <button type="button" class="close-btn" (click)="close()">x</button>
     </div>
 
-    <div class="message-item" (click)="openConversation()">
-
-      <div class="avatar"></div>
-
-      <div class="message-info">
-
-        <div class="name">Kissie Ann</div>
-        <div class="preview">Thank you!</div>
-
-      </div>
-
-      <div class="time">1h</div>
-
-      <div class="unread-dot"></div>
-
+    <div class="conversation-list" *ngIf="conversations.length > 0; else emptyConversations">
+      <button
+        class="conversation-item"
+        type="button"
+        *ngFor="let conversation of conversations"
+        (click)="openConversation(conversation)">
+        <div class="avatar" [style.backgroundImage]="conversation.otherProfilePicture ? 'url(' + conversation.otherProfilePicture + ')' : 'url(assets/images/dummypic.png)'"></div>
+        <div class="conversation-info">
+          <div class="name">{{ conversation.otherName }}</div>
+          <div class="preview">{{ conversation.lastMessage || 'Start a conversation' }}</div>
+        </div>
+        <div class="conversation-meta">
+          <div class="time">{{ formatTime(conversation.lastMessageAt) }}</div>
+          <span class="unread-dot" *ngIf="conversation.unreadCount > 0"></span>
+        </div>
+      </button>
     </div>
 
+    <ng-template #emptyConversations>
+      <div class="empty-state">No messages yet.</div>
+    </ng-template>
   </div>
 
-
-
-  <!-- CHAT VIEW -->
-
   <div class="chat-panel" *ngIf="openChat">
-
-    <div class="chat-header">
-
-      <div class="back-btn" (click)="goBack()"></div>
-
-      <div class="avatar"></div>
-
-      <div class="name">Kissie Ann</div>
-
-      <div class="close-btn"></div>
-
+    <div class="notif-header chat-header">
+      <button type="button" class="back-btn" (click)="goToInbox()"></button>
+      <div class="avatar" [style.backgroundImage]="selectedConversation?.otherProfilePicture ? 'url(' + selectedConversation?.otherProfilePicture + ')' : 'url(assets/images/dummypic.png)'"></div>
+      <div class="name">{{ selectedConversation?.otherName }}</div>
+      <button type="button" class="close-btn" (click)="close()">x</button>
     </div>
 
-
-    <div class="chat-body">
-
-      <div *ngFor="let msg of messages">
-
-        <div class="message-row left" *ngIf="msg.from === 'kissie'">
-
-          <div class="avatar small"></div>
-
-          <div class="bubble">
-            {{msg.text}}
-          </div>
-
-        </div>
-
-
-        <div class="message-row right" *ngIf="msg.from === 'me'">
-
-          <div class="bubble">
-            {{msg.text}}
-          </div>
-
-          <div class="avatar small"></div>
-
-        </div>
-
+    <div #chatBody class="chat-body">
+      <div class="message-row" *ngFor="let msg of messages" [class.right]="isMine(msg)" [class.left]="!isMine(msg)">
+        <div class="avatar-sm" *ngIf="!isMine(msg)"
+          [style.backgroundImage]="msg.senderProfilePicture ? 'url(' + msg.senderProfilePicture + ')' : ''"></div>
+        <div class="bubble">{{ msg.messageText }}</div>
+        <div class="avatar-sm" *ngIf="isMine(msg)"
+          [style.backgroundImage]="currentUserProfilePicture ? 'url(' + currentUserProfilePicture + ')' : ''"></div>
       </div>
-
+      <div class="empty-thread" *ngIf="messages.length === 0">Start your conversation here.</div>
     </div>
-
 
     <div class="chat-input">
-
       <input
         type="text"
-        placeholder="Type a message..."
+        placeholder="send a message"
         [(ngModel)]="messageText"
-        (keyup.enter)="sendMessage()"
-      >
-
-      <div class="send-btn" (click)="sendMessage()"></div>
-
+        (keyup.enter)="sendMessage()">
+      <button type="button" class="send-btn" (click)="sendMessage()">&#10148;</button>
     </div>
-
+    <div class="send-error" *ngIf="sendError">{{ sendError }}</div>
   </div>
 
 </div>

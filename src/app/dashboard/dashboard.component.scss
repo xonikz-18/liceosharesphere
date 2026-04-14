@@ -109,6 +109,26 @@
   cursor:pointer;
 }
 
+.notif-btn{
+  position:relative;
+}
+
+.notif-badge{
+  position:absolute;
+  top:-2px;
+  right:0;
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  border-radius:999px;
+  background:#f3a300;
+  color:#230000;
+  font-size:11px;
+  font-weight:700;
+  line-height:18px;
+  text-align:center;
+}
+
 /* RIGHT SIDE */
 
 .top-icons{
@@ -143,6 +163,12 @@
 .content{
   flex:1;
   overflow-y:auto;
+}
+
+.empty-state{
+  padding:20px 30px 0;
+  color:#5c5c5c;
+  font-size:14px;
 }
 
 /* ICONS */
@@ -266,6 +292,12 @@ app-logout{
   margin-top:10px;
 }
 
+.meta{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
 /* OWNER */
 
 .owner{
@@ -286,6 +318,33 @@ app-logout{
 .date{
   font-size:12px;
   color:#777;
+}
+
+.status-badge{
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:10px;
+  text-transform:capitalize;
+}
+
+.status-badge.available{
+  background:#B9FF66;
+  color:#000;
+}
+
+.status-badge.pending{
+  background:#f3a300;
+  color:#230000;
+}
+
+.status-badge.borrowed{
+  background:#000;
+  color:#fff;
+}
+
+.status-badge.returned{
+  background:#f3a300;
+  color:#000;
 }
 
 /* ========================= */
@@ -313,3 +372,4 @@ app-logout{
   max-height:90%;
   border-radius:10px;
 }
+

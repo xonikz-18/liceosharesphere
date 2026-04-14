@@ -1,8 +1,9 @@
 :host{
-  position:absolute;
+  position:fixed;
   right:70px;
   top:70px;
   font-family:Arial, Helvetica, sans-serif;
+  z-index:1000;
 }
 
 /* container */
@@ -16,13 +17,17 @@
 .notification-panel{
 
   width:300px;
+  max-height:420px;
   background:white;
+  overflow:hidden;
 
   border-radius:10px;
 
   box-shadow:0 6px 18px rgba(0,0,0,0.15);
 
   padding:10px;
+  display:flex;
+  flex-direction:column;
 }
 
 /* header */
@@ -63,15 +68,23 @@
 
   padding:10px;
 
-  align-items:center;
-
-  cursor:pointer;
+  align-items:flex-start;
 
   border-radius:6px;
+  border-bottom:1px solid #f1f1f1;
 }
 
-.notif-item:hover{
-  background:#f5f5f5;
+.empty-notif{
+  padding:14px 10px;
+  color:#666;
+  font-size:13px;
+}
+
+.notif-list{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding-right:4px;
 }
 
 /* avatar */
@@ -90,73 +103,37 @@
 
 .notif-text{
   font-size:13px;
-}
-
-/* request card */
-
-.request-card{
-
-  position:absolute;
-
-  right:320px;
-  top:0;
-
-  width:360px;   /* wider so the X button has space */
-
-  background:white;
-
-  border-radius:10px;
-
-  padding:20px 22px;
-
-  box-shadow:0 6px 18px rgba(0,0,0,0.15);
-}
-
-/* close button */
-
-.close-btn{
-
-  position:absolute;
-
-  right:16px;
-  top:16px;
-
-  width:16px;
-  height:16px;
-
-  cursor:pointer;
-
-  background-image:url("../../assets/icons/cancelbtnicon.png");
-  background-size:contain;
-  background-repeat:no-repeat;
-}
-
-/* request layout */
-
-.request-content{
-
+  flex:1;
   display:flex;
-  align-items:center;
-
-  gap:10px;
+  flex-direction:column;
+  gap:4px;
 }
 
-/* request text */
+.notif-status{
+  margin-top:4px;
+  font-size:11px;
+  text-transform:capitalize;
+  color:#666;
+}
 
-.request-text{
+.notif-status.approved{
+  color:#246b00;
+}
+
+.notif-status.declined{
+  color:#8b0000;
+}
+
+.feedback-message{
+  margin:12px 10px 4px;
   font-size:13px;
+  color:#7c0000;
 }
 
-/* buttons */
-
-.request-buttons{
-
-  margin-top:12px;
-
+.notif-actions{
+  margin-top:6px;
   display:flex;
   gap:8px;
-
-  justify-content:flex-end;
 }
 
 .decline{
@@ -184,4 +161,10 @@
   padding:6px 14px;
 
   cursor:pointer;
+}
+
+.decline:disabled,
+.approve:disabled{
+  opacity:0.7;
+  cursor:not-allowed;
 }

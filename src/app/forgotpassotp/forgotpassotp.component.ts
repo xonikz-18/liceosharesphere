@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,10 +10,9 @@ import { Router } from '@angular/router';
   templateUrl: './forgotpassotp.component.html',
   styleUrls: ['./forgotpassotp.component.scss']
 })
-export class ForgotPassOtpComponent {
+export class ForgotPassOtpComponent implements AfterViewInit {
 
   otp: string[] = ['', '', '', '', '', ''];
-  email: string = '';
 
   @ViewChild('otp0') otp0!: ElementRef;
   @ViewChild('otp1') otp1!: ElementRef;
@@ -26,64 +25,57 @@ export class ForgotPassOtpComponent {
 
   constructor(private router: Router) {}
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.inputs = [
       this.otp0, this.otp1, this.otp2,
       this.otp3, this.otp4, this.otp5
     ];
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/forgotpassemail']);
   }
 
-  onInput(event: any, index: number){
+  onInput(event: any, index: number) {
     let value = event.target.value.replace(/[^0-9]/g, '');
-
     value = value.slice(-1); // only 1 digit
 
     this.otp[index] = value;
     event.target.value = value;
 
-    if(value && index < 5){
+    if (value && index < 5) {
       this.inputs[index + 1].nativeElement.focus();
     }
   }
 
-  onKeyDown(event: any, index: number){
-
-    if(event.key === 'Backspace'){
-
-      if(this.otp[index]){
+  onKeyDown(event: any, index: number) {
+    if (event.key === 'Backspace') {
+      if (this.otp[index]) {
         this.otp[index] = '';
         event.target.value = '';
-      }
-      else if(index > 0){
+      } else if (index > 0) {
         this.inputs[index - 1].nativeElement.focus();
         this.otp[index - 1] = '';
         this.inputs[index - 1].nativeElement.value = '';
       }
-
       event.preventDefault();
     }
 
     // block letters
-    if(!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key.length === 1){
+    if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key.length === 1) {
       event.preventDefault();
     }
   }
 
-  verifyOTP(){
+  verifyOTP() {
     const code = this.otp.join('');
 
-    if(code.length !== 6){
+    if (code.length !== 6) {
       alert('Enter complete OTP');
       return;
     }
 
-    console.log('OTP:', code);
-
+    localStorage.setItem('resetCode', code);
     this.router.navigate(['/forgotpassnew']);
   }
-
 }

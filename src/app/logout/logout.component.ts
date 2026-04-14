@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-logout',
@@ -13,14 +14,14 @@ export class LogoutComponent {
   // This sends a signal back to the dashboard to close the popup
   @Output() cancel = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private profileService: ProfileService) {}
 
   onCancel() {
     this.cancel.emit();
   }
 
   onConfirm() {
-    // This takes you back to the login page
+    this.profileService.logout();
     this.router.navigate(['/']);
   }
 }

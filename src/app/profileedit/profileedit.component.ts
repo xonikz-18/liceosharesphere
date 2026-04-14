@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,39 +9,94 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './profileedit.component.html',
   styleUrls: ['./profileedit.component.scss']
 })
-export class ProfileEditComponent {
-
-  @Input() profile!: any;
-
+export class ProfileEditComponent implements OnInit {
+  @Input() profile: any = {};
   @Output() saveProfile = new EventEmitter<any>();
+  @Output() profilePreviewChange = new EventEmitter<string>();
   @Output() close = new EventEmitter<void>();
 
-  // 🔥 THIS IS WHAT YOU'RE MISSING
   editableProfile: any = {};
+  previewImage = 'assets/images/dummypic.png';
+  isSaving = false;
+  errorMessage = '';
 
-  previewImage: string = 'assets/images/dummypepic.png';
-
-  ngOnInit(){
-    this.editableProfile = { ...this.profile }; // clone
+  ngOnInit() {
+    // ✅ clone profile including id
+    this.editableProfile = { ...this.profile };
+    this.previewImage = this.profile?.profilePicture || this.profile?.profile_picture || this.profile?.imageUrl || this.previewImage;
+    this.profilePreviewChange.emit(this.previewImage);
   }
 
-  onFileSelected(event: any){
-    const file = event.target.files[0];
-    if(file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewImage = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : this.previewImage;
+      this.previewImage = result;
+      this.editableProfile.profilePicture = result;
+      this.editableProfile.profile_picture = result;
+      this.profilePreviewChange.emit(result);
+    };
+    reader.readAsDataURL(file);
   }
 
-  save(){
+  private hasRequiredFields() {
+    return Boolean(
+      this.editableProfile.fullname?.trim() &&
+      this.editableProfile.sex?.trim() &&
+      this.editableProfile.email?.trim()
+    );
+  }
+
+  onSaveClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+
+    this.save();
+  }
+
+  save() {
+    if (this.isSaving) {
+      return;
+    }
+
+    if (!this.hasRequiredFields()) {
+      this.errorMessage = 'Please fill in full name, sex, and email.';
+      return;
+    }
+
+    this.isSaving = true;
+    this.errorMessage = '';
+
+    // ✅ always emit with id
+    if (!this.editableProfile.id && this.profile.id) {
+      this.editableProfile.id = this.profile.id;
+    }
+
+    if (!this.editableProfile._id && this.profile._id) {
+      this.editableProfile._id = this.profile._id;
+    }
+
+    if (!this.editableProfile.userId && this.profile.userId) {
+      this.editableProfile.userId = this.profile.userId;
+    }
+
     this.saveProfile.emit(this.editableProfile);
-    this.close.emit();
+    this.isSaving = false;
   }
 
-  cancel(){
+  cancel() {
     this.close.emit();
   }
 }

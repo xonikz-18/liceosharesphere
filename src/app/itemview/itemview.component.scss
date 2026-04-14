@@ -92,6 +92,11 @@
   color:white;
 }
 
+.status-badge.pending{
+  background:#f3a300;
+  color:#230000;
+}
+
 /* DETAILS */
 .form-section{
   width:55%;
@@ -133,6 +138,34 @@
   padding:8px 14px;
   border-radius:6px;
   cursor:pointer;
+}
+
+.borrow-btn{
+  border:none;
+  background:#7c0000;
+  color:white;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.borrow-btn.pending,
+.borrow-btn.pending:disabled{
+  background:#f3a300;
+  color:#230000;
+}
+
+.borrow-btn:disabled{
+  background:#b8b8b8;
+  color:#f4f4f4;
+  cursor:not-allowed;
+}
+
+.request-message{
+  margin:0;
+  font-size:13px;
+  color:#7c0000;
+  text-align:right;
 }
 
 /* FULLSCREEN IMAGE */

@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   email: string = '';
   password: string = '';
@@ -21,38 +22,55 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private profileService: ProfileService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  clearLoginError() {
+    if (!this.invalidLogin && this.errorMessage !== 'Invalid email or password.') {
+      return;
+    }
+
+    this.invalidLogin = false;
+    this.errorMessage = '';
+  }
 
   login() {
     this.showError = true;
     this.invalidLogin = false;
     this.errorMessage = '';
 
-    if (!this.email.trim() || !this.password.trim()) {
+    const email = this.email.trim();
+    const password = this.password.trim();
+
+    if (!email || !password) {
       this.errorMessage = 'Please fill in all fields.';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (!this.emailPattern.test(email)) {
+      this.errorMessage = 'Please enter a valid email address.';
+      this.cdr.detectChanges();
       return;
     }
 
     this.isLoading = true;
+    this.cdr.detectChanges();
 
-    this.http.post<{ fullname: string; email: string; role: string }>(
-    'http://localhost:3000/auth/login', // ✅ FIXED
-    { email: this.email, password: this.password }
-    ).subscribe({
-      next: (user) => {
+    this.profileService.login(email, password).subscribe({
+      next: () => {
         this.isLoading = false;
-        localStorage.setItem('currentUser', JSON.stringify(user));
-
-        if (user.role === 'admin') {
-          this.router.navigate(['/admindashboard']);
-        } else {
-          this.router.navigate(['/dashboard']);
-        }
+        this.cdr.detectChanges();
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.isLoading = false;
         this.invalidLogin = true;
         this.errorMessage = err.error?.message || 'Invalid email or password.';
+        this.cdr.detectChanges();
       }
     });
   }

@@ -1,24 +1,292 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, combineLatest, concat, of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { BorrowRequestService } from './borrow-request.service';
+import { PostService } from './post.service';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
+  private apiUrl = 'http://localhost:3000'; // adjust to your backend port
+  private cachedProfile: any = null;
+  private readonly profileStorageKey = 'currentUser';
+  private readonly sessionProfileStorageKey = 'currentUserSession';
+  private readonly http = inject(HttpClient);
+  private readonly postService = inject(PostService);
+  private readonly borrowRequestService = inject(BorrowRequestService);
+  private readonly messageService = inject(MessageService);
 
-  profile = {
-    firstName: 'Amber',
-    lastName: 'Garillos',
-    year: '2',
-    contact: '09091457196',
-    department: 'Information Technology',
-    email: 'amber17@liceo.edu.ph'
-  };
+  private writeWithRetry(storage: Storage, key: string, primaryValue: unknown, fallbackValue: unknown) {
+    try {
+      storage.setItem(key, JSON.stringify(primaryValue));
+      return;
+    } catch {
+      // Retry with a smaller payload.
+    }
 
-  getProfile(){
-    return this.profile;
+    try {
+      storage.removeItem(key);
+      storage.setItem(key, JSON.stringify(fallbackValue));
+    } catch {
+      // Keep runtime state if browser storage is unavailable or full.
+    }
   }
 
-  updateProfile(updated: any){
-    this.profile = updated;
+  private buildLightweightProfile(profile: any): any {
+    if (!profile || typeof profile !== 'object') {
+      return profile;
+    }
+
+    const normalized = this.normalizeProfile(profile);
+    const profilePicture = typeof normalized.profilePicture === 'string' && normalized.profilePicture.length <= 4096
+      ? normalized.profilePicture
+      : '';
+
+    return {
+      id: normalized.id ?? normalized.userId ?? normalized.user_id ?? normalized._id,
+      userId: normalized.userId ?? normalized.id ?? normalized.user_id ?? normalized._id,
+      user_id: normalized.user_id ?? normalized.id ?? normalized.userId ?? normalized._id,
+      _id: normalized._id ?? normalized.id ?? normalized.userId ?? normalized.user_id,
+      fullname: normalized.fullname ?? normalized.name ?? '',
+      email: normalized.email ?? '',
+      department: normalized.department ?? '',
+      sex: normalized.sex ?? '',
+      contact_number: normalized.contact_number ?? normalized.contact ?? '',
+      profilePicture,
+      profile_picture: profilePicture
+    };
+  }
+
+  private normalizeProfile(profile: any): any {
+    if (!profile || typeof profile !== 'object') {
+      return profile;
+    }
+
+    const profilePicture = profile.profilePicture ?? profile.profile_picture ?? profile.imageUrl ?? '';
+    const resolvedId = profile.id ?? profile.userId ?? profile.user_id ?? profile._id;
+
+    return {
+      ...profile,
+      id: resolvedId,
+      userId: resolvedId,
+      user_id: resolvedId,
+      profilePicture,
+      profile_picture: profilePicture
+    };
+  }
+
+  private getStoredProfile(): any {
+    if (this.cachedProfile) {
+      return this.cachedProfile;
+    }
+
+    const sessionStored = sessionStorage.getItem(this.sessionProfileStorageKey);
+
+    if (sessionStored) {
+      try {
+        this.cachedProfile = this.normalizeProfile(JSON.parse(sessionStored));
+        try {
+          sessionStorage.setItem(this.sessionProfileStorageKey, JSON.stringify(this.cachedProfile));
+        } catch {
+          // Keep runtime profile when storage update is unavailable.
+        }
+        return this.cachedProfile;
+      } catch {
+        sessionStorage.removeItem(this.sessionProfileStorageKey);
+      }
+    }
+
+    const stored = localStorage.getItem(this.profileStorageKey);
+
+    if (!stored) {
+      return null;
+    }
+
+    try {
+      this.cachedProfile = this.normalizeProfile(JSON.parse(stored));
+      try {
+        localStorage.setItem(this.profileStorageKey, JSON.stringify(this.toStorageSafeProfile(this.cachedProfile)));
+      } catch {
+        // Keep runtime profile when storage update is unavailable.
+      }
+      return this.cachedProfile;
+    } catch {
+      localStorage.removeItem(this.profileStorageKey);
+      return null;
+    }
+  }
+
+  private toStorageSafeProfile(profile: any): any {
+    if (!profile || typeof profile !== 'object') {
+      return profile;
+    }
+
+    const normalizedProfile = this.normalizeProfile(profile);
+    const profilePicture = normalizedProfile.profilePicture ?? normalizedProfile.profile_picture ?? '';
+
+    return {
+      ...normalizedProfile,
+      profilePicture,
+      profile_picture: profilePicture,
+      hasProfilePicture: Boolean(normalizedProfile.profilePicture)
+    };
+  }
+
+  private getProfileId(profile: any): string | number | undefined {
+    return profile?.id ?? profile?._id ?? profile?.userId ?? profile?.user_id;
+  }
+
+  private persistProfile(profile: any): any {
+    const normalizedProfile = this.normalizeProfile(profile);
+    this.cachedProfile = normalizedProfile;
+    const lightweightProfile = this.buildLightweightProfile(normalizedProfile);
+    const identityOnlyProfile = {
+      id: lightweightProfile?.id,
+      userId: lightweightProfile?.userId,
+      user_id: lightweightProfile?.user_id,
+      _id: lightweightProfile?._id,
+      fullname: lightweightProfile?.fullname ?? '',
+      email: lightweightProfile?.email ?? ''
+    };
+
+    this.writeWithRetry(
+      sessionStorage,
+      this.sessionProfileStorageKey,
+      lightweightProfile,
+      identityOnlyProfile
+    );
+
+    this.writeWithRetry(
+      localStorage,
+      this.profileStorageKey,
+      this.toStorageSafeProfile(lightweightProfile),
+      identityOnlyProfile
+    );
+
+    this.postService.updateCachedOwnerData(
+      this.getProfileId(normalizedProfile),
+      normalizedProfile?.fullname,
+      normalizedProfile?.profilePicture
+    );
+    return normalizedProfile;
+  }
+
+  private normalizeProfileResponse(response: any, fallbackProfile: any): any {
+    if (!response) {
+      return fallbackProfile;
+    }
+
+    const profile = response.user ?? response;
+
+    if (!profile || typeof profile !== 'object') {
+      return fallbackProfile;
+    }
+
+    return this.normalizeProfile({ ...fallbackProfile, ...profile });
+  }
+
+  private hydrateLoginSession(profile: any): Observable<any> {
+    const persistedProfile = this.persistProfile(profile);
+    const profileId = this.getProfileId(persistedProfile);
+
+    if (!profileId) {
+      return of(persistedProfile);
+    }
+
+    return combineLatest([
+      this.postService.getPosts(),
+      this.borrowRequestService.loadBorrowerRequestsForUser(profileId),
+      this.borrowRequestService.refreshNotificationsForUser(profileId),
+      this.borrowRequestService.refreshIncomingRequestsForOwner(profileId),
+      this.messageService.refreshUnreadCount(profileId).pipe(catchError(() => of(0)))
+    ]).pipe(
+      map(() => persistedProfile),
+      catchError(() => of(persistedProfile))
+    );
+  }
+
+  // LOGIN
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+      map(res => {
+        const profile = res.user ? res.user : res;
+        return this.normalizeProfile(profile);
+      }),
+      switchMap((profile) => {
+        const profileId = this.getProfileId(profile);
+
+        if (!profileId) {
+          return this.hydrateLoginSession(profile);
+        }
+
+        return this.http.get<any>(`${this.apiUrl}/auth/profile/${profileId}`).pipe(
+          map((response) => this.normalizeProfileResponse(response, profile)),
+          catchError(() => of(profile)),
+          switchMap((resolvedProfile) => this.hydrateLoginSession(resolvedProfile))
+        );
+      })
+    );
+  }
+
+  // GET PROFILE (from backend or localStorage)
+  getProfileSnapshot(): any {
+    return this.getStoredProfile() ?? {};
+  }
+
+  getProfile(): Observable<any> {
+    const stored = this.getStoredProfile();
+    const profileId = this.getProfileId(stored);
+
+    if (!profileId) {
+      return of(stored ?? {});
+    }
+
+    const request$ = this.http.get<any>(`${this.apiUrl}/auth/profile/${profileId}`).pipe(
+      map((response) => this.persistProfile(this.normalizeProfileResponse(response, stored ?? {}))),
+      catchError(() => of(stored ?? {}))
+    );
+
+    if (stored) {
+      return concat(of(stored), request$);
+    }
+
+    return request$;
+  }
+
+  applyLocalProfileUpdate(profile: any): any {
+    const mergedProfile = { ...(this.getStoredProfile() ?? {}), ...profile };
+    return this.persistProfile(mergedProfile);
+  }
+
+  // UPDATE PROFILE
+  updateProfile(profile: any): Observable<any> {
+    const mergedProfile = { ...(this.getStoredProfile() ?? {}), ...profile };
+    const profileId = this.getProfileId(mergedProfile);
+
+    if (!profileId) {
+      return of(this.persistProfile(mergedProfile));
+    }
+
+    const requestBody = {
+      ...mergedProfile,
+      profile_picture: mergedProfile.profilePicture ?? mergedProfile.profile_picture ?? null
+    };
+
+    return this.http.put<any>(`${this.apiUrl}/profile/${profileId}`, requestBody).pipe(
+      catchError(() => this.http.put<any>(`${this.apiUrl}/auth/profile/${profileId}`, requestBody)),
+      map(res => this.persistProfile(this.normalizeProfileResponse(res, mergedProfile))),
+      catchError(() => of(this.persistProfile(mergedProfile)))
+    );
+  }
+
+  // LOGOUT
+  logout() {
+    this.cachedProfile = null;
+    localStorage.removeItem(this.profileStorageKey);
+    sessionStorage.removeItem(this.sessionProfileStorageKey);
+    this.borrowRequestService.resetSessionState();
   }
 }

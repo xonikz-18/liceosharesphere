@@ -49,17 +49,19 @@
         <!-- SEARCH -->
         <div class="search-container">
           <div class="icon search"></div>
-          <input type="text" placeholder="Search">
+          <input type="text" placeholder="Search item" [value]="searchTerm" (input)="onSearchChange($event)">
         </div>
 
         <!-- NOTIF -->
-        <div class="btn" (click)="toggleNotifications($event)">
+        <div class="btn notif-btn" (click)="toggleNotifications($event)">
           <div class="icon notif"></div>
+          <span class="notif-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
         </div>
 
         <!-- MESSAGE -->
-        <div class="btn" (click)="toggleMessages($event)">
+        <div class="btn notif-btn" (click)="openMessages($event)">
           <div class="icon message"></div>
+          <span class="notif-badge" *ngIf="messageUnreadCount > 0">{{ messageUnreadCount }}</span>
         </div>
 
       </div>
@@ -68,9 +70,10 @@
 
     <!-- 🔥 CONTENT -->
     <div class="content">
+      <div *ngIf="errorMessage" class="empty-state">{{ errorMessage }}</div>
 
       <div class="item-grid">
-        <div class="item-card" *ngFor="let item of items" (click)="openItem(item)">
+        <div class="item-card" *ngFor="let item of filteredItems" (click)="openItem(item)">
 
           <div class="item-title">{{ item.name }}</div>
 
@@ -82,16 +85,29 @@
           <div class="item-footer">
 
             <div class="owner">
-              <div class="avatar"></div>
+              <div class="avatar" [style.backgroundImage]="item.ownerProfilePicture ? 'url(' + item.ownerProfilePicture + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'"></div>
               <span>{{ item.owner }}</span>
             </div>
 
-            <div class="date">{{ item.date }}</div>
+            <div class="meta">
+              <div class="date">{{ item.date }}</div>
+              <div class="status-badge" [class.available]="item.status === 'available'" [class.pending]="item.status === 'pending'" [class.borrowed]="item.status === 'borrowed'" [class.returned]="item.status === 'returned'">
+                {{ item.status }}
+              </div>
+            </div>
 
           </div>
 
         </div>
 
+      </div>
+
+      <div *ngIf="!errorMessage && !items.length" class="empty-state">
+        No posts yet.
+      </div>
+
+      <div *ngIf="!errorMessage && !!items.length && !filteredItems.length" class="empty-state">
+        No matching items found.
       </div>
 
     </div>
@@ -123,6 +139,8 @@
 <!-- MESSAGE -->
 <app-message
   *ngIf="showMessages"
+  [targetOwner]="messageTargetOwner"
+  (closePanel)="closeMessagePanel()"
   (click)="$event.stopPropagation()">
 </app-message>
 

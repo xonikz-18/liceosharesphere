@@ -1,26 +1,3 @@
-<!-- REQUEST CARD (only visible after clicking notification) -->
-<div class="request-card" *ngIf="showRequest">
-
-  <div class="close-btn" (click)="closeRequest()"></div>
-
-  <div class="request-content">
-
-    <div class="avatar"></div>
-
-    <div class="request-text">
-      <b>Kissie Ann</b> requested to borrow “Projector”.
-    </div>
-
-  </div>
-
-  <div class="request-buttons">
-    <button class="decline" (click)="decline()">Decline</button>
-    <button class="approve" (click)="approve()">Approve</button>
-  </div>
-
-</div>
-
-
 <!-- NOTIFICATION DROPDOWN -->
 <div class="notification-panel">
 
@@ -31,13 +8,67 @@
 
   </div>
 
-  <div class="notif-item" (click)="openRequest()">
+  <div class="empty-notif" *ngIf="!incomingRequests.length && !notifications.length">
+    No notifications yet.
+  </div>
 
-    <div class="avatar"></div>
+  <p *ngIf="feedbackMessage" class="feedback-message">{{ feedbackMessage }}</p>
+
+  <div class="notif-list" *ngIf="incomingRequests.length || notifications.length">
+
+  <div class="notif-item" *ngFor="let request of incomingRequests">
+
+    <div
+      class="avatar"
+      [style.backgroundImage]="request.borrowerProfilePicture ? 'url(' + request.borrowerProfilePicture + ')' : 'url(assets/images/dummypic.png)'"
+      [style.backgroundSize]="'cover'"
+      [style.backgroundPosition]="'center'">
+    </div>
 
     <div class="notif-text">
-      <b>Kissie Ann</b> requested to borrow “Projector”.
+      <b>{{ request.borrowerName }}</b>
+      <span>requested to borrow "{{ request.postName }}".</span>
+      <div class="notif-status">pending</div>
+
+      <div class="notif-actions">
+        <button class="decline" (click)="declineIncomingRequest(request, $event)">
+          Decline
+        </button>
+        <button class="approve" (click)="approveIncomingRequest(request, $event)">
+          Approve
+        </button>
+      </div>
     </div>
+
+  </div>
+
+  <div class="notif-item" *ngFor="let notification of notifications">
+
+    <div
+      class="avatar"
+      [style.backgroundImage]="notification.actorProfilePicture ? 'url(' + notification.actorProfilePicture + ')' : 'url(assets/images/dummypic.png)'"
+      [style.backgroundSize]="'cover'"
+      [style.backgroundPosition]="'center'">
+    </div>
+
+    <div class="notif-text">
+      <b>{{ notification.actorName }}</b>
+      <span>{{ notification.message.replace(notification.actorName, '').trim() }}</span>
+      <div class="notif-status" [class.approved]="notification.status === 'approved'" [class.declined]="notification.status === 'declined'">
+        {{ notification.status }}
+      </div>
+
+      <div class="notif-actions" *ngIf="isIncomingRequest(notification)">
+        <button class="decline" [disabled]="isProcessing(notification)" (click)="decline(notification, $event)">
+          Decline
+        </button>
+        <button class="approve" [disabled]="isProcessing(notification)" (click)="approve(notification, $event)">
+          Approve
+        </button>
+      </div>
+    </div>
+
+  </div>
 
   </div>
 

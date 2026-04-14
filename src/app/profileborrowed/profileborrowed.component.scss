@@ -228,3 +228,28 @@
 .borrowed-date{
   color:#666;
 }
+
+.list-message{
+  color:#666;
+  font-size:14px;
+}
+
+.borrowed-copy{
+  flex:1;
+}
+
+.borrowed-meta{
+  margin-top:4px;
+  font-size:13px;
+  color:#555;
+}
+
+.borrowed-status{
+  border-radius:999px;
+  padding:6px 12px;
+  background:#7c0000;
+  color:white;
+  font-size:12px;
+  text-transform:capitalize;
+  font-weight:600;
+}

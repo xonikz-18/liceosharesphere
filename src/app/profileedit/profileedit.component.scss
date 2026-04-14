@@ -5,7 +5,7 @@
 /* OVERLAY */
 
 .overlay{
-  position:absolute;
+  position:fixed;
   top:0;
   left:0;
   width:100%;
@@ -147,12 +147,10 @@ input{
   margin-top:20px;
 }
 
-.cancel-btn{
-  background:#ddd;
-  border:none;
-  padding:8px 18px;
-  border-radius:6px;
-  cursor:pointer;
+.error-message{
+  margin:0;
+  color:#b00020;
+  font-size:13px;
 }
 
 .save-btn{
@@ -162,4 +160,9 @@ input{
   padding:8px 18px;
   border-radius:6px;
   cursor:pointer;
+}
+
+.save-btn:disabled{
+  opacity:0.7;
+  cursor:not-allowed;
 }

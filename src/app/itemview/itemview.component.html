@@ -19,8 +19,8 @@
           (click)="openPreview()">
         </div>
 
-        <span class="status-badge" [ngClass]="item?.status">
-          {{ item?.status }}
+        <span class="status-badge" [ngClass]="displayedStatus">
+          {{ displayedStatus }}
         </span>
       </div>
 
@@ -28,7 +28,7 @@
       <div class="form-section">
 
         <div class="owner">
-          <div class="avatar"></div>
+          <div class="avatar" [style.backgroundImage]="item?.ownerProfilePicture ? 'url(' + item?.ownerProfilePicture + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'"></div>
           <span>{{ item?.owner }}</span>
         </div>
 
@@ -38,8 +38,13 @@
         </div>
 
         <div class="actions">
-          <button class="msg-btn" (click)="messageOwner()">Message Owner</button>
+          <button *ngIf="!isOwner" class="msg-btn" (click)="messageOwner($event)">Message Owner</button>
+          <button class="borrow-btn" [class.pending]="displayedStatus === 'pending'" [disabled]="isRequestDisabled || isSubmittingRequest" (click)="requestBorrow($event)">
+            {{ requestButtonLabel }}
+          </button>
         </div>
+
+        <p *ngIf="requestMessage" class="request-message">{{ requestMessage }}</p>
 
       </div>
 

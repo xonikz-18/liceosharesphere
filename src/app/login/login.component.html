@@ -1,10 +1,8 @@
 <div class="login-container">
-
   <div class="center-wrapper">
 
     <!-- LEFT SIDE -->
     <div class="login-left">
-
       <div class="left-content">
 
         <div class="logo"></div>
@@ -15,7 +13,6 @@
         </p>
 
         <form (ngSubmit)="login()">
-
           <!-- EMAIL -->
           <label>Email</label>
           <div class="input-group"
@@ -25,6 +22,7 @@
               type="email"
               name="email"
               [(ngModel)]="email"
+              (ngModelChange)="clearLoginError()"
               placeholder="student@liceo.edu.ph"
               required
             />
@@ -39,15 +37,18 @@
               type="password"
               name="password"
               [(ngModel)]="password"
+              (ngModelChange)="clearLoginError()"
               placeholder="Enter password"
               required
             />
           </div>
 
-          <button class="login-btn" type="submit">
-            Login
+          <button class="login-btn" type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Login' }}
           </button>
 
+          <!-- Show backend error -->
+          <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
         </form>
 
         <p class="forgot" routerLink="/forgotpassemail">
@@ -71,5 +72,4 @@
     </div>
 
   </div>
-
 </div>

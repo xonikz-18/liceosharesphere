@@ -16,6 +16,7 @@ import { ForgotPassOtpComponent } from './forgotpassotp/forgotpassotp.component'
 import { ForgotPassNewComponent } from './forgotpassnew/forgotpassnew.component';
 import { AdminDashboardComponent } from './admindashboard/admindashboard.component';
 
+
 export const routes: Routes = [
   { path: '', component: LoginComponent },
 

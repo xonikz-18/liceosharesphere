@@ -1,0 +1,28 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-pic">
+      <img src="assets/images/dummypic.png" alt="Profile Picture" />
+    </div>
+
+    <div class="profile-info">
+      <h2>{{ profile.fullname || '-' }}</h2>
+      <p>Sex: {{ profile.sex || '-' }}</p>
+      <p>Department: {{ profile.department || '-' }}</p>
+      <p>Contact: {{ profile.contact_number || '-' }}</p>
+      <p>Email: {{ profile.email || '-' }}</p>
+    </div>
+
+    <button class="edit-btn" (click)="openEdit()">Edit Profile</button>
+  </div>
+
+  <app-profileedit
+    *ngIf="showEdit"
+    [profile]="profile"
+    (profilePreviewChange)="handleProfilePreview($event)"
+    (saveProfile)="onProfileSaved($event)"
+    (close)="onCloseEdit()">
+  </app-profileedit>
+
+  <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>

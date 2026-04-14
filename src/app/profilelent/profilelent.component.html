@@ -34,18 +34,18 @@
     <div class="profile-header-wrapper">
       <div class="profile-header">
 
-        <div class="profile-picture"></div>
+        <div class="profile-picture" [style.backgroundImage]="(profile.profilePicture || profile.profile_picture) ? 'url(' + (profile.profilePicture || profile.profile_picture) + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'"></div>
 
         <div class="profile-info">
 
           <div class="profile-name">
-            {{profile.firstName}} {{profile.lastName}}
+            {{profile.fullname || (profile.firstName + ' ' + profile.lastName)}}
             <button class="edit-icon" (click)="openEditProfile()"></button>
           </div>
 
           <div class="profile-details">
-            {{profile.contact}}<br>
-            {{profile.department}} - {{profile.year}}<br>
+            {{profile.contact_number || profile.contact}}<br>
+            {{profile.department}} - {{profile.sex}}<br>
             {{profile.email}}
           </div>
 
@@ -64,13 +64,23 @@
 
       <div class="borrowed-section">
 
+        <div *ngIf="errorMessage" class="list-message">{{ errorMessage }}</div>
+
+        <div *ngIf="!errorMessage && !lent.length" class="list-message">
+          No posted items yet.
+        </div>
+
         <div class="borrowed-container">
 
           <div class="borrowed-list">
 
-            <div class="borrowed-card" *ngFor="let item of lent; let i = index">
+            <div class="borrowed-card" *ngFor="let item of lent">
 
-              <div class="borrowed-image"></div>
+              <div
+                class="borrowed-image"
+                [style.backgroundImage]="item.image ? 'url(' + item.image + ')' : 'none'"
+                [style.backgroundColor]="item.image ? 'transparent' : '#d9d9d9'">
+              </div>
 
               <div class="borrowed-name">
                 {{item.name}}
@@ -78,22 +88,14 @@
 
               <!-- RIGHT SIDE -->
               <div class="lent-actions">
-
-                <!-- AVAILABLE -->
-                <div *ngIf="item.status === 'available'" class="available-group">
-                  <span class="edit-text" (click)="openEdit(item, i)">edit</span>
-                  <div class="status available">Available</div>
-                </div>
-
-                <!-- BORROWED -->
-                <div *ngIf="item.status === 'borrowed'" class="available-group">
-                  <span class="edit-text" (click)="openEdit(item, i)">edit</span>
-                  <div class="status borrowed">Borrowed</div>
-                </div>
-
-                <!-- RETURNED -->
-                <div *ngIf="item.status === 'returned'" class="returned-text">
-                  returned
+                <div class="available-group">
+                  <button type="button" class="action-button edit-text" (click)="openEdit(item, $event)">edit</button>
+                  <button type="button" class="action-button delete-text" [disabled]="deletingPostId === item.id" (click)="deleteItem(item, $event)">
+                    {{ deletingPostId === item.id ? 'deleting...' : 'delete' }}
+                  </button>
+                  <div class="status" [class.available]="item.status === 'available'" [class.pending]="item.status === 'pending'" [class.borrowed]="item.status === 'borrowed'" [class.returned]="item.status === 'returned'">
+                    {{ item.status }}
+                  </div>
                 </div>
 
               </div>
@@ -121,13 +123,14 @@
 <app-profileedit
   *ngIf="showEditProfile"
   [profile]="profile"
+  (profilePreviewChange)="handleProfilePreview($event)"
   (saveProfile)="updateProfile($event)"
   (close)="closeEditProfile()">
 </app-profileedit>
 
-<!-- 🔥 EDIT ITEM MODAL -->
 <app-edititem
-  *ngIf="showEditPopup"
+  *ngIf="showEditPopup && selectedItem"
   [item]="selectedItem"
-  (close)="handleEditSave($event)">
+  (saveItem)="saveEditedItem($event)"
+  (close)="closeEditItem()">
 </app-edititem>

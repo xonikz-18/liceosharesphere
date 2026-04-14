@@ -39,36 +39,37 @@
     <div class="history-container">
 
       <div class="history-list">
+        @if (!history.length) {
+          <div class="history-empty">No borrowing or lending activity yet.</div>
+        } @else {
+          @for (h of history; track h.type + '-' + h.requestId) {
+            <div class="history-card">
 
-        <div 
-          class="history-card"
-          *ngFor="let h of history"
-        >
+              <div
+                class="indicator"
+                [class.borrowed]="h.type === 'borrowed'"
+                [class.lent]="h.type === 'lent'">
+              </div>
 
-          <div class="indicator"
-            [ngClass]="{
-              'borrowed': h.type === 'borrowed',
-              'lent': h.type === 'lent'
-            }">
-          </div>
+              <div class="history-text">
+                @if (h.type === 'borrowed') {
+                  <span>
+                    Borrowed <b>"{{h.item}}"</b> from <b>{{h.person}}</b>
+                  </span>
+                } @else {
+                  <span>
+                    Lent <b>"{{h.item}}"</b> to <b>{{h.person}}</b>
+                  </span>
+                }
+              </div>
 
-          <div class="history-text">
+              <div class="history-date">
+                {{h.date}}
+              </div>
 
-            <span *ngIf="h.type === 'borrowed'">
-              Borrowed <b>“{{h.item}}”</b> from <b>{{h.person}}</b>
-            </span>
-
-            <span *ngIf="h.type === 'lent'">
-              Lent <b>“{{h.item}}”</b> to <b>{{h.person}}</b>
-            </span>
-
-          </div>
-
-          <div class="history-date">
-            {{h.date}}
-          </div>
-
-        </div>
+            </div>
+          }
+        }
 
       </div>
 
@@ -79,7 +80,6 @@
 </div>
 
 <!-- LOGOUT MODAL -->
-<app-logout
-  *ngIf="showLogoutPopup"
-  (cancel)="handleCancel()">
-</app-logout>
+@if (showLogoutPopup) {
+  <app-logout (cancel)="handleCancel()"></app-logout>
+}

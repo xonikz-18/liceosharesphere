@@ -1,5 +1,4 @@
 <div class="overlay">
-
   <div class="modal">
 
     <div class="header">
@@ -8,67 +7,62 @@
     </div>
 
     <div class="content">
-
+      <!-- Profile Picture -->
       <div class="image-section">
         <div 
           class="profile-picture"
           [style.backgroundImage]="'url(' + previewImage + ')'"
         ></div>
 
-        <label class="upload-btn">
-          <input type="file" (change)="onFileSelected($event)">
+        <label class="upload-btn" for="profilePic">
+          <input type="file" id="profilePic" name="profilePic" accept="image/*" (change)="onFileSelected($event)">
           <span class="upload-icon"></span>
           Add Profile
         </label>
       </div>
 
+      <!-- Form Fields -->
       <div class="form-section">
 
         <div class="row">
-          <div class="field">
-            <label>First Name</label>
-            <input [(ngModel)]="editableProfile.firstName">
-          </div>
-
-          <div class="field">
-            <label>Last Name</label>
-            <input [(ngModel)]="editableProfile.lastName">
+          <div class="field" style="width:100%;">
+            <label for="fullname">Full Name</label>
+            <input id="fullname" name="fullname" [(ngModel)]="editableProfile.fullname" required>
           </div>
         </div>
 
         <div class="row">
           <div class="field">
-            <label>Year Level</label>
-            <input [(ngModel)]="editableProfile.year">
+            <label for="sex">Sex</label>
+            <input id="sex" name="sex" [(ngModel)]="editableProfile.sex" required>
           </div>
 
           <div class="field">
-            <label>Contact Number</label>
-            <input [(ngModel)]="editableProfile.contact">
+            <label for="contact_number">Contact Number</label>
+            <input id="contact_number" name="contact_number" [(ngModel)]="editableProfile.contact_number">
           </div>
         </div>
 
         <div class="row">
           <div class="field">
-            <label>Department</label>
-            <input [(ngModel)]="editableProfile.department">
+            <label for="department">Department</label>
+            <input id="department" name="department" [(ngModel)]="editableProfile.department">
           </div>
 
           <div class="field">
-            <label>Email</label>
-            <input [(ngModel)]="editableProfile.email">
+            <label for="email">Email</label>
+            <input id="email" name="email" [(ngModel)]="editableProfile.email" required>
           </div>
         </div>
+
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
         <div class="actions">
-          <button class="cancel-btn" (click)="cancel()">Cancel</button>
-          <button class="save-btn" (click)="save()">Save</button>
+          <button type="button" class="save-btn" (click)="onSaveClick($event)">Save</button>
+     
         </div>
 
       </div>
-
     </div>
-
   </div>
-
 </div>

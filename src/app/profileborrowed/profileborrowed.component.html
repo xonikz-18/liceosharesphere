@@ -1,115 +1,85 @@
 <div class="dashboard">
-
   <div class="sidebar">
-
     <div class="logo"></div>
-
     <div class="menu">
-
       <div class="menu-item" routerLink="/dashboard">
         <div class="icon home"></div>
         <span>Home</span>
       </div>
-
       <div class="menu-item" routerLink="/history">
         <div class="icon history"></div>
         <span>History</span>
       </div>
-
       <div class="menu-item active" routerLink="/profile">
         <div class="icon profile"></div>
         <span>Profile</span>
       </div>
-
     </div>
-
     <div class="logout" (click)="toggleLogout()">
       <div class="icon logout-icon"></div>
       <span>Logout</span>
     </div>
-
   </div>
 
-
   <div class="main-profile">
-
-    <!-- HEADER -->
     <div class="profile-header-wrapper">
       <div class="profile-header">
-
-        <div class="profile-picture"></div>
-
+        <div class="profile-picture" [style.backgroundImage]="(profile.profilePicture || profile.profile_picture) ? 'url(' + (profile.profilePicture || profile.profile_picture) + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'"></div>
         <div class="profile-info">
-
           <div class="profile-name">
-            {{profile.firstName}} {{profile.lastName}}
+            {{ profile.fullname }}
             <button class="edit-icon" (click)="openEditProfile()"></button>
           </div>
-
           <div class="profile-details">
-            {{profile.contact}}<br>
-            {{profile.department}} - {{profile.year}}<br>
-            {{profile.email}}
+            {{ profile.contact_number }}<br>
+            {{ profile.department }} - {{ profile.sex }}<br>
+            {{ profile.email }}
           </div>
-
         </div>
-
       </div>
     </div>
 
-    <!-- LIST -->
     <div class="list-wrapper">
-
       <div class="tabs">
         <div class="tab active">Borrowed</div>
         <div class="tab" routerLink="/profile/lent">Lent</div>
       </div>
-
       <div class="borrowed-section">
-
-        <div class="borrowed-container">
-
-          <div class="borrowed-list">
-
-            <div 
-  class="borrowed-card" 
-  *ngFor="let item of borrowed"
-  (click)="openReturn(item)"
->
-
-  <div class="borrowed-image"></div>
-
-  <div class="borrowed-name">
-    {{item.name}}
-  </div>
-
-  <div class="borrowed-date">
-    {{item.date}}
-  </div>
-
-</div>
-
-          </div>
-
+        <div class="list-message" *ngIf="!borrowed.length">
+          No borrowed items yet.
         </div>
 
+        <div class="borrowed-container" *ngIf="borrowed.length">
+          <div class="borrowed-list">
+            <div class="borrowed-card" *ngFor="let item of borrowed">
+              <div
+                class="borrowed-image"
+                [style.backgroundImage]="item.image ? 'url(' + item.image + ')' : 'url(assets/images/dummypepic.png)'"
+                [style.backgroundSize]="'cover'"
+                [style.backgroundPosition]="'center'">
+              </div>
+
+              <div class="borrowed-copy">
+                <div class="borrowed-name">{{ item.name }}</div>
+                <div class="borrowed-meta">Borrowed from {{ item.owner }}</div>
+                <div class="borrowed-date">Accepted on {{ item.approvedAt }}</div>
+              </div>
+
+              <div class="borrowed-status">currently borrowed</div>
+            </div>
+          </div>
+        </div>
       </div>
-
     </div>
-
   </div>
-
 </div>
 
-<app-logout
-  *ngIf="showLogoutPopup"
-  (cancel)="handleCancel()">
-</app-logout>
+<app-logout *ngIf="showLogoutPopup" (cancel)="handleCancel()"></app-logout>
 
-<!-- 🔥 PROFILE EDIT MODAL -->
 <app-profileedit
   *ngIf="showEditProfile"
   [profile]="profile"
+  (profilePreviewChange)="handleProfilePreview($event)"
   (saveProfile)="updateProfile($event)"
   (close)="closeEditProfile()">
 </app-profileedit>
