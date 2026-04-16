@@ -1,7 +1,10 @@
 <div class="profile-container">
   <div class="profile-header">
     <div class="profile-pic">
-      <img src="assets/images/dummypic.png" alt="Profile Picture" />
+      <img
+        [src]="profile.profilePicture || profile.profile_picture || 'assets/images/dummypic.png'"
+        alt="Profile Picture"
+      />
     </div>
 
     <div class="profile-info">

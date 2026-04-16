@@ -165,9 +165,18 @@ export class DashboardComponent implements OnInit {
     this.errorMessage = '';
     const cachedItems = this.borrowRequestService.applyRequestStatusesToPosts(this.postService.getCachedPosts());
 
+    // Use the cached posts immediately so refresh does not clear the visible feed.
+    if (cachedItems.length > 0) {
+      this.items = cachedItems;
+    }
+
     this.postService.getPosts().subscribe({
       next: (posts) => {
-        this.items = this.borrowRequestService.applyRequestStatusesToPosts(posts);
+        if (posts.length === 0 && cachedItems.length > 0) {
+          this.items = cachedItems;
+        } else {
+          this.items = this.borrowRequestService.applyRequestStatusesToPosts(posts);
+        }
         this.isLoading = false;
         this.syncSelectedItem();
       },

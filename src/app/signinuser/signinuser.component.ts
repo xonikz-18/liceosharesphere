@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -21,14 +21,16 @@ export class SigninuserComponent {
   password: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
+  submitted = false;
   isLoading = false;
 
    constructor(private router: Router, private http: HttpClient) {}
 
-  onRegister() {
+  onRegister(signupForm: NgForm) {
+    this.submitted = true;
+    this.errorMessage = '';
 
-    if (!this.fullname || !this.email || !this.sex || !this.department || !this.contactNumber || !this.password || !this.confirmPassword) {
-      this.errorMessage = 'Please fill in all fields.';
+    if (signupForm.invalid) {
       return;
     }
 

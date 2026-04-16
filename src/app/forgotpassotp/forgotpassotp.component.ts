@@ -1,7 +1,9 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-forgotpassotp',
@@ -23,7 +25,7 @@ export class ForgotPassOtpComponent implements AfterViewInit {
 
   inputs: ElementRef[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.inputs = [

@@ -1,0 +1,54 @@
+<div class="overlay" (click)="close.emit()">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="header">
+      <h2>{{item?.name}}</h2>
+      <div class="close-btn" (click)="close.emit()"></div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- IMAGE -->
+      <div class="image-section">
+
+        <div class="image-preview" [style.backgroundImage]="item?.image ? 'url(' + item.image + ')' : 'none'"></div>
+
+        <!-- STATUS -->
+        <span class="status-badge" [ngClass]="item?.status || 'available'">
+          {{ item?.status || 'available' }}
+        </span>
+
+      </div>
+
+      <!-- DETAILS -->
+      <div class="form-section">
+
+        <div class="owner">
+          <div class="avatar" [style.backgroundImage]="item?.ownerProfilePicture ? 'url(' + item.ownerProfilePicture + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'"></div>
+          <span>{{item?.owner}}</span>
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <p class="desc">
+            {{ item?.description || 'No description provided.' }}
+          </p>
+        </div>
+
+        <!-- DELETE BUTTON -->
+        <div class="actions">
+          <button class="delete-btn" (click)="delete.emit()">
+            Delete
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

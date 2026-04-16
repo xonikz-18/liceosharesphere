@@ -15,6 +15,8 @@ import { ForgotPassEmailComponent } from './forgotpassemail/forgotpassemail.comp
 import { ForgotPassOtpComponent } from './forgotpassotp/forgotpassotp.component';
 import { ForgotPassNewComponent } from './forgotpassnew/forgotpassnew.component';
 import { AdminDashboardComponent } from './admindashboard/admindashboard.component';
+import { AdminReviewComponent } from './adminreview/adminreview.component';
+
 
 
 export const routes: Routes = [
@@ -47,6 +49,8 @@ export const routes: Routes = [
   { path: 'notification', component: NotificationComponent },
 
   { path: 'messages', component: MessageComponent },
+
+  { path: 'adminreview', component: AdminReviewComponent },
 
   { path: '**', redirectTo: '' }
 ];

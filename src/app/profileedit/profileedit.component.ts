@@ -20,8 +20,24 @@ export class ProfileEditComponent implements OnInit {
   isSaving = false;
   errorMessage = '';
 
+  sexes = ['Female', 'Male'];
+  departments = [
+    'College of Arts and Sciences',
+    'School of Business, Management and Accountancy',
+    'College of Criminal Justice',
+    'College of Engineering',
+    'College of Information Technology',
+    'College of Medical Laboratory Science',
+    'Conservatory of Music, Theater and Dance',
+    'College of Nursing',
+    'College of Dentistry',
+    'College of Pharmacy',
+    'College of Rehabilitation Sciences',
+    'College of Radiologic Technology',
+    'School of Teacher Education'
+  ];
+
   ngOnInit() {
-    // ✅ clone profile including id
     this.editableProfile = { ...this.profile };
     this.previewImage = this.profile?.profilePicture || this.profile?.profile_picture || this.profile?.imageUrl || this.previewImage;
     this.profilePreviewChange.emit(this.previewImage);
@@ -50,6 +66,7 @@ export class ProfileEditComponent implements OnInit {
     return Boolean(
       this.editableProfile.fullname?.trim() &&
       this.editableProfile.sex?.trim() &&
+      this.editableProfile.department?.trim() &&
       this.editableProfile.email?.trim()
     );
   }
@@ -72,14 +89,14 @@ export class ProfileEditComponent implements OnInit {
     }
 
     if (!this.hasRequiredFields()) {
-      this.errorMessage = 'Please fill in full name, sex, and email.';
+      this.errorMessage = 'Please fill in full name, sex, department, and email.';
       return;
     }
 
     this.isSaving = true;
     this.errorMessage = '';
 
-    // ✅ always emit with id
+    // always emit with id
     if (!this.editableProfile.id && this.profile.id) {
       this.editableProfile.id = this.profile.id;
     }

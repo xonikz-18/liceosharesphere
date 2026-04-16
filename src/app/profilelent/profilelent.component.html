@@ -1,7 +1,5 @@
 <div class="dashboard">
-
   <div class="sidebar">
-
     <div class="logo"></div>
 
     <div class="menu">
@@ -25,81 +23,48 @@
       <div class="icon logout-icon"></div>
       <span>Logout</span>
     </div>
-
   </div>
 
   <div class="main-profile">
 
-    <!-- HEADER -->
     <div class="profile-header-wrapper">
-      <div class="profile-header">
+      <div class="profile-card alt">
 
-        <div class="profile-picture" [style.backgroundImage]="(profile.profilePicture || profile.profile_picture) ? 'url(' + (profile.profilePicture || profile.profile_picture) + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'" [style.backgroundPosition]="'center'"></div>
+        <div class="profile-picture"
+          [style.backgroundImage]="(profile.profilePicture || profile.profile_picture) ? 'url(' + (profile.profilePicture || profile.profile_picture) + ')' : 'url(assets/images/dummypic.png)'">
+        </div>
 
         <div class="profile-info">
 
-          <div class="profile-name">
-            {{profile.fullname || (profile.firstName + ' ' + profile.lastName)}}
+          <div class="profile-top">
             <button class="edit-icon" (click)="openEditProfile()"></button>
           </div>
 
-          <div class="profile-details">
-            {{profile.contact_number || profile.contact}}<br>
-            {{profile.department}} - {{profile.sex}}<br>
-            {{profile.email}}
-          </div>
+          <div class="info-grid">
 
-        </div>
+            <div class="info-item name-item">
+              <span class="label">Full Name</span>
+              <span class="value">{{profile.fullname || (profile.firstName + ' ' + profile.lastName)}}</span>
+            </div>
 
-      </div>
-    </div>
+            <div class="info-item">
+              <span class="label">Gender</span>
+              <span class="value">{{profile.sex}}</span>
+            </div>
 
-    <!-- LIST -->
-    <div class="list-wrapper">
+            <div class="info-item">
+              <span class="label">Contact Number</span>
+              <span class="value">{{profile.contact_number || profile.contact}}</span>
+            </div>
 
-      <div class="tabs">
-        <div class="tab" routerLink="/profile">Borrowed</div>
-        <div class="tab active">Lent</div>
-      </div>
+            <div class="info-item wide">
+              <span class="label">Department</span>
+              <span class="value">{{profile.department}}</span>
+            </div>
 
-      <div class="borrowed-section">
-
-        <div *ngIf="errorMessage" class="list-message">{{ errorMessage }}</div>
-
-        <div *ngIf="!errorMessage && !lent.length" class="list-message">
-          No posted items yet.
-        </div>
-
-        <div class="borrowed-container">
-
-          <div class="borrowed-list">
-
-            <div class="borrowed-card" *ngFor="let item of lent">
-
-              <div
-                class="borrowed-image"
-                [style.backgroundImage]="item.image ? 'url(' + item.image + ')' : 'none'"
-                [style.backgroundColor]="item.image ? 'transparent' : '#d9d9d9'">
-              </div>
-
-              <div class="borrowed-name">
-                {{item.name}}
-              </div>
-
-              <!-- RIGHT SIDE -->
-              <div class="lent-actions">
-                <div class="available-group">
-                  <button type="button" class="action-button edit-text" (click)="openEdit(item, $event)">edit</button>
-                  <button type="button" class="action-button delete-text" [disabled]="deletingPostId === item.id" (click)="deleteItem(item, $event)">
-                    {{ deletingPostId === item.id ? 'deleting...' : 'delete' }}
-                  </button>
-                  <div class="status" [class.available]="item.status === 'available'" [class.pending]="item.status === 'pending'" [class.borrowed]="item.status === 'borrowed'" [class.returned]="item.status === 'returned'">
-                    {{ item.status }}
-                  </div>
-                </div>
-
-              </div>
-
+            <div class="info-item">
+              <span class="label">Email</span>
+              <span class="value">{{profile.email}}</span>
             </div>
 
           </div>
@@ -107,11 +72,61 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="list-wrapper">
+      <div class="tabs">
+        <a class="tab" routerLink="/profile">Borrowed</a>
+        <a class="tab active" routerLink="/profile/lent">Lent</a>
+      </div>
+
+      <div class="borrowed-section">
+        <div *ngIf="!lent.length" class="list-message">
+          No posted items yet.
+        </div>
+
+        <div class="borrowed-container" *ngIf="lent.length">
+          <div class="borrowed-list">
+
+            <div class="borrowed-card" *ngFor="let item of lent">
+
+              <div class="borrowed-image"
+                [style.backgroundImage]="item.image ? 'url(' + item.image + ')' : 'none'">
+              </div>
+
+              <div class="borrowed-name">{{item.name}}</div>
+
+              <div class="lent-actions">
+                <div class="available-group">
+
+                  <button class="action-button edit-text" (click)="openEdit(item, $event)">edit</button>
+
+                  <button class="action-button delete-text"
+                    [disabled]="deletingPostId === item.id"
+                    (click)="deleteItem(item, $event)">
+                    {{ deletingPostId === item.id ? 'deleting...' : 'delete' }}
+                  </button>
+
+                  <div class="status"
+                    [class.available]="item.status === 'available'"
+                    [class.pending]="item.status === 'pending'"
+                    [class.borrowed]="item.status === 'borrowed'"
+                    [class.returned]="item.status === 'returned'">
+                    {{ item.status }}
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
 
     </div>
 
   </div>
-
 </div>
 
 <app-logout

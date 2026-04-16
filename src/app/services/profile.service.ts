@@ -14,6 +14,7 @@ export class ProfileService {
   private cachedProfile: any = null;
   private readonly profileStorageKey = 'currentUser';
   private readonly sessionProfileStorageKey = 'currentUserSession';
+  private readonly profilePictureStorageKey = 'currentUserProfilePicture';
   private readonly http = inject(HttpClient);
   private readonly postService = inject(PostService);
   private readonly borrowRequestService = inject(BorrowRequestService);
@@ -41,9 +42,7 @@ export class ProfileService {
     }
 
     const normalized = this.normalizeProfile(profile);
-    const profilePicture = typeof normalized.profilePicture === 'string' && normalized.profilePicture.length <= 4096
-      ? normalized.profilePicture
-      : '';
+    const profilePicture = normalized.profilePicture ?? normalized.profile_picture ?? '';
 
     return {
       id: normalized.id ?? normalized.userId ?? normalized.user_id ?? normalized._id,
@@ -83,13 +82,18 @@ export class ProfileService {
       return this.cachedProfile;
     }
 
+    const storedProfilePicture = this.getStoredProfilePicture();
     const sessionStored = sessionStorage.getItem(this.sessionProfileStorageKey);
 
     if (sessionStored) {
       try {
         this.cachedProfile = this.normalizeProfile(JSON.parse(sessionStored));
+        this.cachedProfile = this.ensureProfilePicture(this.cachedProfile, storedProfilePicture);
         try {
           sessionStorage.setItem(this.sessionProfileStorageKey, JSON.stringify(this.cachedProfile));
+          if (storedProfilePicture) {
+            this.writeProfilePicture(storedProfilePicture);
+          }
         } catch {
           // Keep runtime profile when storage update is unavailable.
         }
@@ -107,6 +111,7 @@ export class ProfileService {
 
     try {
       this.cachedProfile = this.normalizeProfile(JSON.parse(stored));
+      this.cachedProfile = this.ensureProfilePicture(this.cachedProfile, storedProfilePicture);
       try {
         localStorage.setItem(this.profileStorageKey, JSON.stringify(this.toStorageSafeProfile(this.cachedProfile)));
       } catch {
@@ -131,7 +136,7 @@ export class ProfileService {
       ...normalizedProfile,
       profilePicture,
       profile_picture: profilePicture,
-      hasProfilePicture: Boolean(normalizedProfile.profilePicture)
+      hasProfilePicture: Boolean(profilePicture)
     };
   }
 
@@ -143,28 +148,37 @@ export class ProfileService {
     const normalizedProfile = this.normalizeProfile(profile);
     this.cachedProfile = normalizedProfile;
     const lightweightProfile = this.buildLightweightProfile(normalizedProfile);
-    const identityOnlyProfile = {
+    const profilePicture = normalizedProfile.profilePicture ?? normalizedProfile.profile_picture ?? '';
+    const minimalProfile = {
       id: lightweightProfile?.id,
       userId: lightweightProfile?.userId,
       user_id: lightweightProfile?.user_id,
       _id: lightweightProfile?._id,
       fullname: lightweightProfile?.fullname ?? '',
-      email: lightweightProfile?.email ?? ''
+      email: lightweightProfile?.email ?? '',
+      department: lightweightProfile?.department ?? '',
+      sex: lightweightProfile?.sex ?? '',
+      contact_number: lightweightProfile?.contact_number ?? '',
+      contact: lightweightProfile?.contact_number ?? '',
+      profilePicture: '',
+      profile_picture: '',
+      hasProfilePicture: false
     };
 
-    this.writeWithRetry(
-      sessionStorage,
-      this.sessionProfileStorageKey,
-      lightweightProfile,
-      identityOnlyProfile
-    );
+    try {
+      sessionStorage.setItem(this.sessionProfileStorageKey, JSON.stringify(lightweightProfile));
+    } catch {
+      sessionStorage.removeItem(this.sessionProfileStorageKey);
+    }
 
     this.writeWithRetry(
       localStorage,
       this.profileStorageKey,
       this.toStorageSafeProfile(lightweightProfile),
-      identityOnlyProfile
+      minimalProfile
     );
+
+    this.writeProfilePicture(profilePicture);
 
     this.postService.updateCachedOwnerData(
       this.getProfileId(normalizedProfile),
@@ -249,11 +263,64 @@ export class ProfileService {
       catchError(() => of(stored ?? {}))
     );
 
-    if (stored) {
+    if (stored && Object.keys(stored).length > 0) {
       return concat(of(stored), request$);
     }
 
     return request$;
+  }
+
+  private getStoredProfilePicture(): string | null {
+    try {
+      const picture = sessionStorage.getItem(this.profilePictureStorageKey);
+      return picture && typeof picture === 'string' ? picture : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private ensureProfilePicture(profile: any, fallbackPicture: string | null): any {
+    if (!profile || typeof profile !== 'object') {
+      return profile;
+    }
+
+    const hasPicture = typeof profile.profilePicture === 'string' && profile.profilePicture
+      ? profile.profilePicture
+      : typeof profile.profile_picture === 'string' && profile.profile_picture
+        ? profile.profile_picture
+        : '';
+
+    if (!hasPicture && fallbackPicture) {
+      return {
+        ...profile,
+        profilePicture: fallbackPicture,
+        profile_picture: fallbackPicture
+      };
+    }
+
+    return profile;
+  }
+
+  private writeProfilePicture(profilePicture: string): void {
+    try {
+      if (profilePicture) {
+        sessionStorage.setItem(this.profilePictureStorageKey, profilePicture);
+      } else {
+        sessionStorage.removeItem(this.profilePictureStorageKey);
+      }
+    } catch {
+      sessionStorage.removeItem(this.profilePictureStorageKey);
+    }
+
+    try {
+      if (profilePicture) {
+        localStorage.setItem(this.profilePictureStorageKey, profilePicture);
+      } else {
+        localStorage.removeItem(this.profilePictureStorageKey);
+      }
+    } catch {
+      localStorage.removeItem(this.profilePictureStorageKey);
+    }
   }
 
   applyLocalProfileUpdate(profile: any): any {
@@ -287,6 +354,7 @@ export class ProfileService {
     this.cachedProfile = null;
     localStorage.removeItem(this.profileStorageKey);
     sessionStorage.removeItem(this.sessionProfileStorageKey);
+    sessionStorage.removeItem(this.profilePictureStorageKey);
     this.borrowRequestService.resetSessionState();
   }
 }

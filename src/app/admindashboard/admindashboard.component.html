@@ -1,7 +1,82 @@
-<div class="admin-container">
 
-  <h1>ADMIN DASHBOARD</h1>
+<div class="dashboard">
 
-  <p>You are logged in as an administrator.</p>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="logo"></div>
+
+    <div class="menu">
+
+      
+
+    </div>
+
+    <div class="logout" (click)="toggleLogout()">
+  <div class="icon logout-icon"></div>
+  <span>Logout</span>
+</div>
+
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-admin">
+
+    <h2 class="title">Total Listings</h2>
+
+    <!-- CHART -->
+    <div class="chart-container">
+      <canvas id="listingChart"></canvas>
+    </div>
+
+    <!-- REVIEW LISTINGS -->
+    <div class="review-section">
+
+      <div class="review-header">
+        <span>Review Listings</span>
+      </div>
+
+      <div class="admin-list">
+
+        <div 
+          class="admin-card"
+          *ngFor="let item of posts"
+          (click)="openItem(item)"
+        >
+
+          <div class="top-line yellow"></div>
+
+          <div class="admin-text">
+            <span>
+              <b>{{ item.owner }}</b> posted <b>“{{ item.name }}”</b>
+            </span>
+          </div>
+
+          <div class="admin-date">
+            {{ item.date }}
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="!posts.length && !isLoading" class="empty-state">
+        No posts have been published yet.
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
+
+<app-logout
+  *ngIf="showLogoutPopup"
+  (cancel)="handleCancel()">
+</app-logout>
+
+<app-adminreview
+  *ngIf="selectedItem"
+  [item]="selectedItem"
+  (close)="closeModal()"
+  (delete)="deleteItem()">
+</app-adminreview>

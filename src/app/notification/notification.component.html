@@ -28,7 +28,6 @@
     <div class="notif-text">
       <b>{{ request.borrowerName }}</b>
       <span>requested to borrow "{{ request.postName }}".</span>
-      <div class="notif-status">pending</div>
 
       <div class="notif-actions">
         <button class="decline" (click)="declineIncomingRequest(request, $event)">
@@ -54,9 +53,6 @@
     <div class="notif-text">
       <b>{{ notification.actorName }}</b>
       <span>{{ notification.message.replace(notification.actorName, '').trim() }}</span>
-      <div class="notif-status" [class.approved]="notification.status === 'approved'" [class.declined]="notification.status === 'declined'">
-        {{ notification.status }}
-      </div>
 
       <div class="notif-actions" *ngIf="isIncomingRequest(notification)">
         <button class="decline" [disabled]="isProcessing(notification)" (click)="decline(notification, $event)">

@@ -57,6 +57,11 @@ export class ProfileBorrowedComponent implements OnInit {
     this.profileService.getProfile().subscribe({
       next: (res) => {
         this.profile = res;
+        const previousUserId = this.currentUserId;
+        this.currentUserId = this.getCurrentUserId();
+        if (!previousUserId && this.currentUserId) {
+          this.loadBorrowedItems();
+        }
       },
       error: (err) => {
         console.error('Failed to load profile:', err);
@@ -123,14 +128,15 @@ export class ProfileBorrowedComponent implements OnInit {
 
   private getCurrentUserId(): number | string | null {
     try {
-      const currentUser = JSON.parse(sessionStorage.getItem('currentUserSession') || localStorage.getItem('currentUser') || '{}');
-      const id = currentUser.id ?? currentUser.userId ?? currentUser.user_id ?? currentUser._id;
-      if (id !== undefined && id !== null) {
-        return id;
+      const snapshot = this.profileService.getProfileSnapshot();
+      const snapshotId = snapshot?.id ?? snapshot?.userId ?? snapshot?.user_id ?? snapshot?._id;
+      if (snapshotId !== undefined && snapshotId !== null) {
+        return snapshotId;
       }
 
-      const snapshot = this.profileService.getProfileSnapshot();
-      return snapshot?.id ?? snapshot?.userId ?? snapshot?.user_id ?? snapshot?._id ?? null;
+      const currentUser = JSON.parse(sessionStorage.getItem('currentUserSession') || localStorage.getItem('currentUser') || '{}');
+      const id = currentUser.id ?? currentUser.userId ?? currentUser.user_id ?? currentUser._id;
+      return id !== undefined && id !== null ? id : null;
     } catch {
       const snapshot = this.profileService.getProfileSnapshot();
       return snapshot?.id ?? snapshot?.userId ?? snapshot?.user_id ?? snapshot?._id ?? null;

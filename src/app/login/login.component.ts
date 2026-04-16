@@ -13,6 +13,7 @@ import { ProfileService } from '../services/profile.service';
 })
 export class LoginComponent {
   private readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  private readonly adminEmail = 'npacatang89487@liceo.edu.ph';
 
   email: string = '';
   password: string = '';
@@ -64,6 +65,13 @@ export class LoginComponent {
       next: () => {
         this.isLoading = false;
         this.cdr.detectChanges();
+
+        const normalizedEmail = email.toLowerCase();
+        if (normalizedEmail === this.adminEmail) {
+          this.router.navigate(['/admindashboard']);
+          return;
+        }
+
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

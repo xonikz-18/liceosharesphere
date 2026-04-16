@@ -31,7 +31,7 @@ export interface BorrowNotification {
   id: number | string;
   requestId: number | string;
   postId?: number | string;
-  type: 'incoming-request' | 'request-approved' | 'request-declined';
+  type: 'incoming-request' | 'request-approved' | 'request-declined' | 'post-deleted';
   actorName: string;
   actorProfilePicture?: string;
   itemName: string;

@@ -8,24 +8,24 @@
             
             <h1>Account Information</h1>
 
-            <form #signupForm="ngForm" (ngSubmit)="onRegister()">
+            <form #signupForm="ngForm" (ngSubmit)="onRegister(signupForm)">
 
-                <label>Full Name *</label>
-                <input type="text" name="fullname" [(ngModel)]="fullname" required>
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" name="fullname" [(ngModel)]="fullname" #fullnameCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && fullnameCtrl.invalid }" placeholder="Enter Full Name">
 
-                <label>Email *</label>
-                <input type="email" name="email" [(ngModel)]="email" required>
+                <label>Email <span class="required">*</span></label>
+                <input type="email" name="email" [(ngModel)]="email" #emailCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && emailCtrl.invalid }" placeholder="Enter Email">
 
-                <label>Sex *</label>
-                <select name="sex" [(ngModel)]="sex" required>
-                    <option value="">Select</option>
+                <label>Sex <span class="required">*</span></label>
+                <select name="sex" [(ngModel)]="sex" #sexCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && sexCtrl.invalid }">
+                    <option value="" disabled hidden>Select Sex</option>
                     <option>Female</option>
                     <option>Male</option>
                 </select>
 
-                <label>Department *</label>
-                <select name="department" [(ngModel)]="department" required>
-                    <option value="">Select</option>
+                <label>Department <span class="required">*</span></label>
+                <select name="department" [(ngModel)]="department" #departmentCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && departmentCtrl.invalid }">
+                    <option value="" disabled hidden>Select Department</option>
                     <option>College of Arts and Sciences</option>
                     <option>School of Business, Management and Accountancy</option>
                     <option>College of Criminal Justice</option>
@@ -41,22 +41,21 @@
                     <option>School of Teacher Education</option>
                 </select>
 
-                <label>Contact Number *</label>
-                <input type="text" name="contact" [(ngModel)]="contactNumber" required>
+                <label>Contact Number <span class="required">*</span></label>
+                <input type="text" name="contact" [(ngModel)]="contactNumber" #contactCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && contactCtrl.invalid }" placeholder="Enter Contact Number">
 
-                <label>Password *</label>
-                <input type="password" name="password" [(ngModel)]="password" required>
+                <label>Password <span class="required">*</span></label>
+                <input type="password" name="password" [(ngModel)]="password" #passwordCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && passwordCtrl.invalid }" placeholder="Enter Password">
 
-                <label>Confirm Password *</label>
-                <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-                
+                <label>Confirm Password <span class="required">*</span></label>
+                <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && confirmPasswordCtrl.invalid }" placeholder="Confirm Password">
+
+                <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
                 <div class="buttons">
-                <button class="signup" type="button" (click)="onRegister()">
-                Sign Up
-                </button>
-
+                    <button class="signup" type="submit">Sign Up</button>
                     <button class="cancel" type="button" (click)="onCancel()">Cancel</button>
-                    </div>
+                </div>
 
             </form>
 

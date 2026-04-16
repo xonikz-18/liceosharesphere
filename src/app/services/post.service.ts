@@ -30,11 +30,20 @@ export class PostService {
   readonly postsChanged$ = this.postsSubject.asObservable();
 
   syncFromCache(): PostItem[] {
+    if (!this.cachedPosts.length) {
+      this.cachedPosts = this.readCachedPosts();
+    }
+
     this.postsSubject.next([...this.cachedPosts]);
     return [...this.cachedPosts];
   }
 
   getCachedPosts(): PostItem[] {
+    if (!this.cachedPosts.length) {
+      this.cachedPosts = this.readCachedPosts();
+      this.postsSubject.next([...this.cachedPosts]);
+    }
+
     return [...this.cachedPosts];
   }
 
@@ -84,11 +93,17 @@ export class PostService {
 
     return this.fetchPostsFromEndpoints(endpoints, params).pipe(
       tap((posts) => {
-        if (posts !== null && (posts.length > 0 || this.cachedPosts.length === 0)) {
+        if (posts !== null) {
           this.updateCache(posts);
         }
       }),
-      map((posts) => posts ?? [...this.cachedPosts])
+      map((posts) => {
+        if (posts === null) {
+          return [...this.cachedPosts];
+        }
+
+        return posts;
+      })
     );
   }
 
@@ -124,7 +139,10 @@ export class PostService {
     }).pipe(
       catchError(() => this.http.delete<void>(`${this.fallbackApiUrl}/${postId}`, {
         body
-      }))
+      })),
+      tap(() => {
+        this.removeCachedPost(postId);
+      })
     );
   }
 
@@ -176,56 +194,70 @@ export class PostService {
       return this.sortPosts(parsedPosts.map((post) => this.normalizePost(post)).filter((post) => !!post.id));
     };
 
-    try {
-      const sessionPosts = parseStoredPosts(sessionStorage.getItem(this.postsSessionStorageKey));
-      if (sessionPosts && sessionPosts.length) {
-        return sessionPosts;
-      }
+    const sessionStored = sessionStorage.getItem(this.postsSessionStorageKey);
+    const localStored = localStorage.getItem(this.postsLocalStorageKey);
 
-      const localPosts = parseStoredPosts(localStorage.getItem(this.postsLocalStorageKey));
-      return localPosts ?? [];
+    let sessionPosts: PostItem[] | null = null;
+    let localPosts: PostItem[] | null = null;
+
+    try {
+      sessionPosts = parseStoredPosts(sessionStored);
     } catch {
       sessionStorage.removeItem(this.postsSessionStorageKey);
-      localStorage.removeItem(this.postsLocalStorageKey);
-      return [];
+      sessionPosts = null;
     }
+
+    try {
+      localPosts = parseStoredPosts(localStored);
+    } catch {
+      localStorage.removeItem(this.postsLocalStorageKey);
+      localPosts = null;
+    }
+
+    if (sessionPosts && sessionPosts.length) {
+      return sessionPosts;
+    }
+
+    return localPosts ?? [];
   }
 
   private persistCachedPosts(posts: PostItem[]) {
     const compactPosts = this.buildCompactPostsForStorage(posts);
-    const minimalPosts = compactPosts.slice(0, Math.min(20, compactPosts.length)).map((post) => ({
+    const minimalPosts = compactPosts.map((post) => ({
       ...post,
       image: ''
     }));
+    const tinyPosts = minimalPosts.slice(0, Math.min(10, minimalPosts.length));
 
-    this.writeWithRetry(
-      sessionStorage,
-      this.postsSessionStorageKey,
-      compactPosts,
-      minimalPosts
-    );
+    try {
+      sessionStorage.setItem(this.postsSessionStorageKey, JSON.stringify(compactPosts));
+    } catch {
+      sessionStorage.removeItem(this.postsSessionStorageKey);
+    }
 
     this.writeWithRetry(
       localStorage,
       this.postsLocalStorageKey,
       compactPosts,
-      minimalPosts
+      minimalPosts,
+      tinyPosts
     );
   }
 
-  private writeWithRetry(storage: Storage, key: string, primaryValue: unknown, fallbackValue: unknown) {
-    try {
-      storage.setItem(key, JSON.stringify(primaryValue));
-      return;
-    } catch {
-      // Retry with a smaller payload.
+  private writeWithRetry(storage: Storage, key: string, ...values: unknown[]) {
+    for (const value of values) {
+      try {
+        storage.setItem(key, JSON.stringify(value));
+        return;
+      } catch {
+        // Try the next smaller payload.
+      }
     }
 
     try {
       storage.removeItem(key);
-      storage.setItem(key, JSON.stringify(fallbackValue));
     } catch {
-      // Keep runtime state if browser storage is unavailable or full.
+      // Ignore storage cleanup failures.
     }
   }
 

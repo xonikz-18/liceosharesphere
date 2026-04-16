@@ -1,27 +1,213 @@
-.admin-container{
+:host{
+  display:block;
+  width:100vw;
   height:100vh;
+  overflow:hidden;
+}
+
+.dashboard{
   display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  font-family:Arial;
+  height:100%;
+  width:100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-h1{
-  font-size:40px;
-  margin-bottom:10px;
-}
+/* ================= SIDEBAR ================= */
 
-p{
-  margin-bottom:20px;
-}
-
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:6px;
+.sidebar{
+  width:225px;
   background:#7c0000;
   color:white;
+
+  display:flex;
+  flex-direction:column;
+
+  padding:30px 20px;
+  box-sizing:border-box;
+}
+
+.logo{
+  width:170px;
+  height:60px;
+  background:url('../../assets/images/noiconlogo.png') no-repeat center;
+  background-size:contain;
+  margin-bottom:50px;
+}
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.menu-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:16px;
   cursor:pointer;
+}
+
+.menu-item.active{
+  color:#f7b733;
+}
+
+/* ICONS */
+
+.icon{
+  width:32px;
+  height:32px;
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+.logout-icon{
+  background-image:url('../../assets/icons/logoutbtnicon.png');
+  width:23px;
+  height:23px;
+}
+
+/* LOGOUT */
+
+.logout{
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:6px 12px;
+  border:1px solid white;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+  height:26px;
+  width:150px;
+}
+
+/* ================= MAIN ================= */
+
+.main-admin{
+  flex:1;
+  background:#ffffff;
+  padding:30px;
+  box-sizing:border-box;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow-y:auto;
+}
+
+/* TITLE */
+
+.title{
+  font-size:24px;
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+/* ================= CHART ================= */
+
+.chart-container{
+  background:#ffffff;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+
+  height:280px;
+  box-shadow:0 5px 5px rgba(0,0,0,0.12);
+}
+
+.chart-container canvas{
+  width:100% !important;
+  height:100% !important;
+}
+
+/* ================= REVIEW SECTION ================= */
+
+.review-section{
+  margin-top:5px;
+}
+
+/* HEADER TAB */
+
+.review-header{
+  background:#f7b733;
+  padding:10px 16px;
+  border-radius:6px 6px 0 0;
+  font-weight:600;
+  width:125px;
+}
+
+/* LIST CONTAINER */
+
+.admin-list{
+  background:#ffffff;
+  box-shadow:0 5px 5px rgba(0,0,0,0.12);
+  border-color: white;
+  border-style: solid;
+  padding:10px;
+  border-radius:0px 6px 6px 6px;
+  max-height:630px;
+  overflow-y:auto;
+  margin-bottom: -10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px; /* 🔥 spacing between cards */
+}
+
+/* CARD */
+
+.admin-card{
+  position:relative;
+
+  background:rgb(246, 246, 246);
+  border:1px solid #d9d9d9;
+  border-radius:8px;
+
+  padding:14px 16px;
+
+  display:flex;
+  align-items:center;
+  cursor: default;
+  transition:0.2s;
+}
+
+/* HOVER EFFECT (makes it feel real) */
+.admin-card:hover{
+  cursor: pointer;
+  transform:scale(1.01);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* TOP LINE */
+
+.top-line{
+  position:absolute;
+  top:0;
+  left:0;
+  height:3px;
+  width:100%;
+}
+
+.top-line.yellow{
+  background:#f7b733;
+}
+
+.top-line.red{
+  background:#7c0000;
+}
+
+/* TEXT */
+
+.admin-text{
+  flex:1;
+  font-size:14px;
+}
+
+/* DATE */
+
+.admin-date{
+  font-size:13px;
+  color:#666;
 }

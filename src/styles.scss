@@ -5,10 +5,24 @@ html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 app-root {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+.btn,
+.save-btn,
+.cancel,
+.login-btn,
+.signup-btn,
+.btn-post,
+.action-button {
+  font-weight: normal !important;
 }
