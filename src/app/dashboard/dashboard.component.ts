@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostListener, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, HostListener, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
   messageUnreadCount = 0;
   private currentUserId: number | string | null = null;
   messageTargetOwner: MessageTargetOwner | null = null;
-
+  private cdr = inject(ChangeDetectorRef);
   previewImage: string = '';
 
   /* ========================= */
@@ -179,12 +179,14 @@ export class DashboardComponent implements OnInit {
         }
         this.isLoading = false;
         this.syncSelectedItem();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.items = cachedItems;
         this.errorMessage = '';
         this.isLoading = false;
         this.syncSelectedItem();
+        this.cdr.detectChanges();
       }
     });
   }
@@ -231,6 +233,7 @@ closeItem(){
   private syncItemsFromCache() {
     this.items = this.borrowRequestService.applyRequestStatusesToPosts(this.postService.syncFromCache());
     this.syncSelectedItem();
+    this.cdr.detectChanges();
   }
 
   private syncSelectedItem() {
@@ -321,6 +324,7 @@ closeItem(){
 
   openPreview(img: string){
     this.previewImage = img;
+    this.cdr.detectChanges();
   }
 
   closePreview(){

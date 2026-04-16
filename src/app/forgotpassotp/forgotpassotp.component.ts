@@ -69,15 +69,27 @@ export class ForgotPassOtpComponent implements AfterViewInit {
     }
   }
 
-  verifyOTP() {
-    const code = this.otp.join('');
+    verifyOTP() {
+  const code = this.otp.join('');
 
-    if (code.length !== 6) {
-      alert('Enter complete OTP');
-      return;
-    }
-
-    localStorage.setItem('resetCode', code);
-    this.router.navigate(['/forgotpassnew']);
+  if (code.length !== 6) {
+    alert('Enter complete OTP');
+    return;
   }
+
+  const email = localStorage.getItem('resetEmail');
+
+  this.http.post<any>('http://localhost:3000/api/otp/verify', { email, code }).subscribe({
+    next: () => {
+      localStorage.setItem('resetCode', code);
+      this.router.navigate(['/forgotpassnew']);
+    },
+    error: (err) => {
+      if (err.status === 400) {
+        alert(err.error.message || 'Invalid or expired code.');
+      }
+    }
+  });
 }
+}
+

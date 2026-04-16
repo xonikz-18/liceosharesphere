@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, DestroyRef, inject } from '@angular/core';
+import { Component, AfterViewInit, OnInit, DestroyRef, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,6 +30,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   private chart: Chart | null = null;
   private chartCanvasReady = false;
+  private cdr = inject(ChangeDetectorRef);
 
   posts: PostItem[] = [];
   currentUserId: number | string | null = null;
@@ -87,6 +88,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     if (cachedPosts.length) {
       this.posts = cachedPosts;
       this.updateChart();
+  
     }
 
     this.postService.getPosts().subscribe({
@@ -94,10 +96,12 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         this.posts = posts;
         this.updateChart();
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Unable to load post listings at this time.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
