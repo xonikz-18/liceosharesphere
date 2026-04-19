@@ -4,7 +4,6 @@
   width:100vw;
 }
 
-/* 🔥 FULL BACKGROUND (NO WHITE ANYWHERE) */
 .login-container{
   height:100%;
   width:100%;
@@ -17,13 +16,11 @@
   background-size: cover;
 }
 
-/* 🔥 CENTERED CONTENT LIKE FIGMA */
 .center-wrapper{
   width:1500px;
   display:flex;
 }
 
-/* LEFT */
 .login-left{
   width:50%;
   display:flex;
@@ -32,7 +29,6 @@
   color:black;
 }
 
-/* RIGHT */
 .login-right{
   width:50%;
   display:flex;
@@ -40,14 +36,12 @@
   align-items:center;
 }
 
-/* CONTENT */
 .left-content{
   width:400px;
   display:flex;
   flex-direction:column;
 }
 
-/* LOGO */
 .logo{
   width:270px;
   height:180px;
@@ -56,7 +50,6 @@
   margin-bottom:-20px;
 }
 
-/* 🔥 CENTERED WHITE TEXT */
 .subtitle{
   font-size:14px;
   line-height:1.5;
@@ -65,13 +58,11 @@
   margin-bottom:30px;
 }
 
-/* FORM */
 form{
   display:flex;
   flex-direction:column;
 }
 
-/* 🔥 LABELS WHITE + CENTERED */
 label{
   font-size:13px;
   color:black;
@@ -79,14 +70,11 @@ label{
   margin-top:12px;
 }
 
-/* INPUT */
 .input-group{
   display:flex;
   align-items:center;
-
   background:white;
   border-radius:6px;
-
   margin-top:6px;
   padding:0 12px;
   height:42px;
@@ -133,8 +121,6 @@ input:-webkit-autofill:active {
   background-image:url('../../assets/icons/padlockicon.png');
 }
 
-
-/* BUTTONS */
 .login-btn,
 .signup-btn{
   height:42px;
@@ -153,7 +139,6 @@ input:-webkit-autofill:active {
   width:100%;
 }
 
-/* 🔥 CENTERED WHITE TEXT */
 .forgot{
   margin-top:12px;
   font-size:12px;
@@ -166,7 +151,6 @@ input:-webkit-autofill:active {
   color:#b40606;
 }
 
-/* DIVIDER */
 .divider{
   display:flex;
   align-items:center;
@@ -186,7 +170,6 @@ input:-webkit-autofill:active {
   background: black;
 }
 
-/* 🔥 BIG DIAMOND CENTER RIGHT */
 .diamond{
   width:600px;
   height:600px;

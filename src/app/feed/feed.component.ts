@@ -47,8 +47,7 @@ export class FeedComponent implements OnInit {
       }
     });
   }
-
-  // 🔹 Called from AddComponent to instantly update feed
+  
   addPost(newPost: PostItem) {
     this.posts.unshift(newPost);
   }

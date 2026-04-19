@@ -41,23 +41,11 @@ export class DashboardComponent implements OnInit {
   private latestNotifications: BorrowNotification[] = [];
   private latestIncomingRequestsCount = 0;
 
-  /* ========================= */
-  /* MODALS */
-  /* ========================= */
-
   showLogoutPopup = false;
   showAddPopup = false;
 
-  /* ========================= */
-  /* DROPDOWNS */
-  /* ========================= */
-
   showNotifications = false;
   showMessages = false;
-
-  /* ========================= */
-  /* ITEMS */
-  /* ========================= */
 
   items: PostItem[] = [];
   isLoading = false;
@@ -69,10 +57,6 @@ export class DashboardComponent implements OnInit {
   messageTargetOwner: MessageTargetOwner | null = null;
   private cdr = inject(ChangeDetectorRef);
   previewImage: string = '';
-
-  /* ========================= */
-  /* LOGOUT */
-  /* ========================= */
 
   selectedItem: PostItem | null = null;
 
@@ -165,7 +149,6 @@ export class DashboardComponent implements OnInit {
     this.errorMessage = '';
     const cachedItems = this.borrowRequestService.applyRequestStatusesToPosts(this.postService.getCachedPosts());
 
-    // Use the cached posts immediately so refresh does not clear the visible feed.
     if (cachedItems.length > 0) {
       this.items = cachedItems;
     }
@@ -297,10 +280,6 @@ closeItem(){
     this.showLogoutPopup = false;
   }
 
-  /* ========================= */
-  /* ADD ITEM */
-  /* ========================= */
-
   openAddPopup(){
     this.showAddPopup = true;
   }
@@ -318,10 +297,6 @@ closeItem(){
     this.showAddPopup = false;
   }
 
-  /* ========================= */
-  /* IMAGE PREVIEW */
-  /* ========================= */
-
   openPreview(img: string){
     this.previewImage = img;
     this.cdr.detectChanges();
@@ -330,10 +305,6 @@ closeItem(){
   closePreview(){
     this.previewImage = '';
   }
-
-  /* ========================= */
-  /* NOTIFICATIONS */
-  /* ========================= */
 
   toggleNotifications(event: Event){
     event.stopPropagation();
@@ -368,10 +339,6 @@ closeItem(){
     this.refreshIncomingRequests();
   }
 
-  /* ========================= */
-  /* MESSAGES */
-  /* ========================= */
-
   openMessages(event: Event){
     event.stopPropagation();
     this.showNotifications = false;
@@ -388,10 +355,6 @@ closeItem(){
     this.messageTargetOwner = null;
     this.refreshMessageUnreadCount();
   }
-
-  /* ========================= */
-  /* CLOSE DROPDOWNS */
-  /* ========================= */
 
   @HostListener('document:click')
   closeDropdowns(){

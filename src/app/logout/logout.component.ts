@@ -11,7 +11,6 @@ import { ProfileService } from '../services/profile.service';
   styleUrl: './logout.component.scss'
 })
 export class LogoutComponent {
-  // This sends a signal back to the dashboard to close the popup
   @Output() cancel = new EventEmitter<void>();
 
   constructor(private router: Router, private profileService: ProfileService) {}

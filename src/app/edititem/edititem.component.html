@@ -1,21 +1,15 @@
 <div class="overlay">
-
   <div class="modal">
-
-    <!-- HEADER -->
     <div class="header">
       <h2>Edit Item</h2>
       <div class="close-btn" (click)="cancel()"></div>
     </div>
 
     <div class="content">
-
-      <!-- LEFT IMAGE -->
       <div class="image-section">
         <div class="image-preview" [style.backgroundImage]="editableItem.image ? 'url(' + editableItem.image + ')' : ''"></div>
       </div>
 
-      <!-- RIGHT FORM -->
       <div class="form-section">
 
         <div class="field">
@@ -28,7 +22,6 @@
           <textarea [(ngModel)]="editableItem.description"></textarea>
         </div>
 
-        <!-- STATUS -->
         <div class="status-group">
 
           <label class="radio available">
@@ -51,15 +44,10 @@
 
         </div>
 
-        <!-- SAVE -->
         <div class="actions">
           <button type="button" class="save-btn" (click)="saveFromClick($event)">Save</button>
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>

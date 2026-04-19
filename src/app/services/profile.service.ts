@@ -25,14 +25,14 @@ export class ProfileService {
       storage.setItem(key, JSON.stringify(primaryValue));
       return;
     } catch {
-      // Retry with a smaller payload.
+      // retry with a smaller payload.
     }
 
     try {
       storage.removeItem(key);
       storage.setItem(key, JSON.stringify(fallbackValue));
     } catch {
-      // Keep runtime state if browser storage is unavailable or full.
+      // keep runtime state if browser storage is unavailable or full.
     }
   }
 
@@ -95,7 +95,7 @@ export class ProfileService {
             this.writeProfilePicture(storedProfilePicture);
           }
         } catch {
-          // Keep runtime profile when storage update is unavailable.
+          // keep runtime profile when storage update is unavailable.
         }
         return this.cachedProfile;
       } catch {
@@ -115,7 +115,7 @@ export class ProfileService {
       try {
         localStorage.setItem(this.profileStorageKey, JSON.stringify(this.toStorageSafeProfile(this.cachedProfile)));
       } catch {
-        // Keep runtime profile when storage update is unavailable.
+        // keep runtime profile when storage update is unavailable.
       }
       return this.cachedProfile;
     } catch {
@@ -222,7 +222,6 @@ export class ProfileService {
     );
   }
 
-  // LOGIN
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
       map(res => {
@@ -245,7 +244,7 @@ export class ProfileService {
     );
   }
 
-  // GET PROFILE (from backend or localStorage)
+  // get profile (from backend or localStorage)
   getProfileSnapshot(): any {
     return this.getStoredProfile() ?? {};
   }
@@ -328,7 +327,6 @@ export class ProfileService {
     return this.persistProfile(mergedProfile);
   }
 
-  // UPDATE PROFILE
   updateProfile(profile: any): Observable<any> {
     const mergedProfile = { ...(this.getStoredProfile() ?? {}), ...profile };
     const profileId = this.getProfileId(mergedProfile);
@@ -349,7 +347,6 @@ export class ProfileService {
     );
   }
 
-  // LOGOUT
   logout() {
     this.cachedProfile = null;
     localStorage.removeItem(this.profileStorageKey);

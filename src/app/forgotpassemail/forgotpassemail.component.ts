@@ -27,31 +27,31 @@ export class ForgotPassEmailComponent {
     this.errorMessage = '';
   }
 
-    
-
   goBack(){
-    this.router.navigate(['/']); // back to login
+    this.router.navigate(['/']); 
   }
 
-  continue(){
-  if(!this.email) return;
+  continue() {
+  if (!this.email) return;
 
   this.http.post<any>('http://localhost:3000/api/auth/forgot-password', { email: this.email })
     .subscribe({
-      next: (res) => {
+      next: () => {
         localStorage.setItem('resetEmail', this.email);
 
-        // send OTP after email check
+        // 👉 Redirect agad
+        this.router.navigate(['/forgotpassotp']);
+
+        // 👉 Send OTP in background (no waiting)
         this.http.post<any>('http://localhost:3000/api/otp/send', { email: this.email })
           .subscribe({
-            next: () => {
-              toast.success('Code sent successfully');
-              this.router.navigate(['/forgotpassotp']);
-            },
-            error: (err) => toast.error(err.error.message || 'Failed to send OTP')
+            error: () => toast.error('Failed to send OTP')
           });
+          toast.success('Code sent successfully') 
       },
-      error: (err) => toast.error(err.error.message || 'Request failed')
+      error: (err) => {
+        toast.error(err.error.message || 'Request failed');
+      }
     });
 }
 }

@@ -1,46 +1,16 @@
 <div class="container">
-
-  <!-- BACK BUTTON -->
   <div class="back-btn" (click)="goBack()"></div>
-
-  <!-- CARD -->
   <div class="card">
-
     <h2>Confirm your account</h2>
     <p class="subtitle">Enter the code sent to your email</p>
-
-    <!-- OTP INPUTS -->
     <div class="otp-container">
-
-  <input #otp0 maxlength="1" class="otp-input"
-    (input)="onInput($event, 0)"
-    (keydown)="onKeyDown($event, 0)">
-
-     <input #otp1 maxlength="1" class="otp-input"
-    (input)="onInput($event, 1)"
-    (keydown)="onKeyDown($event, 1)">
-
-    <input #otp2 maxlength="1" class="otp-input"
-    (input)="onInput($event, 2)"
-    (keydown)="onKeyDown($event, 2)">
-
-    <input #otp3 maxlength="1" class="otp-input"
-    (input)="onInput($event, 3)"
-    (keydown)="onKeyDown($event, 3)">
-
-    <input #otp4 maxlength="1" class="otp-input"
-    (input)="onInput($event, 4)"
-    (keydown)="onKeyDown($event, 4)">
-
-    <input #otp5 maxlength="1" class="otp-input"
-    (input)="onInput($event, 5)"
-    (keydown)="onKeyDown($event, 5)">
-
+    <input #otp0 maxlength="1" class="otp-input" (input)="onInput($event, 0)" (keydown)="onKeyDown($event, 0)">
+    <input #otp1 maxlength="1" class="otp-input" (input)="onInput($event, 1)" (keydown)="onKeyDown($event, 1)">
+    <input #otp2 maxlength="1" class="otp-input" (input)="onInput($event, 2)" (keydown)="onKeyDown($event, 2)">
+    <input #otp3 maxlength="1" class="otp-input" (input)="onInput($event, 3)" (keydown)="onKeyDown($event, 3)">
+    <input #otp4 maxlength="1" class="otp-input" (input)="onInput($event, 4)" (keydown)="onKeyDown($event, 4)">
+    <input #otp5 maxlength="1" class="otp-input" (input)="onInput($event, 5)" (keydown)="onKeyDown($event, 5)">
     </div>
-
-    <!-- BUTTON -->
     <button class="btn" (click)="verifyOTP()">Submit</button>
-
   </div>
-
 </div>

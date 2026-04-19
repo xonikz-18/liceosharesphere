@@ -79,8 +79,8 @@ export class AddComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.previewImage = e.target.result; // base64 string
-        this.cdr.detectChanges(); // 🔥 forces instant preview
+        this.previewImage = e.target.result; 
+        this.cdr.detectChanges(); 
       };
       reader.readAsDataURL(file);
     }

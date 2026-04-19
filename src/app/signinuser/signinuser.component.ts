@@ -21,42 +21,86 @@ export class SigninuserComponent {
   password: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
+
+  fullnameerror: string = '';
+  emailerror: string = '';
+  sexerror: string = '';
+  departmenterror: string = '';
+  contactNumbererror: string = '';
+  passworderror: string = '';
+  confirmPassworderror: string = '';
+
   submitted = false;
   isLoading = false;
 
    constructor(private router: Router, private http: HttpClient) {}
 
   onRegister(signupForm: NgForm) {
+
     this.submitted = true;
     this.errorMessage = '';
 
-    if (signupForm.invalid) {
-      return;
+    this.fullnameerror = '';
+    this.emailerror = '';
+    this.sexerror = '';
+    this.departmenterror = '';
+    this.contactNumbererror = '';
+    this.passworderror = '';
+    this.confirmPassworderror = '';
+
+    let hasError = false;
+
+    if (
+    !this.fullname.trim() &&
+    !this.email.trim() &&
+    !this.sex &&
+    !this.department &&
+    !this.contactNumber.trim() &&
+    !this.password &&
+    !this.confirmPassword
+  ) {
+    this.errorMessage = 'Please fill in all required fields.';
+    return;
+  }
+
+    if (!this.fullname.trim()) {
+      this.fullnameerror = 'Full name is required.';
+      hasError = true;
+    }
+    if (!this.email.trim()) {
+      this.emailerror = 'Email is required.';
+      hasError = true;
+    }
+    if (!this.sex.trim()) {
+      this.sexerror = 'Gender is required.';
+      hasError = true;
+    }
+    if (!this.department.trim()) {
+      this.departmenterror = 'Department is required.';
+      hasError = true;
+    }
+    if (!this.contactNumber.trim()) {
+      this.contactNumbererror = 'Contact number is required.';
+      hasError = true;
+    }
+    if (!this.password.trim()) {
+      this.passworderror = 'Password is required.';
+      hasError = true;
+    }
+    if (!this.confirmPassword.trim()) {
+      this.confirmPassworderror = 'Confirm password is required.';
+      hasError = true;
     }
 
-    if (!this.email.includes('@liceo.edu.ph')) {
-      this.errorMessage = 'Please use your school email (@liceo.edu.ph).';
-      return;
-    }
-
-    if (this.password.length < 6) {
-      this.errorMessage = 'Password must be at least 6 characters.';
-      return;
-    }
-
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match.';
-      return;
-    }
+      if (hasError) return;
     
-    const payload = {
+     const payload = {
       fullname: this.fullname,
       email: this.email,
       sex: this.sex,
       department: this.department,
       contact_number: this.contactNumber,
-      password: this.password,
-      confirm_password: this.confirmPassword
+      password: this.password
     };
 
     this.isLoading = true;

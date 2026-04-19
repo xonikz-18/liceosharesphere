@@ -35,15 +35,12 @@ export class ItemViewComponent implements OnChanges {
     this.requestMessage = '';
     this.isSubmittingRequest = false;
   }
-
     openPreview(){
       this.showPreview = true;
-    }
-    
+    }    
     closePreview(){
       this.showPreview = false;
-    }
-    
+    }    
       onClose() {
         this.close.emit();
       }
@@ -91,20 +88,16 @@ export class ItemViewComponent implements OnChanges {
       if (!this.item) {
         return;
       }
-
       if (result.ok || result.postStatus === 'pending') {
         this.requestStateOverride = 'pending';
         return;
       }
-
       this.item = {
         ...this.item,
         status: previousStatus
       };
       this.postService.replaceCachedPost({ ...this.item });
-
       this.requestStateOverride = previousRequestState;
-
       if (result.message === 'Your borrow request is already pending.') {
         this.requestStateOverride = 'pending';
       }

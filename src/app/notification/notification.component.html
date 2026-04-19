@@ -1,25 +1,15 @@
-<!-- NOTIFICATION DROPDOWN -->
 <div class="notification-panel">
-
   <div class="notif-header">
-
     <div class="notif-icon"></div>
     Notifications
-
   </div>
-
   <div class="empty-notif" *ngIf="!incomingRequests.length && !notifications.length">
     No notifications yet.
   </div>
-
   <p *ngIf="feedbackMessage" class="feedback-message">{{ feedbackMessage }}</p>
-
   <div class="notif-list" *ngIf="incomingRequests.length || notifications.length">
-
   <div class="notif-item" *ngFor="let request of incomingRequests">
-
-    <div
-      class="avatar"
+    <div class="avatar"
       [style.backgroundImage]="request.borrowerProfilePicture ? 'url(' + request.borrowerProfilePicture + ')' : 'url(assets/images/dummypic.png)'"
       [style.backgroundSize]="'cover'"
       [style.backgroundPosition]="'center'">
@@ -28,7 +18,6 @@
     <div class="notif-text">
       <b>{{ request.borrowerName }}</b>
       <span>requested to borrow "{{ request.postName }}".</span>
-
       <div class="notif-actions">
         <button class="decline" (click)="declineIncomingRequest(request, $event)">
           Decline
@@ -38,13 +27,9 @@
         </button>
       </div>
     </div>
-
   </div>
-
   <div class="notif-item" *ngFor="let notification of notifications">
-
-    <div
-      class="avatar"
+    <div class="avatar"
       [style.backgroundImage]="notification.actorProfilePicture ? 'url(' + notification.actorProfilePicture + ')' : 'url(assets/images/dummypic.png)'"
       [style.backgroundSize]="'cover'"
       [style.backgroundPosition]="'center'">
@@ -63,9 +48,6 @@
         </button>
       </div>
     </div>
-
   </div>
-
   </div>
-
 </div>

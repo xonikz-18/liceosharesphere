@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-profileedit',
@@ -74,6 +75,7 @@ export class ProfileEditComponent implements OnInit {
   onSaveClick(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+    toast.success('Successfully saved');
 
     const activeElement = document.activeElement;
     if (activeElement instanceof HTMLElement) {

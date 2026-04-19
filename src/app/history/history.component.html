@@ -1,87 +1,70 @@
 <div class="dashboard">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
-
     <div class="logo"></div>
-
     <div class="menu">
-
       <div class="menu-item" routerLink="/dashboard">
         <div class="icon home"></div>
         <span>Home</span>
       </div>
-
       <div class="menu-item active" routerLink="/history">
         <div class="icon history"></div>
         <span>History</span>
       </div>
-
       <div class="menu-item" routerLink="/profile">
       <div class="icon profile"></div>
       <span>Profile</span>
     </div>
-
     </div>
-
-    <!-- LOGOUT -->
     <div class="logout" (click)="toggleLogout()">
       <div class="icon logout-icon"></div>
       <span>Logout</span>
     </div>
-
   </div>
-
-
-  <!-- MAIN HISTORY AREA -->
   <div class="main-history">
 
     <div class="history-container">
+    @if (!history.length) {
+      <div class="history-empty">No borrowing or lending activity yet.</div>
+    } @else {
       <div class="history-panel">
         <div class="history-panel-body">
           <div class="history-list">
-            @if (!history.length) {
-              <div class="history-empty">No borrowing or lending activity yet.</div>
-            } @else {
-              @for (h of history; track h.type + '-' + h.requestId) {
-                <div class="history-card">
+            @for (h of history; track h.type + '-' + h.requestId) {
+              <div class="history-card">
 
-                  <div
-                    class="indicator"
-                    [class.borrowed]="h.type === 'borrowed'"
-                    [class.lent]="h.type === 'lent'">
-                  </div>
-
-                  <div class="history-text">
-                    @if (h.type === 'borrowed') {
-                      <span>
-                        Borrowed <b>"{{h.item}}"</b> from <b>{{h.person}}</b>
-                      </span>
-                    } @else {
-                      <span>
-                        Lent <b>"{{h.item}}"</b> to <b>{{h.person}}</b>
-                      </span>
-                    }
-                  </div>
-
-                  <div class="history-date">
-                    {{h.date}}
-                  </div>
-
+                <div
+                  class="indicator"
+                  [class.borrowed]="h.type === 'borrowed'"
+                  [class.lent]="h.type === 'lent'">
                 </div>
-              }
-            }
 
+                <div class="history-text">
+                  @if (h.type === 'borrowed') {
+                    <span>
+                      Borrowed <b>"{{h.item}}"</b> from <b>{{h.person}}</b>
+                    </span>
+                  } @else {
+                    <span>
+                      Lent <b>"{{h.item}}"</b> to <b>{{h.person}}</b>
+                    </span>
+                  }
+                </div>
+
+                <div class="history-date">
+                  {{h.date}}
+                </div>
+
+              </div>
+            }
           </div>
         </div>
       </div>
-    </div>
+    }
+  </div>
 
   </div>
 
 </div>
-
-<!-- LOGOUT MODAL -->
 @if (showLogoutPopup) {
   <app-logout (cancel)="handleCancel()"></app-logout>
 }

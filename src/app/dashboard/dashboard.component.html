@@ -1,12 +1,7 @@
 <div class="dashboard">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
-
     <div class="logo"></div>
-
     <div class="menu">
-
       <div class="menu-item" routerLink="/dashboard" routerLinkActive="active">
         <div class="icon home"></div>
         <span>Home</span>
@@ -30,45 +25,31 @@
     </div>
 
   </div>
-
-
-  <!-- MAIN AREA -->
   <div class="main">
-
-    <!-- TOPBAR -->
     <div class="topbar">
-
-      <!-- ADD BUTTON -->
       <div class="btn" (click)="openAddPopup()">
         <div class="icon add"></div>
         <span>Add</span>
       </div>
 
       <div class="top-icons">
-
-        <!-- SEARCH -->
         <div class="search-container">
           <div class="icon search"></div>
           <input type="text" placeholder="Search item" [value]="searchTerm" (input)="onSearchChange($event)">
         </div>
 
-        <!-- NOTIF -->
         <div class="btn notif-btn" (click)="toggleNotifications($event)">
           <div class="icon notif"></div>
           <span class="notif-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
         </div>
 
-        <!-- MESSAGE -->
         <div class="btn notif-btn" (click)="openMessages($event)">
           <div class="icon message"></div>
           <span class="notif-badge" *ngIf="messageUnreadCount > 0">{{ messageUnreadCount }}</span>
         </div>
-
       </div>
-
     </div>
 
-    <!-- 🔥 CONTENT -->
     <div class="content">
       <div *ngIf="errorMessage" class="empty-state">{{ errorMessage }}</div>
 
@@ -95,11 +76,8 @@
                 {{ item.status }}
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       <div *ngIf="!errorMessage && !items.length" class="empty-state">
@@ -116,34 +94,28 @@
 
 </div>
 
-
-<!-- LOGOUT -->
 <app-logout
   *ngIf="showLogoutPopup"
   (cancel)="handleCancel()">
 </app-logout>
 
-<!-- ADD -->
 <app-add
   *ngIf="showAddPopup"
   (cancel)="closeAddPopup()"
   (postItem)="handlePost($event)">
 </app-add>
 
-<!-- NOTIF -->
 <app-notification
   *ngIf="showNotifications"
   (click)="$event.stopPropagation()">
 </app-notification>
 
-<!-- MESSAGE -->
 <app-message
   *ngIf="showMessages"
   [targetOwner]="messageTargetOwner"
   (closePanel)="closeMessagePanel()"
   (click)="$event.stopPropagation()">
 </app-message>
-
 
 <app-itemview
   *ngIf="selectedItem"

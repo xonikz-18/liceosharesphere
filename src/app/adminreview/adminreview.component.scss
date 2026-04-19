@@ -2,7 +2,6 @@
   display:block;
 }
 
-/* OVERLAY */
 .overlay{
   position:fixed;
   top:0;
@@ -18,7 +17,6 @@
   z-index:9999;
 }
 
-/* MODAL */
 .modal{
   width:800px;
   background:white;
@@ -30,7 +28,6 @@
   flex-direction:column;
 }
 
-/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
@@ -44,7 +41,6 @@
   margin:0;
 }
 
-/* CLOSE */
 .close-btn{
   width:18px;
   height:18px;
@@ -52,13 +48,11 @@
   background:url('../../assets/icons/cancelbtnicon.png') center/contain no-repeat;
 }
 
-/* CONTENT */
 .content{
   display:flex;
   gap:30px;
 }
 
-/* IMAGE */
 .image-section{
   width:45%;
   position:relative;
@@ -68,12 +62,9 @@
   width:100%;
   height:240px;
   border-radius:10px;
-
-  /* ✅ YOUR SYSTEM (UNCHANGED) */
   background:url('../../assets/images/dummypepic.png') center/cover no-repeat;
 }
 
-/* STATUS */
 .status-badge{
   position:absolute;
   bottom:10px;
@@ -106,7 +97,6 @@
   color:#000;
 }
 
-/* DETAILS */
 .form-section{
   width:55%;
   display:flex;
@@ -140,14 +130,12 @@
   line-height:1.5;
 }
 
-/* ACTIONS */
 .actions{
   display:flex;
   justify-content:flex-end;
   margin-top:auto;
 }
 
-/* DELETE */
 .delete-btn{
   background:#7c0000;
   color:white;

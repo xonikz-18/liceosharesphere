@@ -2,15 +2,13 @@
   display:block;
 }
 
-/* OVERLAY */
-
 .overlay{
   position:absolute;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  padding:40px; /* 🔥 gives left/right breathing space */
+  padding:40px; 
   background:rgba(0,0,0,0.3);
 
   display:flex;
@@ -21,13 +19,11 @@
   border-radius:12px;
 }
 
-/* MODAL */
-
 .modal{
   width:100%;
   max-width:890px;
 
-  margin-left:100px; /* 🔥 move modal to the LEFT */
+  margin-left:100px; 
   margin-bottom:65px;
   background:white;
   border-radius:12px;
@@ -35,8 +31,6 @@
 
   box-shadow:0 12px 30px rgba(0,0,0,0.25);
 }
-
-/* HEADER */
 
 .header{
   display:flex;
@@ -57,14 +51,10 @@
   background:url('../../assets/icons/cancelbtnicon.png') center/contain no-repeat;
 }
 
-/* CONTENT */
-
 .content{
   display:flex;
   gap:30px;
 }
-
-/* IMAGE */
 
 .image-section{
   flex:1;
@@ -76,8 +66,6 @@
   border-radius:10px;
   background:url('../../assets/images/dummypepic.png') center/cover no-repeat;
 }
-
-/* FORM */
 
 .form-section{
   flex:1.3;
@@ -111,8 +99,6 @@ textarea{
   resize:none;
 }
 
-/* STATUS */
-
 .status-group{
   display:flex;
   align-items:center;
@@ -124,19 +110,15 @@ textarea{
   display:flex;
   align-items:center;
   gap:8px;
-
   padding:6px 14px;
   border-radius:20px;
   font-size:13px;
   cursor:pointer;
 }
-
-/* hide default radio */
 .radio input{
   display:none;
 }
 
-/* custom circle */
 .circle{
   width:14px;
   height:14px;
@@ -146,7 +128,6 @@ textarea{
   position:relative;
 }
 
-/* filled when checked */
 .radio input:checked + .circle::after{
   content:'';
   width:8px;
@@ -158,8 +139,6 @@ textarea{
   left:50%;
   transform:translate(-50%, -50%);
 }
-
-/* COLORS */
 
 .radio.available{
   background:#B9FF66;
@@ -181,8 +160,6 @@ textarea{
 .radio.returned{
   background:#f3a300;
 }
-
-/* BUTTON */
 
 .actions{
   display:flex;

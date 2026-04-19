@@ -2,7 +2,6 @@
   display:block;
 }
 
-/* OVERLAY */
 .overlay{
   position:fixed;
   top:0;
@@ -18,7 +17,6 @@
   z-index:9999;
 }
 
-/* MODAL */
 .modal{
   width:800px;
   background:white;
@@ -31,7 +29,6 @@
   
 }
 
-/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
@@ -51,13 +48,11 @@
   background:url('../../assets/icons/cancelbtnicon.png') center/contain no-repeat;
 }
 
-/* CONTENT */
 .content{
   display:flex;
   gap:30px;
 }
 
-/* IMAGE */
 .image-section{
   width:45%;
   position:relative;
@@ -72,15 +67,14 @@
   cursor:pointer;
 }
 
-/* STATUS INSIDE IMAGE */
 .status-badge{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-
-  padding:6px 14px;
-  border-radius:20px;
-  font-size:12px;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 12px;
+  width: fit-content;
+  max-width: 120px;
+  margin-left: 0px;
 }
 
 .status-badge.available{
@@ -97,7 +91,6 @@
   color:#230000;
 }
 
-/* DETAILS */
 .form-section{
   width:55%;
   display:flex;
@@ -123,7 +116,6 @@
   color:#444;
 }
 
-/* BUTTONS (BOTTOM RIGHT FIX) */
 .actions{
   display:flex;
   justify-content:flex-end;
@@ -131,7 +123,6 @@
   margin-top:85px;
 }
 
-/* BUTTON STYLES */
 .msg-btn{
   border:1px solid #999;
   background:white;
@@ -168,7 +159,6 @@
   text-align:right;
 }
 
-/* FULLSCREEN IMAGE */
 .fullscreen{
   position:fixed;
   top:0;
@@ -179,8 +169,8 @@
   background:rgba(0,0,0,0.7);
 
   display:flex;
-  justify-content:center;   /* 🔥 horizontal center */
-  align-items:center;       /* 🔥 vertical center */
+  justify-content:center;  
+  align-items:center;      
 
   z-index:10000;
 }
@@ -190,5 +180,5 @@
   max-height:85%;
   border-radius:10px;
 
-  display:block; /* removes weird spacing */
+  display:block; 
 }

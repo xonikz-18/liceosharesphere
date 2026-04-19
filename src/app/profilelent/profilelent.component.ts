@@ -26,7 +26,7 @@ export class ProfileLentComponent implements OnInit {
   showEditPopup = false;
   showEditProfile = false;
 
-  profile: any; // 🔥 declare only
+  profile: any; //declare only
   lent: PostItem[] = [];
   errorMessage = '';
   deletingPostId: number | string | null = null;

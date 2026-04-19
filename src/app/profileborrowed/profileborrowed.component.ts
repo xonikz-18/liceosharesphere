@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -20,6 +20,7 @@ export class ProfileBorrowedComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly profileService = inject(ProfileService);
   private readonly borrowRequestService = inject(BorrowRequestService);
+   private cdr = inject(ChangeDetectorRef);
 
   showLogoutPopup = false;
   showEditProfile = false;
@@ -101,7 +102,7 @@ export class ProfileBorrowedComponent implements OnInit {
 
     this.profileService.updateProfile(updated).subscribe({
       next: (res) => {
-        this.profile = res; // ✅ update instantly
+        this.profile = res;
       },
       error: (err) => {
         this.profile = this.profileService.applyLocalProfileUpdate(previousProfile);
@@ -123,6 +124,7 @@ export class ProfileBorrowedComponent implements OnInit {
   private loadBorrowedItems() {
     this.borrowRequestService.getActiveBorrowedItemsForUser(this.currentUserId ?? undefined).subscribe((items) => {
       this.borrowed = items;
+      this.cdr.detectChanges();
     });
   }
 

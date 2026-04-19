@@ -2,7 +2,6 @@
   display:block;
 }
 
-/* overlay background */
 
 .add-overlay{
   position:fixed;
@@ -21,7 +20,6 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
-/* modal */
 
 .add-modal{
   width:650px;
@@ -34,8 +32,6 @@
 
   position:relative;
 }
-
-/* close */
 
 .cancel-icon{
   position:absolute;
@@ -53,8 +49,6 @@
   background-position:center;
 }
 
-/* form */
-
 .form-group{
   margin-bottom:22px;
 }
@@ -68,8 +62,6 @@ label{
 .required{
   color:#c30000;
 }
-
-/* inputs */
 
 .input-field{
   width:96.5%;
@@ -98,16 +90,12 @@ label{
   resize:none;
 }
 
-/* counter */
-
 .char-counter{
   text-align:right;
   font-size:11px;
   color:#888;
   margin-top:4px;
 }
-
-/* upload */
 
 .upload-box{
   margin-top:10px;
@@ -123,7 +111,7 @@ label{
 
   cursor:pointer;
 
-  position:relative; /* 🔥 ADDED (for X button positioning) */
+  position:relative; 
 }
 
 .upload-content{
@@ -147,8 +135,6 @@ label{
   background-position:center;
 }
 
-/* 🔥 REMOVE IMAGE BUTTON */
-
 .remove-image{
   position:absolute;
   top:8px;
@@ -164,8 +150,6 @@ label{
   background-repeat:no-repeat;
   background-position:center;
 }
-
-/* button */
 
 .button-row{
   display:flex;
@@ -189,8 +173,6 @@ label{
 .btn-post:hover{
   opacity:0.9;
 }
-
-/* full preview */
 
 .overlay{
   position:fixed;

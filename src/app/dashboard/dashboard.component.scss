@@ -4,8 +4,6 @@
   width:100vw;
 }
 
-/* MAIN LAYOUT */
-
 .dashboard{
   display:flex;
   height:100%;
@@ -14,8 +12,6 @@
   position: relative;
   overflow: visible;
 }
-
-/* SIDEBAR */
 
 .sidebar{
   width: 225px;
@@ -37,8 +33,6 @@
   margin-bottom:50px;
 }
 
-/* MENU */
-
 .menu{
   display:flex;
   flex-direction:column;
@@ -57,8 +51,6 @@
   color:#f7b733;
 }
 
-/* LOGOUT BUTTON */
-
 .logout{
   margin-top:auto;
   display:flex;
@@ -74,8 +66,6 @@
   width:150px;
 }
 
-/* MAIN AREA */
-
 .main{
   flex:1;
   background:rgb(246, 246, 246);
@@ -83,8 +73,6 @@
   flex-direction:column;
   overflow:hidden; /* 🔥 important */
 }
-
-/* TOPBAR */
 
 .topbar{
   height:70px;
@@ -96,8 +84,6 @@
 
   padding:0 35px;
 }
-
-/* BUTTONS */
 
 .btn{
   display:flex;
@@ -129,15 +115,11 @@
   text-align:center;
 }
 
-/* RIGHT SIDE */
-
 .top-icons{
   display:flex;
   align-items:center;
   gap:8px;
 }
-
-/* SEARCH */
 
 .search-container{
   display:flex;
@@ -158,8 +140,6 @@
   flex:1;
 }
 
-/* CONTENT AREA */
-
 .content{
   flex:1;
   overflow-y:auto;
@@ -172,19 +152,13 @@
   font-size:14px;
 }
 
-/* ICONS */
-
 .icon{
   width:32px;
   height:32px;
-
   background-size:contain;
   background-repeat:no-repeat;
-
   cursor:pointer;
 }
-
-/* SIDEBAR ICONS */
 
 .home{
   background-image:url('../../assets/icons/homebtnicon.png');
@@ -204,8 +178,6 @@
   height:23px;
 }
 
-/* TOPBAR ICONS */
-
 .add{
   background-image:url('../../assets/icons/addbtnicon.png');
 }
@@ -222,8 +194,6 @@
   background-image:url('../../assets/icons/messagebtnicon.png');
 }
 
-/* MODALS FIX */
-
 app-add,
 app-logout{
   position:fixed;
@@ -232,10 +202,6 @@ app-logout{
   width:100%;
   height:100%;
 }
-
-/* ========================= */
-/* 🔥 GRID FIX (IMPORTANT) */
-/* ========================= */
 
 .item-grid{
   display:grid;
@@ -248,8 +214,6 @@ app-logout{
   box-sizing:border-box;
 }
 
-/* CARD */
-
 .item-card{
   background:#fff;
   border-radius:12px;
@@ -261,29 +225,20 @@ app-logout{
   flex-direction:column;
 }
 
-/* TITLE */
-
 .item-title{
   font-weight:600;
   margin-bottom:8px;
   font-size:15px;
 }
 
-/* IMAGE */
-
 .item-image{
   width:100%;
   height:200px;
-
   border-radius:8px;
-
   background-size:cover;
   background-position:center;
-
   cursor:pointer;
 }
-
-/* FOOTER */
 
 .item-footer{
   display:flex;
@@ -299,8 +254,6 @@ app-logout{
   gap:8px;
 }
 
-/* OWNER */
-
 .owner{
   display:flex;
   align-items:center;
@@ -313,8 +266,6 @@ app-logout{
   border-radius:50%;
   background:#ccc;
 }
-
-/* DATE */
 
 .date{
   font-size:12px;
@@ -347,10 +298,6 @@ app-logout{
   background:#f3a300;
   color:#000;
 }
-
-/* ========================= */
-/* 🔥 FULL IMAGE PREVIEW */
-/* ========================= */
 
 .overlay{
   position:fixed;

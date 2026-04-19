@@ -27,7 +27,7 @@ export interface ChatMessageItem {
 })
 export class MessageService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/auth/messages';
+  private readonly apiUrl = 'http://localhost:3000/api/messages';
   private readonly unreadCountSubject = new BehaviorSubject<number>(0);
   private readonly unreadCountStorageKeyPrefix = 'messageUnreadCount:';
 

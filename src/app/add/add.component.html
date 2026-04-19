@@ -1,10 +1,8 @@
 <div class="add-overlay">
   <div class="add-modal">
 
-    <!-- Cancel icon -->
     <div class="cancel-icon" (click)="onCancel()"></div>
 
-    <!-- ITEM NAME -->
     <div class="form-group">
       <label>Item name <span class="required">*</span></label>
       <input
@@ -16,7 +14,6 @@
       <div class="char-counter">{{ itemName.length }}/100</div>
     </div>
 
-    <!-- DESCRIPTION -->
     <div class="form-group">
       <label>Description <span class="required">*</span></label>
       <textarea
@@ -27,7 +24,6 @@
       <div class="char-counter">{{ description.length }}/600</div>
     </div>
 
-    <!-- ATTACHMENT -->
     <div class="form-group">
       <label>Attachment <span class="required">*</span></label>
       <input type="file" #fileInput hidden (change)="onFileSelected($event)">
@@ -38,7 +34,6 @@
         </div>
       </label>
 
-      <!-- preview -->
       <div class="upload-box" *ngIf="previewImage">
         <img
           [src]="previewImage"
@@ -49,7 +44,6 @@
       </div>
     </div>
 
-    <!-- POST -->
     <div class="button-row">
       <button class="btn-post" (click)="onPost()">Post</button>
     </div>
@@ -57,7 +51,6 @@
   </div>
 </div>
 
-<!-- FULL VIEW -->
 <div class="overlay" *ngIf="showFullPreview" (click)="closePreview()">
   <img
     [src]="previewImage"

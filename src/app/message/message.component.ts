@@ -42,8 +42,8 @@ export class MessageComponent implements OnInit, OnChanges {
     const snapshot = this.profileService.getProfileSnapshot();
     this.currentUserProfilePicture = snapshot?.profilePicture ?? snapshot?.profile_picture ?? '';
 
-    // If a targetOwner was already provided when the panel opened,
-    // jump straight into their chat — don't show the inbox first.
+    // kung ang targetOwner kay na provide na kung ang panel na open,
+    // jump straight into their chat ayaw sa ipakita ang inbox.
     if (this.targetOwner) {
       this.handleTargetOwner();
     }
@@ -61,8 +61,8 @@ export class MessageComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['targetOwner']) {
       this.lastHandledTargetOwnerId = null;
-      // If the component is already initialized (currentUserId set), navigate immediately.
-      // On first creation, ngOnInit will handle it after setting currentUserId.
+      // kung ang component kay na initialized (currentUserId set) na, navigate na dayun.
+      // on first creation, ngOnInit will handle it after setting currentUserId.
       if (this.currentUserId) {
         this.handleTargetOwner();
       }
@@ -132,7 +132,7 @@ export class MessageComponent implements OnInit, OnChanges {
 
     this.messageService.sendMessage(this.currentUserId, receiverId, textToSend).subscribe({
       next: (message) => {
-        // Replace optimistic message with confirmed server message
+        // replace optimistic message with confirmed server message
         this.pendingMessages = this.pendingMessages.filter((m) => m.id !== optimisticMsg.id);
         this.messages = [...this.messages.filter(m => m.id !== optimisticMsg.id), message];
         this.upsertConversationAfterSend(receiverId, textToSend, message.createdAt);
@@ -140,7 +140,7 @@ export class MessageComponent implements OnInit, OnChanges {
         this.changeDetectorRef.markForCheck();
       },
       error: (error) => {
-        // Keep failed bubble visible and restore text for retry.
+        // keep failed bubble visible and restore text for retry.
         this.pendingMessages = this.pendingMessages.filter((m) => m.id !== optimisticMsg.id);
         this.failedMessages = [...this.failedMessages, optimisticMsg];
         this.messageText = textToSend;
@@ -230,7 +230,7 @@ export class MessageComponent implements OnInit, OnChanges {
       return;
     }
 
-    // Keep a newly opened synthetic conversation (from Message Owner) so
+    // keep a newly opened synthetic conversation (from Message Owner) so
     // first message can still be sent even if it is not yet in server list.
     if (this.openChat) {
       return;

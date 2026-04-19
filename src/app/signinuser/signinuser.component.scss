@@ -10,8 +10,6 @@
   overflow: hidden;
 }
 
-/* LEFT IMAGE PANEL */
-
 .left-panel{
   width: 28%;
   background-color: #7a0000;
@@ -21,8 +19,6 @@
   background-position: 0px 10%;
 }
 
-/* RIGHT SIDE */
-
 .right-panel{
   width: 72%;
   background: #ffffff;
@@ -31,8 +27,6 @@
   justify-content: center;
   align-items: center;
 }
-
-/* FORM */
 
 .form-container{
   width: 550px;
@@ -55,15 +49,11 @@ form{
   flex-direction: column;
 }
 
-/* LABELS */
-
 label{
   font-size: 14px;
   margin-bottom: 4px;
   margin-top: 12px;
 }
-
-/* INPUTS */
 
 input, select{
   height: 38px;
@@ -89,8 +79,6 @@ select option {
 select option[value=""] {
   color: #999;
 }
-
-/* BUTTONS */
 
 .buttons{
   display: flex;
@@ -130,7 +118,6 @@ select option[value=""] {
 
 .form-error{
   color: #cc0000;
-  font-size: 14px;
-  margin-top: 18px;
-  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 8px;
 }

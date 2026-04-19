@@ -11,21 +11,15 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* SIDEBAR */
-
 .sidebar{
   width:225px;
   background:#7c0000;
   color:white;
-
   display:flex;
   flex-direction:column;
-
   padding:30px 20px;
   box-sizing:border-box;
 }
-
-/* LOGO */
 
 .logo{
   width:170px;
@@ -34,8 +28,6 @@
   background-size:contain;
   margin-bottom:50px;
 }
-
-/* MENU */
 
 .menu{
   display:flex;
@@ -55,8 +47,6 @@
   color:#f7b733;
 }
 
-/* ICON BASE */
-
 .icon{
   width:32px;
   height:32px;
@@ -64,8 +54,6 @@
   background-size:contain;
   background-repeat:no-repeat;
 }
-
-/* SIDEBAR ICONS */
 
 .home{
   background-image:url('../../assets/icons/home2btnicon.png');
@@ -85,8 +73,6 @@
   height:23px;
 }
 
-/* LOGOUT BUTTON */
-
 .logout{
   margin-top:auto;
   display:flex;
@@ -102,16 +88,12 @@
   width:150px;
 }
 
-/* MAIN HISTORY AREA */
-
 .main-history{
   flex:1;
   background:#ffffff;
   padding:30px;
   box-sizing:border-box;
 }
-
-/* HISTORY CONTAINER */
 
 .history-container{
   height:100%;
@@ -136,8 +118,6 @@
   padding:18px 24px 24px;
 }
 
-/* SCROLL LIST */
-
 .history-list{
   height:100%;
   max-height:100%;
@@ -147,7 +127,7 @@
   gap:14px;
   min-height:120px;
 
-  padding-right:15px; /* space between cards and scrollbar */
+  padding-right:15px; 
 }
 
 .history-empty{
@@ -155,16 +135,11 @@
   align-items:center;
   justify-content:center;
   min-height:160px;
-  padding:24px;
-  border:1px dashed #b7b7b7;
-  border-radius:10px;
-  background:#f5f5f5;
   color:#666;
   font-size:15px;
   text-align:center;
+  padding:24px 0;
 }
-
-/* HISTORY CARD */
 
 .history-card{
 
@@ -180,8 +155,6 @@
   padding:16px 18px;
 }
 
-/* INDICATOR */
-
 .indicator{
   width:10px;
   height:10px;
@@ -196,14 +169,10 @@
   background:#5b0000;
 }
 
-/* TEXT */
-
 .history-text{
   flex:1;
   font-size:15px;
 }
-
-/* DATE */
 
 .history-date{
   font-size:14px;

@@ -19,8 +19,8 @@ export interface PostItem {
 })
 export class PostService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/auth/posts';
-  private readonly fallbackApiUrl = 'http://localhost:3000/posts';
+  private readonly apiUrl = 'http://localhost:3000/api/posts';
+private readonly fallbackApiUrl = 'http://localhost:3000/api/posts';
   private readonly postsSessionStorageKey = 'cachedPosts';
   private readonly postsLocalStorageKey = 'cachedPostsPersistent';
   private readonly maxPersistedPosts = 80;

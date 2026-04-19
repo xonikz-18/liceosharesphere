@@ -1,20 +1,17 @@
 <div class="container">
-
     <div class="left-panel"></div>
-
     <div class="right-panel">
-
         <div class="form-container">
-            
             <h1>Account Information</h1>
-
             <form #signupForm="ngForm" (ngSubmit)="onRegister(signupForm)">
 
                 <label>Full Name <span class="required">*</span></label>
                 <input type="text" name="fullname" [(ngModel)]="fullname" #fullnameCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && fullnameCtrl.invalid }" placeholder="Enter Full Name">
+                <p class="form-error" *ngIf="fullnameerror">{{ fullnameerror }}</p>
 
                 <label>Email <span class="required">*</span></label>
                 <input type="email" name="email" [(ngModel)]="email" #emailCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && emailCtrl.invalid }" placeholder="Enter Email">
+                <p class="form-error" *ngIf="emailerror">{{ emailerror }}</p>
 
                 <label>Sex <span class="required">*</span></label>
                 <select name="sex" [(ngModel)]="sex" #sexCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && sexCtrl.invalid }">
@@ -22,6 +19,7 @@
                     <option>Female</option>
                     <option>Male</option>
                 </select>
+                <p class="form-error" *ngIf="sexerror">{{ sexerror }}</p>
 
                 <label>Department <span class="required">*</span></label>
                 <select name="department" [(ngModel)]="department" #departmentCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && departmentCtrl.invalid }">
@@ -40,27 +38,25 @@
                     <option>College of Radiologic Technology</option>
                     <option>School of Teacher Education</option>
                 </select>
+                <p class="form-error" *ngIf="departmenterror">{{ departmenterror }}</p>
 
                 <label>Contact Number <span class="required">*</span></label>
                 <input type="text" name="contact" [(ngModel)]="contactNumber" #contactCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && contactCtrl.invalid }" placeholder="Enter Contact Number">
-
+                <p class="form-error" *ngIf="contactNumbererror">{{ contactNumbererror }}</p>
                 <label>Password <span class="required">*</span></label>
                 <input type="password" name="password" [(ngModel)]="password" #passwordCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && passwordCtrl.invalid }" placeholder="Enter Password">
-
+                <p class="form-error" *ngIf="passworderror">{{ passworderror }}</p>
                 <label>Confirm Password <span class="required">*</span></label>
                 <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordCtrl="ngModel" required [ngClass]="{ 'invalid': submitted && confirmPasswordCtrl.invalid }" placeholder="Confirm Password">
+                <p class="form-error" *ngIf="confirmPassworderror">{{ confirmPassworderror }}</p>
 
                 <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
                 <div class="buttons">
-                    <button class="signup" type="submit">Sign Up</button>
                     <button class="cancel" type="button" (click)="onCancel()">Cancel</button>
+                    <button class="signup" type="submit">Sign Up</button>
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
 </div>

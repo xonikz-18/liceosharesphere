@@ -88,7 +88,7 @@ export interface BorrowRequestResult {
 export class BorrowRequestService {
   private readonly http = inject(HttpClient);
   private readonly postService = inject(PostService);
-  private readonly apiUrl = 'http://localhost:3000/auth/borrow-requests';
+  private readonly apiUrl = 'http://localhost:3000/api/borrow-requests';
   private readonly notificationsStoragePrefix = 'borrowNotifications:';
   private readonly notificationsReadStoragePrefix = 'borrowNotificationsRead:';
   private readonly incomingRequestsReadStoragePrefix = 'incomingRequestsRead:';

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
@@ -47,13 +48,13 @@ export class LoginComponent {
     const password = this.password.trim();
 
     if (!email || !password) {
-      this.errorMessage = 'Please fill in all fields.';
+      toast.error('Please fill in all fields.');
       this.cdr.detectChanges();
       return;
     }
 
     if (!this.emailPattern.test(email)) {
-      this.errorMessage = 'Please enter a valid email address.';
+      toast.error('Please enter a valid email address.');
       this.cdr.detectChanges();
       return;
     }
@@ -77,7 +78,7 @@ export class LoginComponent {
       error: (err) => {
         this.isLoading = false;
         this.invalidLogin = true;
-        this.errorMessage = err.error?.message || 'Invalid email or password.';
+        toast.error('Invalid email or password.');
         this.cdr.detectChanges();
       }
     });
