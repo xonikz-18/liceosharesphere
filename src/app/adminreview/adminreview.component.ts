@@ -2,11 +2,12 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PostService, PostItem } from '../services/post.service';
+import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
   selector: 'app-adminreview',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LogoutComponent],
   templateUrl: './adminreview.component.html',
   styleUrls: ['./adminreview.component.scss']
 })
@@ -18,6 +19,16 @@ export class AdminReviewComponent implements OnInit {
   posts: PostItem[] = [];
   isLoading = true;
   selectedPost: PostItem | null = null;
+  
+  showLogoutPopup = false;
+
+  toggleLogout() {
+    this.showLogoutPopup = true;
+  }
+
+  handleCancel() {
+    this.showLogoutPopup = false;
+  }
 
   ngOnInit() {
     // realtime from service
@@ -30,7 +41,6 @@ export class AdminReviewComponent implements OnInit {
     // initial load
     this.postService.getPosts().subscribe();
 
-    // 🔥 AUTO REFRESH (important)
     setInterval(() => {
       this.postService.getPosts().subscribe();
     }, 3000); // every 3 sec
@@ -73,3 +83,5 @@ export class AdminReviewComponent implements OnInit {
     });
   }
 }
+
+

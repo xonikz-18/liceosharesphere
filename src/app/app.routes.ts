@@ -1,56 +1,38 @@
 import { Routes } from '@angular/router';
+import { authGuard, adminGuard, guestGuard, userGuard } from '../guards/auth.guard';
+
 import { LoginComponent } from './login/login.component';
 import { SigninuserComponent } from './signinuser/signinuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoryComponent } from './history/history.component';
-import { LogoutComponent } from './logout/logout.component';
-import { AddComponent } from './add/add.component';
-import { NotificationComponent } from './notification/notification.component';
-import { MessageComponent } from './message/message.component';
 import { ProfileBorrowedComponent } from './profileborrowed/profileborrowed.component';
 import { ProfileLentComponent } from './profilelent/profilelent.component';
-import { EditItemComponent } from './edititem/edititem.component';
-import { ItemViewComponent } from './itemview/itemview.component';
 import { ForgotPassEmailComponent } from './forgotpassemail/forgotpassemail.component';
 import { ForgotPassOtpComponent } from './forgotpassotp/forgotpassotp.component';
 import { ForgotPassNewComponent } from './forgotpassnew/forgotpassnew.component';
 import { AdminDashboardComponent } from './admindashboard/admindashboard.component';
 import { AdminReviewComponent } from './adminreview/adminreview.component';
 
-
-
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
 
-  { path: 'admindashboard', component: AdminDashboardComponent },
+  // PUBLIC (GUEST ONLY)
+  { path: '', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'signinuser', component: SigninuserComponent, canActivate: [guestGuard] },
+  { path: 'forgotpassemail', component: ForgotPassEmailComponent, canActivate: [guestGuard] },
+  { path: 'forgotpassotp', component: ForgotPassOtpComponent, canActivate: [guestGuard] },
+  { path: 'forgotpassnew', component: ForgotPassNewComponent, canActivate: [guestGuard] },
 
-  { path: 'forgotpassemail', component: ForgotPassEmailComponent },
-  { path: 'forgotpassotp', component: ForgotPassOtpComponent },
-  { path: 'forgotpassnew', component: ForgotPassNewComponent },
+  // USER ONLY
+  { path: 'dashboard', component: DashboardComponent, canActivate: [userGuard] },
+  { path: 'history', component: HistoryComponent, canActivate: [userGuard] },
+  { path: 'profile', component: ProfileBorrowedComponent, canActivate: [userGuard] },
+  { path: 'profile/lent', component: ProfileLentComponent, canActivate: [userGuard] },
 
-  { path: 'signinuser', component: SigninuserComponent },
+  // ADMIN ONLY
+  { path: 'admindashboard', component: AdminDashboardComponent, canActivate: [adminGuard] },
+  { path: 'adminreview', component: AdminReviewComponent, canActivate: [adminGuard] },
 
-  { path: 'dashboard', component: DashboardComponent },
-
-  { path: 'history', component: HistoryComponent },
-
-  { path: 'profile', component: ProfileBorrowedComponent },
-
-  { path: 'profile/lent', component: ProfileLentComponent },
-
-  { path: 'edit-item/:id', component: EditItemComponent },
-
-  { path: 'item/:id', component: ItemViewComponent },
-
-  { path: 'logout', component: LogoutComponent },
-
-  { path: 'add', component: AddComponent },
-
-  { path: 'notification', component: NotificationComponent },
-
-  { path: 'messages', component: MessageComponent },
-
-  { path: 'adminreview', component: AdminReviewComponent },
-
+  // FALLBACK
   { path: '**', redirectTo: '' }
 ];

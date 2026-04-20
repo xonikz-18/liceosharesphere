@@ -344,6 +344,10 @@
     color: #fff;
   }
   &.badge-borrowed {
+    background: #000000;
+    color: #fff;
+  }
+  &.badge-returned {
     background: #f7b733;
     color: #fff;
   }

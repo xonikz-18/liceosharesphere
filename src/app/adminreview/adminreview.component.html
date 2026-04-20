@@ -11,7 +11,7 @@
         <span>Listings</span>
       </div>
     </div>
-    <div class="logout">
+    <div class="logout" (click)="toggleLogout()">
       <div class="icon logout-icon"></div>
       <span>Logout</span>
     </div>
@@ -81,8 +81,13 @@
           </div>
           <span class="owner-name">{{ selectedPost.owner }}</span>
           <div class="modal-status-badge"
-            [ngClass]="selectedPost.status === 'borrowed' ? 'badge-borrowed' : 'badge-available'">
-            {{ selectedPost.status === 'borrowed' ? 'borrowed' : 'available' }}
+            [ngClass]="{
+              'badge-borrowed': selectedPost.status === 'borrowed',
+              'badge-returned': selectedPost.status === 'returned',
+              'badge-available': selectedPost.status === 'available'
+            }">
+            
+            {{ selectedPost.status }}
           </div>
         </div>
 
@@ -98,3 +103,5 @@
 
   </div>
 </div>
+
+<app-logout *ngIf="showLogoutPopup" (cancel)="handleCancel()"></app-logout>
