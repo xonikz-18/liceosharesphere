@@ -172,9 +172,15 @@
 
 /* LIST */
 .admin-list {
-  max-height: 400px;
+  max-height: min(1000px, calc(100vh - 150px));
   overflow-y: auto;
   scroll-behavior: smooth;
+
+  scrollbar-width: none; // Firefox
+}
+
+.admin-list::-webkit-scrollbar {
+  display: none; // Chrome
 }
 
 /* ITEM */
