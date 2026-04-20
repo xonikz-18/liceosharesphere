@@ -225,6 +225,9 @@ export class ProfileService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
       map(res => {
+        if (res.token) {
+        localStorage.setItem('authToken', res.token);
+      }
         const profile = res.user ? res.user : res;
         return this.normalizeProfile(profile);
       }),

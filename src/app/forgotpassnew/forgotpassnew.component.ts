@@ -46,7 +46,7 @@ export class ForgotPassNewComponent {
     const email = localStorage.getItem('resetEmail');
     const code = localStorage.getItem('resetCode');
 
-    this.http.post<any>('http://localhost:3000/api/auth/reset-password', {
+    this.http.post<any>('http://localhost:3000/auth/reset-password', {
       email, code, newPassword: this.password
     }).subscribe({
       next: () => {

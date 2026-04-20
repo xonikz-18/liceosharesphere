@@ -14,7 +14,6 @@ import { toast } from 'ngx-sonner';
 })
 export class LoginComponent {
   private readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  private readonly adminEmail = 'npacatang89487@liceo.edu.ph';
 
   email: string = '';
   password: string = '';
@@ -63,12 +62,12 @@ export class LoginComponent {
     this.cdr.detectChanges();
 
     this.profileService.login(email, password).subscribe({
-      next: () => {
+      next: (profile) => {
         this.isLoading = false;
         this.cdr.detectChanges();
 
-        const normalizedEmail = email.toLowerCase();
-        if (normalizedEmail === this.adminEmail) {
+        // I-check ang role mula sa profile
+        if (profile.role === 'admin') {
           this.router.navigate(['/admindashboard']);
           return;
         }

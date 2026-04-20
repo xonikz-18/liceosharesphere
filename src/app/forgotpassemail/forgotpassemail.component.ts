@@ -34,7 +34,7 @@ export class ForgotPassEmailComponent {
   continue() {
   if (!this.email) return;
 
-  this.http.post<any>('http://localhost:3000/api/auth/forgot-password', { email: this.email })
+  this.http.post<any>('http://localhost:3000/auth/forgot-password', { email: this.email })
     .subscribe({
       next: () => {
         localStorage.setItem('resetEmail', this.email);

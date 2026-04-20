@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BorrowRequestService, BorrowRequestStatus } from '../services/borrow-request.service';
 import { PostItem, PostService } from '../services/post.service';
@@ -17,6 +17,7 @@ export class ItemViewComponent implements OnChanges {
   private readonly postService = inject(PostService);
   private readonly messagePanelService = inject(MessagePanelService);
   private readonly profileService = inject(ProfileService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @Input() item: PostItem | null = null;
   @Output() close = new EventEmitter<void>();
@@ -79,11 +80,17 @@ export class ItemViewComponent implements OnChanges {
 
     this.requestStateOverride = 'pending';
     this.isSubmittingRequest = true;
-    this.requestMessage = 'Request pending.';
+
+    // ← palitan ng setTimeout para maiwasan ang ExpressionChanged error
+    setTimeout(() => {
+      this.requestMessage = 'Request pending.';
+    });
 
     this.borrowRequestService.requestBorrow(requestItem).subscribe((result) => {
       this.isSubmittingRequest = false;
-      this.requestMessage = result.message;
+      setTimeout(() => {
+        this.requestMessage = result.message;
+      });
 
       if (!this.item) {
         return;
