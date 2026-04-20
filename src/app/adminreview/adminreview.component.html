@@ -1,42 +1,69 @@
-<div class="overlay" (click)="close.emit()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <div class="header">
-      <h2>{{item?.name}}</h2>
-      <div class="close-btn" (click)="close.emit()"></div>
+<div class="dashboard">
+
+  <div class="sidebar">
+    <div class="logo"></div>
+
+    <div class="menu">
+      <div class="menu-item" routerLink="/admindashboard">
+        <div class="icon home"></div>
+        <span>Home</span>
+      </div>
+
+      <div class="menu-item active">
+        <div class="icon listings"></div>
+        <span>Listings</span>
+      </div>
     </div>
 
-    <div class="content">
-
-      <div class="image-section">
-
-        <div class="image-preview" [style.backgroundImage]="item?.image ? 'url(' + item.image + ')' : 'none'"></div>
-
-        <span class="status-badge" [ngClass]="item?.status || 'available'">
-          {{ item?.status || 'available' }}
-        </span>
-
-      </div>
-
-      <div class="form-section">
-
-        <div class="owner">
-          <div class="avatar" [style.backgroundImage]="item?.ownerProfilePicture ? 'url(' + item.ownerProfilePicture + ')' : 'url(assets/images/dummypic.png)'" [style.backgroundSize]="'cover'"></div>
-          <span>{{item?.owner}}</span>
-        </div>
-
-        <div class="field">
-          <label>Description</label>
-          <p class="desc">
-            {{ item?.description || 'No description provided.' }}
-          </p>
-        </div>
-
-        <div class="actions">
-          <button class="delete-btn" (click)="delete.emit()">
-            Delete
-          </button>
-        </div>
-      </div>
+    <div class="logout">
+      <div class="icon logout-icon"></div>
+      <span>Logout</span>
     </div>
   </div>
+
+  <div class="main">
+
+    <div class="header">
+      <div class="header-bg"></div>
+      <div class="header-logo"></div>
+    </div>
+
+    <div class="review-wrapper">
+
+      <div class="review-header">Review Listings</div>
+
+      <div class="review-card">
+
+        <div *ngIf="posts.length === 0" class="empty-state">
+          No posts have been published yet.
+        </div>
+
+        <div *ngIf="posts.length > 0" class="admin-list">
+
+          <div class="admin-card" *ngFor="let item of posts">
+
+            <div class="top-line"
+              [ngClass]="item.status === 'borrowed' ? 'yellow' : 'red'">
+            </div>
+
+            <div class="admin-text">
+              <b>{{ item.owner }}</b>
+              {{ item.status === 'borrowed' ? 'borrowed' : 'lent' }}
+              <b>"{{ item.name }}"</b>
+            </div>
+
+            <div class="admin-date">
+              {{ item.date }}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

@@ -1,73 +1,62 @@
-
 <div class="dashboard">
+
   <div class="sidebar">
     <div class="logo"></div>
+
     <div class="menu">
+      <div class="menu-item active">
+        <div class="icon home"></div>
+        <span>Home</span>
+      </div>
+
+      <div class="menu-item" routerLink="/adminreview">
+        <div class="icon listings"></div>
+        <span>Listings</span>
+      </div>
     </div>
 
     <div class="logout" (click)="toggleLogout()">
-  <div class="icon logout-icon"></div>
-  <span>Logout</span>
-</div>
-
+      <div class="icon logout-icon"></div>
+      <span>Logout</span>
+    </div>
   </div>
 
   <div class="main-admin">
 
-    <h2 class="title">Total Listings</h2>
-
-    <div class="chart-container">
-      <canvas id="listingChart"></canvas>
+    <div class="header-banner">
+      <div class="header-logo"></div>
     </div>
 
-   
-    <div class="review-section">
+    <div class="stats">
 
-      <div class="review-header">
-        <span>Review Listings</span>
+      <div class="card listings-card">
+        <div class="card-icon listings-icon"></div>
+        <h2>{{ totalListings }}</h2>
+        <p>Total Listings</p>
       </div>
 
-      <div class="admin-list">
-
-        <div 
-          class="admin-card"
-          *ngFor="let item of posts"
-          (click)="openItem(item)"
-        >
-
-          <div class="top-line yellow"></div>
-
-          <div class="admin-text">
-            <span>
-              <b>{{ item.owner }}</b> posted <b>“{{ item.name }}”</b>
-            </span>
-          </div>
-
-          <div class="admin-date">
-            {{ item.date }}
-          </div>
-        </div>
-
+      <div class="card borrowed-card">
+        <div class="card-icon borrow-icon"></div>
+        <h2>{{ totalBorrowed }}</h2>
+        <p>Total Borrowed</p>
       </div>
 
-      <div *ngIf="!posts.length && !isLoading" class="empty-state">
-        No posts have been published yet.
+      <div class="card lent-card">
+        <div class="card-icon lent-icon"></div>
+        <h2>{{ totalLent }}</h2>
+        <p>Total Available Items</p>
       </div>
 
+    </div>
+
+    <div class="chart-wrapper">
+      <div class="chart-container">
+        <canvas id="listingChart"></canvas>
+      </div>
     </div>
 
   </div>
 
 </div>
 
-<app-logout
-  *ngIf="showLogoutPopup"
-  (cancel)="handleCancel()">
-</app-logout>
-
-<app-adminreview
-  *ngIf="selectedItem"
-  [item]="selectedItem"
-  (close)="closeModal()"
-  (delete)="deleteItem()">
-</app-adminreview>
+<app-logout *ngIf="showLogoutPopup" (cancel)="handleCancel()"></app-logout>
