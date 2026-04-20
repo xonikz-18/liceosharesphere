@@ -171,10 +171,10 @@
 }
 
 /* LIST */
-.admin-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+.admin-list {
+  max-height: 400px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 /* ITEM */

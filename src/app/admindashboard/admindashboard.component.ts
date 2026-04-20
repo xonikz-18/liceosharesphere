@@ -49,9 +49,6 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
     this.postService.getPosts().subscribe();
 
-    setInterval(() => {
-      this.postService.getPosts().subscribe();
-    }, 3000);
   }
 
   ngAfterViewInit() {
@@ -150,12 +147,18 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   private updateChart() {
-    if (!this.chart) {
-      this.createChart();
-      return;
-    }
-
-    this.chart.data = this.buildChartData();
-    this.chart.update();
+  if (!this.chart) {
+    this.createChart();
+    return;
   }
+
+  const newData = this.buildChartData();
+
+  if (JSON.stringify(this.chart.data.datasets) === JSON.stringify(newData.datasets)) {
+    return;
+  }
+
+  this.chart.data = newData;
+  this.chart.update();
+}
 }
