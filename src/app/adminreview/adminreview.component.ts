@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PostService } from '../services/post.service';
+import { PostService, PostItem } from '../services/post.service';
 
 @Component({
   selector: 'app-adminreview',
@@ -13,26 +13,63 @@ import { PostService } from '../services/post.service';
 export class AdminReviewComponent implements OnInit {
 
   private postService = inject(PostService);
+  private cdr = inject(ChangeDetectorRef);
 
-  posts: any[] = [];
+  posts: PostItem[] = [];
+  isLoading = true;
+  selectedPost: PostItem | null = null;
 
   ngOnInit() {
-    this.postService.getPosts().subscribe({
-      next: (data: any[]) => {
-        this.posts = data.map(p => ({
-          owner: p.owner,
-          name: p.name,
-          date: new Date(p.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }),
-          status: p.status
-        }));
-      },
-      error: () => {
-        this.posts = [];
-      }
+    // realtime from service
+    this.postService.postsChanged$.subscribe(posts => {
+      this.posts = posts;
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
+
+    // initial load
+    this.postService.getPosts().subscribe();
+
+    // 🔥 AUTO REFRESH (important)
+    setInterval(() => {
+      this.postService.getPosts().subscribe();
+    }, 3000); // every 3 sec
+  }
+
+  openModal(item: PostItem) {
+    this.selectedPost = item;
+  }
+
+  closeModal() {
+    this.selectedPost = null;
+  }
+
+  deletePost() {
+  if (!this.selectedPost) return;
+
+  const deletedId = this.selectedPost.id;
+
+  this.posts = this.posts.filter(p => String(p.id) !== String(deletedId));
+
+  // optional: close modal agad
+  this.closeModal();
+  this.cdr.detectChanges();
+
+  this.postService.deletePost(deletedId).subscribe({
+    next: () => {
+      // success — nothing to do
+    },
+    error: () => {
+      this.postService.getPosts().subscribe(data => this.posts = data);
+    }
+  });
+}
+
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
     });
   }
 }

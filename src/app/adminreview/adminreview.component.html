@@ -1,20 +1,16 @@
 <div class="dashboard">
-
   <div class="sidebar">
     <div class="logo"></div>
-
     <div class="menu">
       <div class="menu-item" routerLink="/admindashboard">
         <div class="icon home"></div>
         <span>Home</span>
       </div>
-
       <div class="menu-item active">
         <div class="icon listings"></div>
         <span>Listings</span>
       </div>
     </div>
-
     <div class="logout">
       <div class="icon logout-icon"></div>
       <span>Logout</span>
@@ -22,48 +18,83 @@
   </div>
 
   <div class="main">
-
     <div class="header">
       <div class="header-bg"></div>
       <div class="header-logo"></div>
     </div>
 
     <div class="review-wrapper">
-
       <div class="review-header">Review Listings</div>
-
       <div class="review-card">
 
-        <div *ngIf="posts.length === 0" class="empty-state">
+        <div *ngIf="isLoading" class="empty-state">Loading posts...</div>
+
+        <div *ngIf="!isLoading && posts.length === 0" class="empty-state">
           No posts have been published yet.
         </div>
 
-        <div *ngIf="posts.length > 0" class="admin-list">
-
+        <div *ngIf="!isLoading && posts.length > 0" class="admin-list">
           <div class="admin-card" *ngFor="let item of posts">
-
-            <div class="top-line"
-              [ngClass]="item.status === 'borrowed' ? 'yellow' : 'red'">
-            </div>
-
+            <div class="top-line" [ngClass]="item.status === 'borrowed' ? 'yellow' : 'red'"></div>
             <div class="admin-text">
               <b>{{ item.owner }}</b>
               {{ item.status === 'borrowed' ? 'borrowed' : 'lent' }}
               <b>"{{ item.name }}"</b>
             </div>
-
-            <div class="admin-date">
-              {{ item.date }}
-            </div>
-
+            <div class="admin-date">{{ formatDate(item.date) }}</div>
+            <button class="view-btn" (click)="openModal(item)">View</button>
           </div>
-
         </div>
 
       </div>
+    </div>
+  </div>
+</div>
 
+<!-- MODAL OVERLAY -->
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" *ngIf="selectedPost" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <button class="modal-close" (click)="closeModal()">✕</button>
+
+    <h2 class="modal-title">{{ selectedPost.name }}</h2>
+
+    <div class="modal-body">
+      <!-- Left: image -->
+      <div class="modal-image-wrap">
+        <img
+          *ngIf="selectedPost.image"
+          [src]="selectedPost.image"
+          [alt]="selectedPost.name"
+          class="modal-image"
+        />
+        <div *ngIf="!selectedPost.image" class="modal-image-placeholder">No Image</div>
+      </div>
+
+      <!-- Right: owner + status + description -->
+      <div class="modal-right">
+        <div class="modal-owner-row">
+          <div class="owner-avatar"
+            [style.backgroundImage]="selectedPost.ownerProfilePicture
+              ? 'url(' + selectedPost.ownerProfilePicture + ')' : 'none'">
+          </div>
+          <span class="owner-name">{{ selectedPost.owner }}</span>
+          <div class="modal-status-badge"
+            [ngClass]="selectedPost.status === 'borrowed' ? 'badge-borrowed' : 'badge-available'">
+            {{ selectedPost.status === 'borrowed' ? 'borrowed' : 'available' }}
+          </div>
+        </div>
+
+        <p class="desc-label">Description</p>
+        <p class="desc-text">{{ selectedPost.description || 'No description provided.' }}</p>
+      </div>
+    </div>
+
+    <!-- Footer: delete button -->
+    <div class="modal-footer">
+      <button class="delete-btn" (click)="deletePost()">Delete</button>
     </div>
 
   </div>
-
 </div>

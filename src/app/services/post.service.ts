@@ -279,7 +279,7 @@ private readonly fallbackApiUrl = 'http://localhost:3000/api/posts';
       return false;
     }
 
-    return image.length > 4096;
+    return image.length > 500000; 
   }
 
   private normalizePost(post: unknown, fallback?: Partial<PostItem>): PostItem {

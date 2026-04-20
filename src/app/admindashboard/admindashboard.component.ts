@@ -36,7 +36,22 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.loadPosts();
+    this.postService.postsChanged$.subscribe(posts => {
+      this.posts = posts;
+
+      this.totalListings = posts.length;
+      this.totalBorrowed = posts.filter(p => p.status === 'borrowed').length;
+      this.totalLent = posts.filter(p => p.status === 'available').length;
+
+      this.updateChart();
+      this.cdr.detectChanges();
+    });
+
+    this.postService.getPosts().subscribe();
+
+    setInterval(() => {
+      this.postService.getPosts().subscribe();
+    }, 3000);
   }
 
   ngAfterViewInit() {
